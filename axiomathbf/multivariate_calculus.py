@@ -352,7 +352,7 @@ def distance_from_point_to_plane(p, g, c):
     Example
     =======
     >>> from axiomathbf.multivariate_calculus import *
-    >>> distance_from_point_to_plane(Point(2,-1,4), make_vector(1,2,3), 5)
+    >>> distance_from_point_to_plane(Point(2,-1,4), make_vector(1,2,3), -5)
     sqrt(14)/2
     
     Args:
@@ -574,13 +574,13 @@ def convert_rect_to_sphere(p):
     )
 
 
-def cylinder_to_rect(p):
+def convert_cylinder_to_rect(p):
     """Converts cylinderical coordinates to rectangular.
 
     Example
     =======
     >>> from axiomathbf.multivariate_calculus import *
-    >>> cylinder_to_rect(Point(2,pi/2,1))
+    >>> convert_cylinder_to_rect(Point(2,pi/2,1))
     Point3D(0, 2, 1)  
     
     Args:
@@ -593,13 +593,13 @@ def cylinder_to_rect(p):
     return Point(r * cos(Ѳ), r * sin(Ѳ), z)
 
 
-def sphere_to_rect(p):
+def convert_sphere_to_rect(p):
     """Converts spherical coordinates to rectangular.
 
     Example
     =======
     >>> from axiomathbf.multivariate_calculus import *
-    >>> sphere_to_rect(Point(sqrt(5),pi/2,acos(1/sqrt(5)))
+    >>> convert_sphere_to_rect(Point(sqrt(5),pi/2,acos(1/sqrt(5)))
     Point3D(0, 2, 1)  
     
     Args:
@@ -609,7 +609,7 @@ def sphere_to_rect(p):
         (sympy.geometry.point.Point3D): A point tranformed to rectangular (x,y,z).
     """
     ρ, φ, Ѳ = p
-    return Point(ρ * sin(φ) * cos(Ѳ), ρ * sin(φ) * sin(Ѳ), ρ * cos(φ))
+    return Point(ρ * sin(φ) * cos(Ѳ), ρ * cos(φ), ρ * sin(φ) * sin(Ѳ))
 
 
 # 12.1
@@ -724,6 +724,102 @@ def integrate_vector_function(u):
     return Matrix([integration])
 
 
+# 13.1
+def graph_contour(f, xrange, yrange):
+    """Creates a contour plot of a function.
+    
+    Example
+    =======
+    >>> from axiomathbf.multivariate_calculus import *
+    >>> graph_contour("np.cos(Y)", [-3, 3], [-3, 3])
+    ** Image of the contour plot
+    
+    Args:
+        f (str): The function.
+        xrange (List): The x-axis boundaries.
+        yrange (List): The y-axis boundaries.
+    
+    Returns:
+        None
+    """
+    ax = plt.axes()
+    x, y = (
+        np.linspace(xrange[0], xrange[1], 100),
+        np.linspace(yrange[0], yrange[1], 100),
+    )
+    X, Y = np.meshgrid(x, y)
+    Z = eval(f)
+    plt.contourf(X, Y, Z, 20, cmap="viridis")
+    plt.colorbar()
+    plt.show()
+
+
+def graph_model(f, xrange, yrange):
+    """Creates a 3D plot of a function.
+    
+    Example
+    =======
+    >>> from axiomathbf.multivariate_calculus import *
+    >>> graph_model("np.cos(Y)", [-3, 3], [-3, 3])
+    ** Image of the function modeal in 3D
+    
+    Args:
+        f (str): The function.
+        xrange (List): The x-axis boundaries.
+        yrange (List): The y-axis boundaries.
+    
+    Returns:
+        None
+    """
+    ax = plt.axes(projection="3d")
+    x, y = (
+        np.linspace(xrange[0], xrange[1], 100),
+        np.linspace(yrange[0], yrange[1], 100),
+    )
+    X, Y = np.meshgrid(x, y)
+    Z = eval(f)
+    ax.contour3D(X, Y, Z, 50, cmap="viridis")
+    plt.show()
+    
+    
+# https://www.science-emergence.com/Articles/How-to-put-the-origin-in-the-center-of-the-figure-with-matplotlib-/
+def draw_boundaries(xrange, yrange, xbound, ybound):
+    """Draws out the boundaries for a double integral.
+    
+    Example
+    =======
+    >>> from axiomathbf.multivariate_calculus import *
+    >>> draw_boundaries([-1, 1], [-1, 1], ["1", "0"], ["x**2", "-x"])
+    ** Image of the boundaries on the two axes
+    
+    Args: 
+        xrange (List of int): The x-coordinate range.
+        yrange (List of int): The y-coordinate range.
+        xbound (List of str): The boundaries for x, whether it is a constant or a function.
+        ybound (List of str): The boundaries for y, whether it is a constant or a function.
+    
+    Returns:
+        None
+    """
+    fig = plt.figure()
+    ax = plt.axes()
+    x = np.linspace(xrange[0], xrange[1], 100)
+    y = np.linspace(yrange[0], yrange[1], 100)
+    ax.grid(True)
+    ax.spines["left"].set_position("zero")
+    ax.spines["right"].set_color("none")
+    ax.spines["bottom"].set_position("zero")
+    ax.spines["top"].set_color("none")
+    for i in xbound:
+        ax.plot(
+            eval(i) if type(eval(i)) == np.ndarray else np.full(y.size, eval(i)), y,
+        )
+    for i in ybound:     
+        ax.plot(
+            x, eval(i) if type(eval(i)) == np.ndarray else np.full(x.size, eval(i)),
+        )
+
+    
 # 13.4
 def find_linearization(f, p, s=False):
     """Returns the linearization equation for local-linear approximation.
@@ -755,7 +851,7 @@ def chain_rule(f, xf, yf, zf, respect, s=False):
     =======
     >>> from axiomathbf.multivariate_calculus import *
     >>> s, t = symbols("s t")
-    >>> chain_rule(x*y*sin(z**2),s-t,s**2,t**2,s)
+    >>>c
     s**2*sin(t**4) + 2*s*(s - t)*sin(t**4)
     
     Args:
