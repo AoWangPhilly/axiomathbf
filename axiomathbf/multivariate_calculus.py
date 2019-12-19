@@ -851,7 +851,7 @@ def chain_rule(f, xf, yf, zf, respect, s=False):
     =======
     >>> from axiomathbf.multivariate_calculus import *
     >>> s, t = symbols("s t")
-    >>>c
+    >>> chain_rule(x*y*sin(z**2),s-t,s**2,t**2,s)
     s**2*sin(t**4) + 2*s*(s - t)*sin(t**4)
     
     Args:
