@@ -398,6 +398,7 @@ def draw_ellipsoid():
     X, Y = np.sin(P) * np.cos(T), np.sin(P) * np.sin(T)
     ax.plot_surface(X, Y, Z, cmap=plt.cm.YlGnBu_r)
     plt.title("Ellipsoid")
+    plt.show()
 
 
 def draw_elliptic_cone():
@@ -422,6 +423,7 @@ def draw_elliptic_cone():
     ax.plot_surface(X, Y, Z, cmap=plt.cm.YlGnBu_r)
     ax.plot_surface(X, Y, -Z, cmap=plt.cm.YlGnBu_r)
     plt.title("Elliptic Cone")
+    plt.show()
 
 
 def draw_hyperboloid_one_sheet():
@@ -450,6 +452,7 @@ def draw_hyperboloid_one_sheet():
     z = np.sinh(u)
     ax.plot_surface(x, y, z, cmap=plt.cm.YlGnBu_r)
     plt.title("Hyperboloid of One Sheet")
+    plt.show()
 
 
 def draw_elliptic_paraboloid():
@@ -473,6 +476,7 @@ def draw_elliptic_paraboloid():
     Z = X ** 2 + Y ** 2
     ax.plot_surface(X, Y, Z, cmap=plt.cm.YlGnBu_r)
     plt.title("Elliptic Paraboloid")
+    plt.show()
 
 
 def draw_hyperboloid_two_sheet():
@@ -498,6 +502,7 @@ def draw_hyperboloid_two_sheet():
     ax.plot_surface(X, Y, Z, cmap=plt.cm.YlGnBu_r)
     ax.plot_surface(X, Y, -Z, cmap=plt.cm.YlGnBu_r)
     plt.title("Hyperboloid of Two Sheet")
+    plt.show()
 
 
 def draw_hyperbolic_paraboloid():
@@ -522,6 +527,7 @@ def draw_hyperbolic_paraboloid():
     Z = X ** 2 - Y ** 2
     ax.plot_surface(X, Y, Z, cmap=plt.cm.YlGnBu_r)
     plt.title("Hyperbolic Paraboloid")
+    plt.show()
 
 
 # 11.8
@@ -613,7 +619,7 @@ def convert_sphere_to_rect(p):
 
 
 # 12.1
-def find_domain_of_vector_function(v):
+def find_domain_of_vector_function(v, s=False):
     """Finds and returns the domain of the vector function.
     
     Example
@@ -630,6 +636,8 @@ def find_domain_of_vector_function(v):
     """
     domain = Interval(-oo, oo)
     for i in range(len(v)):
+        if s:
+            print("{}: {}".format(v[i],continuous_domain(v[i], x, S.Reals)))
         domain = Intersection(continuous_domain(v[i], x, S.Reals), domain)
     return domain
 
@@ -818,6 +826,7 @@ def draw_boundaries(xrange, yrange, xbound, ybound):
         ax.plot(
             x, eval(i) if type(eval(i)) == np.ndarray else np.full(x.size, eval(i)),
         )
+    plt.show()
 
     
 # 13.4
