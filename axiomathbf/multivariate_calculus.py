@@ -8,18 +8,11 @@ from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 
 """Multivariate Calculus Homework Problem Aid
-
-The module is used to aid students in Multivariable Calculus (Math 200). However, the module should not be used as a crutch.
-Many functions were created to solve problems from the Early Trascendental (Anton, Bivens, Davis) textbook. Additionally, the
-module used many of the sympy and matplotlib, along with the numpy libraries to solve problems from chapter 11 to 14. 
-
-Attributes:
-    x (Symbol): The x variable giving further uses in matematical functions.
-    y (Symbol): The y variable giving further uses in matematical functions.
-    z (Symbol): The z variable giving further uses in matematical functions.
-
-"""
+The module is used to aid students in Multivariate Calculus (Math 200). However, the module should not be used as a crutch.
+Many functions were created to solve problems from the Early Transcendental (Anton, Bivens, Davis) textbook. Additionally, the
+module used many of the sympy and matplotlib, along with the numpy libraries to solve problems from chapter 11 to 14. """
 x, y, z = symbols("x y z")
+
 
 # 11.1
 def simplify_sphere(f, info=False):
@@ -30,28 +23,24 @@ def simplify_sphere(f, info=False):
     >>> from axiomathbf.multivariate_calculus import *
     >>> simplify_sphere(x ** 2 + y ** 2 + z ** 2 - 2 * x - 4 * y + 8 * z + 17) 
     (x - 1.0)**2 + (y - 2.0)**2 + (z + 4.0)**2 - 4.0
-    
-    Args:
-        f (sympy.core.add.Add): The unclean sphere function.
-        info=False (bool): Prints the center and radius of the sphere if True.
-        
-    Returns:
-        sympy.core.add.Add: The function of the sphere formula format.
+    :param f (sympy.core.add.Add): The unclean sphere function.
+    :param info=False (bool): Prints the center and radius of the sphere if True.
+    :return sympy.core.add.Add: The function of the sphere formula format.
     """
     f = simplify(f)
     f = str(f).replace(" ", "")
     var = ["x", "y", "z"]
     var_const = []
     constant = (
-        int(f[f.find("z**2") + 5 :])
+        int(f[f.find("z**2") + 5:])
         if f.find("z", f.find("z**2") + 1) == -1
-        else int(f[f.find("z", f.find("z**2") + 1) + 1 :])
+        else int(f[f.find("z", f.find("z**2") + 1) + 1:])
     )
     for i in var:
         var_const.append(
             0
             if f.find(i, f.find(i + "**2") + 3) == -1
-            else int(f[f.find(i + "**2") + 4 : f.find(i, f.find(i + "**2") + 3) - 1])
+            else int(f[f.find(i + "**2") + 4: f.find(i, f.find(i + "**2") + 3) - 1])
         )
     for i in range(3):
         constant -= (var_const[i] / 2) ** 2
@@ -73,34 +62,25 @@ def make_vector(x, y, z=0):
     >>> from axiomathbf.multivariate_calculus import *
     >>> make_vector(1,2,3)
     Matrix([[1, 2, 3]])
-    
-    Args:
-        x (int): The x coordinate.
-        y (int): The y coordinate.
-        z (int): The z coordinate.
-        
-    Returns:
-        sympy.matrices.dense.MutableDenseMatrix: A matrix object.
-    
+    :param x (int): The x coordinate.
+    :param y (int): The y coordinate.
+    :param z (int): The z coordinate.
+    :return sympy.matrices.dense.MutableDenseMatrix: A matrix object.
     """
     return Matrix([[x, y, z]])
 
 
 def point_to_point_vector(p1, p2):
-    """Creates a vector from two seperate points.
+    """Creates a vector from two separate points.
     
     Example
     =======
     >>> from axiomathbf.multivariate_calculus import *
     >>> point_to_point_vector(Point(2,3,6), Point(3,2,4))
     Matrix([[1, -1, -2]])
-    
-    Args:
-        p1 (sympy.geometry.point.Point3D): The first point.
-        p2 (sympy.geometry.point.Point3D): The second point.
-        
-    Returns:
-        sympy.matrices.dense.MutableDenseMatrix: A matrix object.
+    :param p1 (sympy.geometry.point.Point3D): The first point.
+    :param p2 (sympy.geometry.point.Point3D): The second point.
+    :return sympy.matrices.dense.MutableDenseMatrix: A matrix object.
     """
     return make_vector(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z)
 
@@ -114,13 +94,9 @@ def angle_between_vectors(u, v):
     >>> from axiomathbf.multivariate_calculus import * 
     >>> angle_between_vectors(make_vector(1,2,3), make_vector(5,3,2))
     acos(17*sqrt(133)/266)
-    
-    Args: 
-        u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
-        v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
-    
-    Returns:
-        acos: The angle between the two vectors.
+    :param u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
+    :return acos: The angle between the two vectors.
     """
     return acos(u.dot(v) / (u.norm() * v.norm()))
 
@@ -133,12 +109,8 @@ def directional_cosine(v):
     >>> from axiomathbf.multivariate_calculus import *
     >>> directional_cosine(make_vector(1,2,3))
     {'α': acos(sqrt(14)/14), 'β': acos(sqrt(14)/7), 'γ': acos(3*sqrt(14)/14)}
-    
-    Args:
-        v (sympy.matrices.dense.MutableDenseMatrix): A vector.
-    
-    Returns:
-        dict: A dictionary of the alpha, beta, gamma angles.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): A vector.
+    :return dict: A dictionary of the alpha, beta, gamma angles.
     """
     direction_cos = {}
     for index, angle in enumerate(("α", "β", "γ")):
@@ -155,12 +127,9 @@ def projection(u, v):
     >>> projection(make_vector(1,2,3), make_vector(-2,4,-1))
     Matrix([[-2/7, 4/7, -1/7]])
     
-    Args:
-        u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
-        v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
-    
-    Returns:
-        sympy.matrices.dense.MutableDenseMatrix: The projection vector of u onto v.   
+    :param u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
+    :return sympy.matrices.dense.MutableDenseMatrix: The projection vector of u onto v.
     """
     return (u.dot(v) / v.norm() ** 2) * v
 
@@ -174,13 +143,10 @@ def distance_from_point_to_line(pt, line1, line2):
     >>> distance_from_point_to_line(Point(5,3,0), Point(1,0,1), Point(2,3,1))
     sqrt(910)/10
     
-    Args:
-        pt (sympy.geometry.point.Point3D): The point away from the line.
-        line1 (sympy.geometry.point.Point3D): The first point on the line.
-        line2 (sympy.geometry.point.Point3D): The second point on the line.
-    
-    Returns:
-        sympy.core.mul.Mul: The distance between the point to line.
+    :param pt (sympy.geometry.point.Point3D): The point away from the line.
+    :param line1 (sympy.geometry.point.Point3D): The first point on the line.
+    :param line2 (sympy.geometry.point.Point3D): The second point on the line.
+    :return sympy.core.mul.Mul: The distance between the point to line.
     
     Notes
     =====
@@ -202,13 +168,10 @@ def cross_area(u, v):
     >>> from axiomathbf.multivariate_calculus import *
     >>> cross_area(make_vector(3,4,0), make_vector(-1, 3, -2))
     sqrt(269)
-    
-    Args:
-        u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
-        v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
-    
-    Returns:
-        sympy.core.power.Pow: The area formed by the two vectors.
+
+    :param u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
+    :return sympy.core.power.Pow: The area formed by the two vectors.
     """
     return u.cross(v).norm()
 
@@ -221,14 +184,11 @@ def parallelpiped_volume(u, v, w):
     >>> from axiomathbf.multivariate_calculus import *
     >>> parallelpiped_volume(make_vector(1,2,3), make_vector(3,4,0), make_vector(-1, 3, -2))
     43
-    
-    Args:
-        u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
-        v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
-        w (sympy.matrices.dense.MutableDenseMatrix): The third vector.
-        
-    Returns:
-        sympy.core.numbers.Integer: The volume of the parallelpiped.
+
+    :param u (sympy.matrices.dense.MutableDenseMatrix): The first vector.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
+    :param w (sympy.matrices.dense.MutableDenseMatrix): The third vector.
+    :return sympy.core.numbers.Integer: The volume of the parallelpiped.
     """
     return abs(u.dot(v.cross(w)))
 
@@ -242,13 +202,10 @@ def point_vector_line(p, v):
     >>> from axiomathbf.multivariate_calculus import*
     >>> point_vector_line(Point(1,0,-1), make_vector(1,-2,0))
     <x,y,z> = <1,0,-1> + <1,-2,0>t
-    
-    Args:
-        p (sympy.geometry.point.Point3D): A point.
-        v (sympy.matrices.dense.MutableDenseMatrix): A vector.
-        
-    Returns:
-        str: The parametric line.
+
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): A vector.
+    :return str: The parametric line.
     """
     return "<x,y,z> = <{},{},{}> + <{},{},{}>t".format(p.x, p.y, p.z, v[0], v[1], v[2])
 
@@ -261,13 +218,10 @@ def point_to_point_line(p1, p2):
     >>> from axiomathbf.multivariate_calculus import*
     >>> point_to_point_line(Point(3,-6,6), Point(2,0,7))
     <x,y,z> = <3,-6,6> + <-1,6,1>t
-    
-    Args:
-        p1 (sympy.geometry.point.Point3D): The first point.
-        p2 (sympy.geometry.point.Point3D): The second point.
-    
-    Returns:
-        str: The parametric line.
+
+    :param p1 (sympy.geometry.point.Point3D): The first point.
+    :param p2 (sympy.geometry.point.Point3D): The second point.
+    :return str: The parametric line.
     """
     v = point_to_point_vector(p1, p2)
     return point_vector_line(p1, v)
@@ -282,12 +236,9 @@ def compare_lines(g1, g2):
     >>> compare_lines(make_vector(3,-2,5), make_vector(-6,4,-10))
     Matrix([[3, -2, 5]]) and Matrix([[-6, 4, -10]]): Parallel
     
-    Args:
-        g1 (sympy.matrices.dense.MutableDenseMatrix): The first vector of the line.
-        g2 (sympy.matrices.dense.MutableDenseMatrix): The second vector of the line.
-        
-    Returns:
-        str: The result of comparing the two lines.
+    :param g1 (sympy.matrices.dense.MutableDenseMatrix): The first vector of the line.
+    :param g2 (sympy.matrices.dense.MutableDenseMatrix): The second vector of the line.
+    :return str: The result of comparing the two lines.
     
     Notes
     =====
@@ -313,12 +264,9 @@ def make_plane(p, n):
     >>> make_plane(Point(1,2,3), make_vector(4,-2,6))
     4*x - 2*y + 6*z - 18
     
-    Args:
-        p (sympy.geometry.point.Point3D): A point the plane passes through.
-        n (sympy.matrices.dense.MutableDenseMatrix): A normal vector.
-       
-    Returns:
-        sympy.core.add.Add: The plane function simplfied. 
+    :param p (sympy.geometry.point.Point3D): A point the plane passes through.
+    :param n (sympy.matrices.dense.MutableDenseMatrix): A normal vector.
+    :return sympy.core.add.Add: The plane function simplfied.
     """
     return n[0] * (x - p.x) + n[1] * (y - p.y) + n[2] * (z - p.z)
 
@@ -332,13 +280,10 @@ def three_point_plane(p1, p2, p3):
     >>> three_point_plane(Point(1,2,3), Point(2,-1,5), Point(-1,3,3))
     -2*x - 4*y - 5*z + 25
     
-    Args:
-        p1 (sympy.geometry.point.Point3D): The first point.
-        p2 (sympy.geometry.point.Point3D): The second point.
-        p3 (sympy.geometry.point.Point3D): The third point.
-        
-    Returns:
-        sympy.core.add.Add: The plane function simplfied. 
+    :param p1 (sympy.geometry.point.Point3D): The first point.
+    :param p2 (sympy.geometry.point.Point3D): The second point.
+    :param p3 (sympy.geometry.point.Point3D): The third point.
+    :return sympy.core.add.Add: The plane function simplfied.
     """
     p1p2 = point_to_point_vector(p1, p2)
     p1p3 = point_to_point_vector(p1, p3)
@@ -355,13 +300,10 @@ def distance_from_point_to_plane(p, g, c):
     >>> distance_from_point_to_plane(Point(2,-1,4), make_vector(1,2,3), -5)
     sqrt(14)/2
     
-    Args:
-        p (sympy.geometry.point.Point3D): The point away from the plane.
-        g (sympy.matrices.dense.MutableDenseMatrix): The vector of the plane.
-        c (int): The constant of the plane.
-        
-    Returns: 
-        sympy.core.mul.Mul: The distance of the point to the plane.
+    :param p (sympy.geometry.point.Point3D): The point away from the plane.
+    :param g (sympy.matrices.dense.MutableDenseMatrix): The vector of the plane.
+    :param c (int): The constant of the plane.
+    :return sympy.core.mul.Mul: The distance of the point to the plane.
         
     Notes
     =====
@@ -382,7 +324,6 @@ def draw_ellipsoid():
     >>> draw_ellipoid()
     **Displays image
 
-    
     Note
     ====
     Formula: x**2/a**2 + y**2/b**2 + z**2/c**2 = 1
@@ -434,8 +375,7 @@ def draw_hyperboloid_one_sheet():
     >>> from axiomathbf.multivariate_calculus import *
     >>> draw_hyperboloid_one_sheet()
     **Displays image    
-    
-    
+
     Note
     ====
     Formula: x**2/a**2 + y**2/b**2 - z**2/c**2 = 1
@@ -513,8 +453,7 @@ def draw_hyperbolic_paraboloid():
     >>> from axiomathbf.multivariate_calculus import *
     >>> draw_hyperboloid_two_sheet()
     **Displays image        
-    
-    
+
     Note
     ====
     Formula: z = y**2/b**2 - x**2/a**2
@@ -540,12 +479,8 @@ def convert_rect_to_cylinder(p):
     >>> convert_rect_to_cylinder(Point(1,-sqrt(3),-2))
     Point3D(2, 5*pi/3, -2)
     
-    Args:
-        p (sympy.geometry.point.Point3D): A point in rectangular.
-    
-    Returns:
-        (sympy.geometry.point.Point3D): A point tranformed to cylinderical (r, theta, z).
-    
+    :param p (sympy.geometry.point.Point3D): A point in rectangular.
+    :return (sympy.geometry.point.Point3D): A point transformed to cylindrical (r, theta, z).
     """
     x, y, z = p
     return Point(
@@ -564,11 +499,8 @@ def convert_rect_to_sphere(p):
     >>> convert_rect_to_sphere(Point(1,-sqrt(3),-2))
     Point3D(2*sqrt(2), 5*pi/3, 3*pi/4)  
     
-    Args:
-        p (sympy.geometry.point.Point3D): A point in rectangular.
-    
-    Returns:
-        (sympy.geometry.point.Point3D): A point tranformed to spherical (rho, theta, phi).
+    :param p (sympy.geometry.point.Point3D): A point in rectangular.
+    :return (sympy.geometry.point.Point3D): A point tranformed to spherical (rho, theta, phi).
     """
     x, y, z = p
     return Point(
@@ -589,11 +521,8 @@ def convert_cylinder_to_rect(p):
     >>> convert_cylinder_to_rect(Point(2,pi/2,1))
     Point3D(0, 2, 1)  
     
-    Args:
-        p (sympy.geometry.point.Point3D): A point in cylinderical.
-    
-    Returns:
-        (sympy.geometry.point.Point3D): A point tranformed to rectangular (x,y,z).
+    :param p (sympy.geometry.point.Point3D): A point in cylinderical.
+    :return (sympy.geometry.point.Point3D): A point tranformed to rectangular (x,y,z).
     """
     r, Ѳ, z = p
     return Point(r * cos(Ѳ), r * sin(Ѳ), z)
@@ -628,16 +557,13 @@ def find_domain_of_vector_function(v, s=False):
     >>> find_domain_of_vector_function(make_vector(x**2,sqrt(1-x),-1/x))
     Union(Interval.open(-oo, 0), Interval.Lopen(0, 1))
     
-    Args:
-        v (sympy.matrices.dense.MutableDenseMatrix): The vector-valued function.
-    
-    Returns:
-        sympy.sets.sets.Union: The domain of the vector-valued function.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): The vector-valued function.
+    :return sympy.sets.sets.Union: The domain of the vector-valued function.
     """
     domain = Interval(-oo, oo)
     for i in range(len(v)):
         if s:
-            print("{}: {}".format(v[i],continuous_domain(v[i], x, S.Reals)))
+            print("{}: {}".format(v[i], continuous_domain(v[i], x, S.Reals)))
         domain = Intersection(continuous_domain(v[i], x, S.Reals), domain)
     return domain
 
@@ -652,13 +578,10 @@ def tangent_line(u, p=0, t=False):
     >>> tangent_line(make_vector(ln(x),2*sqrt(x),x**2),Point(0,2,1))
     <x,y,z> = <0,2,1> + <1,1,2>t
     
-    Args:
-        u (sympy.matrices.dense.MutableDenseMatrix): The vector-valued function.
-        p=0 (int) or (sympy.geometry.point.Point3D): A point at the curve.
-        t=False (bool): Determine whether it is a point or when t = #.
-    
-    Returns:
-        str: A parametric line tanget to the curve at a point.
+    :param u (sympy.matrices.dense.MutableDenseMatrix): The vector-valued function.
+    :param p=0 (int) or (sympy.geometry.point.Point3D): A point at the curve.
+    :param t=False (bool): Determine whether it is a point or when t = #.
+    :return str: A parametric line tanget to the curve at a point.
     """
     solution = 0
     if not t:
@@ -699,11 +622,8 @@ def derive_vector_function(u):
     >>> derive_vector_function(make_vector(exp(x),sin(x),23*x**4))
     Matrix([[exp(x), cos(x), 92*x**3]])
     
-    Args:
-        u (sympy.matrices.dense.MutableDenseMatrix): A vector-valued function.
-    
-    Returns:
-        (sympy.matrices.dense.MutableDenseMatrix): A derived vector-valued function.
+    :param u (sympy.matrices.dense.MutableDenseMatrix): A vector-valued function.
+    :return (sympy.matrices.dense.MutableDenseMatrix): A derived vector-valued function.
     """
     derivative = []
     for i in range(len(u)):
@@ -720,11 +640,8 @@ def integrate_vector_function(u):
     >>> integrate_vector_function(make_vector(exp(x),sin(x),23*x**4))
     Matrix([[exp(x), -cos(x), 23*x**5/5]])
     
-    Args: 
-        u (sympy.matrices.dense.MutableDenseMatrix): A vector-valued function.
-    
-    Returns:
-        (sympy.matrices.dense.MutableDenseMatrix): An integrated vector-valued function.  
+    :param u (sympy.matrices.dense.MutableDenseMatrix): A vector-valued function.
+    :return (sympy.matrices.dense.MutableDenseMatrix): An integrated vector-valued function.
     """
     integration = []
     for i in range(len(u)):
@@ -742,13 +659,9 @@ def graph_contour(f, xrange, yrange):
     >>> graph_contour("np.cos(Y)", [-3, 3], [-3, 3])
     ** Image of the contour plot
     
-    Args:
-        f (str): The function.
-        xrange (List): The x-axis boundaries.
-        yrange (List): The y-axis boundaries.
-    
-    Returns:
-        None
+    :param f (str): The function.
+    :param xrange (List): The x-axis boundaries.
+    :param yrange (List): The y-axis boundaries.
     """
     ax = plt.axes()
     x, y = (
@@ -769,15 +682,11 @@ def graph_model(f, xrange, yrange):
     =======
     >>> from axiomathbf.multivariate_calculus import *
     >>> graph_model("np.cos(Y)", [-3, 3], [-3, 3])
-    ** Image of the function modeal in 3D
+    ** Image of the function model in 3D
     
-    Args:
-        f (str): The function.
-        xrange (List): The x-axis boundaries.
-        yrange (List): The y-axis boundaries.
-    
-    Returns:
-        None
+    :param f (str): The function.
+    :param xrange (List): The x-axis boundaries.
+    :param yrange (List): The y-axis boundaries.
     """
     ax = plt.axes(projection="3d")
     x, y = (
@@ -788,8 +697,8 @@ def graph_model(f, xrange, yrange):
     Z = eval(f)
     ax.contour3D(X, Y, Z, 50, cmap="viridis")
     plt.show()
-    
-    
+
+
 # https://www.science-emergence.com/Articles/How-to-put-the-origin-in-the-center-of-the-figure-with-matplotlib-/
 def draw_boundaries(xrange, yrange, xbound, ybound):
     """Draws out the boundaries for a double integral.
@@ -800,14 +709,10 @@ def draw_boundaries(xrange, yrange, xbound, ybound):
     >>> draw_boundaries([-1, 1], [-1, 1], ["1", "0"], ["x**2", "-x"])
     ** Image of the boundaries on the two axes
     
-    Args: 
-        xrange (List of int): The x-coordinate range.
-        yrange (List of int): The y-coordinate range.
-        xbound (List of str): The boundaries for x, whether it is a constant or a function.
-        ybound (List of str): The boundaries for y, whether it is a constant or a function.
-    
-    Returns:
-        None
+    :param xrange (List of int): The x-coordinate range.
+    :param yrange (List of int): The y-coordinate range.
+    :param xbound (List of str): The boundaries for x, whether it is a constant or a function.
+    :param ybound (List of str): The boundaries for y, whether it is a constant or a function.
     """
     fig = plt.figure()
     ax = plt.axes()
@@ -822,13 +727,13 @@ def draw_boundaries(xrange, yrange, xbound, ybound):
         ax.plot(
             eval(i) if type(eval(i)) == np.ndarray else np.full(y.size, eval(i)), y,
         )
-    for i in ybound:     
+    for i in ybound:
         ax.plot(
             x, eval(i) if type(eval(i)) == np.ndarray else np.full(x.size, eval(i)),
         )
     plt.show()
 
-    
+
 # 13.4
 def find_linearization(f, p, s=False):
     """Returns the linearization equation for local-linear approximation.
@@ -839,13 +744,10 @@ def find_linearization(f, p, s=False):
     >>> find_linearization(3*x**2-2*y**2+x*z**3, Point(-1,2,1))
     -5*x - 8*y - 3*z + 8
     
-    Args:
-        f (sympy.core.add.Add): A function.
-        p (sympy.geometry.point.Point3D): A point.
-        s=False (bool): Determines whether the user wants to see the work of partial derivatives. 
-    
-    Returns:
-        sympy.core.add.Add: The linearization equation. 
+    :param f (sympy.core.add.Add): A function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param s=False (bool): Determines whether the user wants to see the work of partial derivatives.
+    :return sympy.core.add.Add: The linearization equation.
     """
     g = find_gradient(f, p, s)
     f_at_p = f.replace(x, p[0]).replace(y, p[1]).replace(z, p[2])
@@ -863,15 +765,12 @@ def chain_rule(f, xf, yf, zf, respect, s=False):
     >>> chain_rule(x*y*sin(z**2),s-t,s**2,t**2,s)
     s**2*sin(t**4) + 2*s*(s - t)*sin(t**4)
     
-    Args:
-        f (sympy.core.add.Add): The main function.
-        xf (sympy.core.add.Add): The x-function.
-        yf (sympy.core.add.Add): The y-function.
-        zf (sympy.core.add.Add): The z-function.
-        respect (sympy.core.symbol.Symbol): The variable deriving respect to. 
-        
-    Returns:
-        (sympy.core.add.Add): The derived function.
+    :param f (sympy.core.add.Add): The main function.
+    :param xf (sympy.core.add.Add): The x-function.
+    :param yf (sympy.core.add.Add): The y-function.
+    :param zf (sympy.core.add.Add): The z-function.
+    :param respect (sympy.core.symbol.Symbol): The variable deriving respect to.
+    :return (sympy.core.add.Add): The derived function.
     """
     dfdX = []
     dXdr = [diff(xf, respect), diff(yf, respect), diff(zf, respect)]
@@ -900,13 +799,10 @@ def find_gradient(f, p, s=False):
     >>> find_gradient(4*x*y*z-y**2*z**3+4*z**3*y,Point(2,3,1))
     Matrix([[12, 6, 33]])
     
-    Args:
-        f (sympy.core.add.Add): The function.
-        p (sympy.geometry.point.Point3D): A point.
-        s=False (bool): Determines whether the user wants to see the partial derivative work.
-        
-    Returns:
-        (sympy.matrices.dense.MutableDenseMatrix): The gradient vector.
+    :param f (sympy.core.add.Add): The function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param s=False (bool): Determines whether the user wants to see the partial derivative work.
+    :return (sympy.matrices.dense.MutableDenseMatrix): The gradient vector.
     """
     fx, fy, fz = "", "", ""
     res = [x, y, z]
@@ -928,13 +824,10 @@ def directional_derivative(f, p, v, s=False):
     >>> directional_derivative(exp(x)*cos(y*z),Point(1,pi,0),make_vector(-2,1,-3))
     -sqrt(14)*E/7
     
-    Args:
-        f (sympy.core.add.Add): A function.
-        p (sympy.geometry.point.Point3D): A point.
-        v (sympy.matrices.dense.MutableDenseMatrix): A vector.
-        
-    Returns:
-        sympy.core.mul.Mul: The directional derivative.
+    :param f (sympy.core.add.Add): A function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param v (sympy.matrices.dense.MutableDenseMatrix): A vector.
+    :return ympy.core.mul.Mul: The directional derivative.
     """
     return find_gradient(f, p, s).dot(v / v.norm())
 
@@ -948,13 +841,10 @@ def directional_derivative_info(f, p, increasing=True):
     >>> directional_derivative_info(exp(x*y**2),Point(1,3,0))
     (3*sqrt(13)*exp(9), Matrix([[3*sqrt(13)/13, 2*sqrt(13)/13, 0]]))
     
-    Args:
-        f (sympy.core.add.Add): A function.
-        p (sympy.geometry.point.Point3D): A point.
-        increasing=True (bool): Determines whether to make the maximum and unit vector negative.
-    
-    Returns:
-        tuple: The first index is the maximum value of the directional derivative, the second 
+    :param f (sympy.core.add.Add): A function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param increasing=True (bool): Determines whether to make the maximum and unit vector negative.
+    :return tuple: The first index is the maximum value of the directional derivative, the second
                was the unit vector for the direction.
     """
     g = find_gradient(f, p)
@@ -973,13 +863,10 @@ def tangent_plane(f, p, s=False):
     >>> tangent_plane(ln(x+y+z),Point(-1,exp(2),1))
     (x + 1)*exp(-2) + (y - exp(2))*exp(-2) + (z - 1)*exp(-2)
     
-    Args:
-        f (sympy.core.add.Add): A function.
-        p (sympy.geometry.point.Point3D): A point.
-        s=False (bool): Determines whether the user wants to see the partial derivative work.
-        
-    Returns:
-        (sympy.core.add.Add): A tangent plane.
+    :param f (sympy.core.add.Add): A function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param s=False (bool): Determines whether the user wants to see the partial derivative work.
+    :return (sympy.core.add.Add): A tangent plane.
     """
     g = find_gradient(f, p, s)
     return make_plane(p, g)
@@ -994,13 +881,10 @@ def normal_lines(f, p, s=False):
     >>> normal_lines(ln(x+y+z),Point(-1,exp(2),1))
     <x,y,z> = <-1,exp(2),1> + <exp(-2),exp(-2),exp(-2)>t
     
-    Args:
-        f (sympy.core.add.Add): A function.
-        p (sympy.geometry.point.Point3D): A point.
-        s=False (bool): Determines whether the user wants to see the partial derivative work.
-        
-    Returns:
-        (sympy.core.add.Add): A normal line.
+    :param f (sympy.core.add.Add): A function.
+    :param p (sympy.geometry.point.Point3D): A point.
+    :param s=False (bool): Determines whether the user wants to see the partial derivative work.
+    :return (sympy.core.add.Add): A normal line.
     """
     g = find_gradient(f, p, s)
     return point_vector_line(p, g)
@@ -1017,11 +901,7 @@ def find_relative_extreme(f):
     Saddle point: (-1, 3)
     Relative minimum: (1, 3)
     
-    Args:
-        f (sympy.core.add.Add): A function.
-    
-    Returns:
-        None
+    :param f (sympy.core.add.Add): A function.
     """
     x1, y1 = 0, 0
     fx, fy = diff(f, x), diff(f, y)
@@ -1056,12 +936,9 @@ def find_jacobian(func, res):
     >>> find_jacobian([ρ*sin(φ)*cos(Ѳ),ρ*sin(φ)*sin(Ѳ),ρ*cos(φ)],[ρ, φ, Ѳ])
     ρ**2*sin(φ)
     
-    Args:
-        func (list): The list of x,y,z functions.
-        res (list): The list of partial derivative respects. 
-        
-    Returns:
-        sympy.core.mul.Mul: The Jacobian.
+    :param func (list): The list of x,y,z functions.
+    :param res (list): The list of partial derivative respects.
+    :return sympy.core.mul.Mul: The Jacobian.
     """
     matrix = []
     for i in func:
