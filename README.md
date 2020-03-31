@@ -1,2 +1,2 @@
 # axiomathbf
-A Mathematical Aid for Multivariate Calculus and Linear Algebra
+A Mathematical Aid for Multivariate Calculus
