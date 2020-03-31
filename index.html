@@ -12,19 +12,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
     <title>Axiomathbf</title>
     <style>
+        /*
         .hero {
             background: url(https://images.pexels.com/photos/3729557/pexels-photo-3729557.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) center/cover;
+        }
+*/
+
+        body::-webkit-scrollbar {
+            width: 0.25rem;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #1e1e24;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: #6649b8;
         }
     </style>
 </head>
 
 <body>
-    <section class="hero is-medium">
+    <section class="hero is-dark is-bold is-medium">
         <div class="hero-head">
             <nav class="navbar">
                 <div class="container">
                     <div class="navbar-brand">
-                        <a style="color: white; font-size: 1.5rem;" href="index.html" class="navbar-item">
+                        <a style="font-size: 1.5rem;" href="index.html" class="navbar-item">
                             <p style="padding-right: 0.7rem;">Axiomathbf</p>
                             <span class="icon is medium"><i class="fas fa-calculator"></i></span>
                         </a>
@@ -42,8 +56,7 @@
                             <a class="navbar-item">
                                 Examples
                             </a>
-                            <a class="navbar-item">
-                                Documentation
+                            <a class="navbar-item">Documentation
                             </a>
                             <span class="navbar-item">
                                 <a class="button is-black is-inverted">
@@ -60,16 +73,37 @@
         </div>
         <div class="hero-body">
             <div class="container has-text-centered">
-                <h1 style="color:white; font-family: cursive; font-size: 4rem;" class="title">
+                <h1 style="font-family: cursive; font-size: 4rem;" class="title">
                     Axiomathbf
                 </h1>
-                <h2 style="color:white; font-size:1,5rem;" class="subtitle">
+                <h2 style="font-size:1,5rem;" class="subtitle">
                     A Multivariate Calculus Aid
                 </h2>
             </div>
         </div>
-
-
+        <div class="hero-foot">
+            <nav class="tabs">
+                <div class="container">
+                    <ul>
+                        <li class="is-active"><a>Overview</a></li>
+                        <li><a>Frameworks</a></li>
+                        <li><a>Goals</a></li>
+                        <li><a>Topics Covered</a></li>
+                        <li><a>Why I Built It</a></li>
+                        <li><a>Resources</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </section>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Axiomathbf</strong> by <a href="https://ow-wow-wang.github.io/">Ao Wang</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+            </p>
+        </div>
+    </footer>
 
 </body></html>
