@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <!-- Vector from two points-->
+    <h1 class="title">
+        Find Vector From Two Points
+    </h1>
+    <form method="POST" action="">
+        <div>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="x1" type="text" placeholder="x" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="y1" type="text" placeholder="y" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="z1" type="text" placeholder="z" />
+                </span>
+            </span>
+        </div>
+        <br>
+
+        <div>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="x2" type="text" placeholder="x" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="y2" type="text" placeholder="y" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="z2" type="text" placeholder="z" />
+                </span>
+            </span>
+        </div>
+
+        <div class="control">
+            <button class="button is-primary">Submit</button>
+        </div>
+    </form>
+
+    <p>
+        {% if vector != None%}
+        $$\overrightarrow{v} = {{ vector }} $$
+        {% endif %}
+    </p>
+    <!-- Vector from two points -->
+    
+    <!-- Angle between two vectors -->
+    <h1 class="title">Angle between two vectors </h1>
+    <form method="POST" action="">
+        <div>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="v1" type="text" placeholder="i" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="v2" type="text" placeholder="j" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="v3" type="text" placeholder="k" />
+                </span>
+            </span>
+        </div>
+        <br>
+
+        <div>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="w1" type="text" placeholder="i" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="w2" type="text" placeholder="j" />
+                </span>
+            </span>
+            <span class="field">
+                <span class="control">
+                    <input class="input" name="w3" type="text" placeholder="k" />
+                </span>
+            </span>
+        </div>
+
+        <div class="control">
+            <button class="button is-primary">Submit</button>
+        </div>
+    </form>
+
+    <p>
+        {% if angle != None%}
+        $$\theta ={{ angle }}$$
+        {% endif %}
+    </p>
+    
+    <!-- Angle between two vectors -->
+</body>
+
+</html>

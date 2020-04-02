@@ -82,7 +82,7 @@ def point_to_point_vector(p1, p2):
     :param p2 (sympy.geometry.point.Point3D): The second point.
     :return sympy.matrices.dense.MutableDenseMatrix: A matrix object.
     """
-    return make_vector(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z)
+    return r'\langle {},{},{}\rangle'.format(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z)
 
 
 # 11.3
@@ -98,7 +98,7 @@ def angle_between_vectors(u, v):
     :param v (sympy.matrices.dense.MutableDenseMatrix): The second vector.
     :return acos: The angle between the two vectors.
     """
-    return acos(u.dot(v) / (u.norm() * v.norm()))
+    return latex(acos(u.dot(v) / (u.norm() * v.norm())))
 
 
 def directional_cosine(v):
