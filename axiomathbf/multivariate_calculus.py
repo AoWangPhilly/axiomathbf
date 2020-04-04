@@ -82,7 +82,8 @@ def point_to_point_vector(p1, p2):
     :param p2 (sympy.geometry.point.Point3D): The second point.
     :return sympy.matrices.dense.MutableDenseMatrix: A matrix object.
     """
-    return r'\langle {},{},{}\rangle'.format(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z)
+    vec = p2-p1
+    return r'\langle {},{},{}\rangle'.format(vec.x, vec.y, vec.z)
 
 
 # 11.3
