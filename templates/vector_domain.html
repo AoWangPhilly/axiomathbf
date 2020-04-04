@@ -1,5 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
-
-<h1 class="title">Vector Domain</h1>
+<section class="hero is-dark is-bold is-medium">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">Vector Domain</h1>
+        </div>
+    </div>
+</section>
+<section class="section">
+    <form method="POST" action="">
+        \(\vec{r} = \) {{ form.hidden_tag() }}
+        \(\langle\){{form.vect1()}},
+        {{form.vect2()}},
+        {{ form.vect3() }}\(\rangle\)
+        <div>
+            {{ form.submit(class="button is-dark is-bold") }}
+        </div>
+    </form>
+    <p>
+        {% if parts is defined %}
+        Find the domain of the vector-valued function $$ \vec{r} = \langle {{parts[0]}}, {{parts[1]}}, {{parts[2]}} \rangle = {{domain}} $$
+        {% else %}
+        Input is not defined
+        {%endif%}
+    </p>
+</section>
 {% endblock content %}
