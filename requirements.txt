@@ -1,0 +1,8 @@
+django
+gunicorn
+django-heroku
+flask
+sympy
+numpy
+matplotlib
+wtforms
