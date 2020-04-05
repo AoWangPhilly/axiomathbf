@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, FloatField
 from wtforms.validators import DataRequired, Length
 
 class VectorDomainForm(FlaskForm):
@@ -10,4 +10,9 @@ class VectorDomainForm(FlaskForm):
     
 
 class GradientForm(FlaskForm):
-    pass
+    function = StringField(validators=[DataRequired()], render_kw={"placeholder":"function"})
+    point_x = FloatField(validators=[DataRequired()], render_kw={"placeholder":"x"})
+    point_y = FloatField(validators=[DataRequired()], render_kw={"placeholder":"y"})
+    point_z = FloatField(validators=[DataRequired()], render_kw={"placeholder":"z"})
+    submit = SubmitField("Calculate")
+                        
