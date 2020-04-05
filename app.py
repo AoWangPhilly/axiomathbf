@@ -15,18 +15,24 @@ def vector_domain():
     form = VectorDomainForm()
     try:
         if form.validate_on_submit():
-            if "^" in form.vect1.data:
-                form.vect1.data = form.vect1.data.replace("^", "**")
-            if "^" in form.vect2.data:
-                form.vect2.data = form.vect2.data.replace("^", "**")
-            if "^" in form.vect3.data:
-                form.vect3.data = form.vect3.data.replace("^", "**")
-            domain = latex(find_domain_of_vector_function(make_vector(eval(form.vect1.data), eval(form.vect2.data), eval(form.vect3.data))))
-            return render_template("vector_domain.html", title="Vector Domain", form=form, domain=domain, parts=[latex(eval(form.vect1.data)),
-                                                                                                                 latex(eval(form.vect2.data)),
-                                                                                                                 latex(eval(form.vect3.data))])
+            vect = [form.vect1.data, form.vect2.data, form.vect3.data]
+            for idx in range(len(vect)):
+                if "^" in vect[idx]:
+                    vect[idx]= vect[idx].replace("^", "**")
+                if "e" in vect[idx]:
+                    vect[idx]= vect[idx].replace("e", "E")
+                if "ln" in vect[idx]:
+                    vect[idx] = list(vect[idx])
+                    if vect[idx].index("n")-vect[idx].index("l") == 1:
+                        vect[idx].insert(vect[idx].index("n")+1,"(abs")
+                        vect[idx].insert(vect[idx].index(")"), ")")
+                        vect[idx] = "".join(vect[idx])
+            vect = [eval(v) for v in vect]
+            domains = find_domain_of_vector_function(make_vector(vect[0], vect[1], vect[2]))
+            intersected_domain = latex(domains[0])
+            return render_template("vector_domain.html", title="Vector Domain", form=form, intersected_domain=intersected_domain, multiple_domains=domains[1], parts=[latex(v) for v in vect])
     except (TypeError, NameError, SyntaxError) as e:
-        print("NO!")
+        print("Error! >:D")
     return render_template("vector_domain.html", title="Vector Domain", form=form)
 
 if __name__ == "__main__":

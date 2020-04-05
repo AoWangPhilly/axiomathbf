@@ -9,17 +9,24 @@
 </section>
 <section class="section">
     <form method="POST" action="">
-        \(\vec{r} = \) {{ form.hidden_tag() }}
-        \(\langle\){{form.vect1()}},
-        {{form.vect2()}},
-        {{ form.vect3() }}\(\rangle\)
+        <span class="text">\(\vec{r}(t) = \) {{form.hidden_tag()}}
+            \(\langle\){{form.vect1(id="vect_domain", class="input")}},
+            {{form.vect2(id="vect_domain", class="input")}},
+            {{form.vect3(id="vect_domain", class="input")}}\(\rangle\)
+        </span>
         <div>
             {{ form.submit(class="button is-dark is-bold") }}
         </div>
     </form>
-    <p>
+    <p class="text">
         {% if parts is defined %}
-        Find the domain of the vector-valued function $$ \vec{r} = \langle {{parts[0]}}, {{parts[1]}}, {{parts[2]}} \rangle = {{domain}} $$
+        Find the natural domain of $$ \vec{r}(t) = \langle {{parts[0]}}, {{parts[1]}}, {{parts[2]}} \rangle = {{parts[0]}}\textbf{i} + {{parts[1]}}\textbf{j} + {{parts[2]}}\textbf{k}$$
+        The component functions are
+        $$ x(t) = {{parts[0]}}, y(t) = {{parts[1]}}, z(t) = {{parts[2]}} $$
+        The natural domains of the component functions are
+        $$x \in {{multiple_domains[0]}}, y \in {{multiple_domains[1]}}, z \in {{multiple_domains[2]}}$$
+        The intersection of these sets is
+        $$\vec{r} \in {{intersected_domain}}$$
         {% else %}
         Input is not defined
         {%endif%}

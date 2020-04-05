@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 The module is used to aid students in Multivariate Calculus (Math 200). However, the module should not be used as a crutch.
 Many functions were created to solve problems from the Early Transcendental (Anton, Bivens, Davis) textbook. Additionally, the
 module used many of the sympy and matplotlib, along with the numpy libraries to solve problems from chapter 11 to 14. """
-x, y, z = symbols("x y z")
+x, y, z, t = symbols("x y z t")
 
 
 # 11.1
@@ -562,11 +562,13 @@ def find_domain_of_vector_function(v, s=False):
     :return sympy.sets.sets.Union: The domain of the vector-valued function.
     """
     domain = Interval(-oo, oo)
+    domains = []
     for i in range(len(v)):
         if s:
-            print("{}: {}".format(v[i], continuous_domain(v[i], x, S.Reals)))
-        domain = Intersection(continuous_domain(v[i], x, S.Reals), domain)
-    return domain
+            print("{}: {}".format(v[i], continuous_domain(v[i], t, S.Reals)))
+        domains.append(latex(continuous_domain(v[i], t, S.Reals)))
+        domain = Intersection(continuous_domain(v[i], t, S.Reals), domain)
+    return domain, domains
 
 
 # 12.2

@@ -10,6 +10,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/styles/style.css">
     {% if title %}
     <title>Axiomathbf - {{ title }}</title>
     {% else %}
@@ -37,6 +38,17 @@
 
 <body>
     {% block content %}{% endblock %}
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Axiomathbf</strong> by <a href="https://ow-wow-wang.github.io/">Ao Wang</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+            </p>
+            <a href="https://bulma.io">
+                <img src="https://bulma.io/images/made-with-bulma--semiblack.png" alt="Made with Bulma" width="200" height="24">
+            </a>
+        </div>
+    </footer>
 </body>
 
 </html>
