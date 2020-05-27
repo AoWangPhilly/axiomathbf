@@ -2,20 +2,20 @@ from sympy import *
 
 
 class MultiVarFunction:
-    variables = symbols("x y z")
 
     def __init__(self, function, point=Point(0, 0, 0)):
         self.function = function
         self.point = point
+        self.x, self.y, self.z = symbols("x y z")
 
     def getFunction(self):
         return self.function
 
-    def setFunction(self, function):
-        self.function = function
-
     def getPoint(self):
         return self.point
+
+    def setFunction(self, function):
+        self.function = function
 
     def setPoint(self, point):
         self.point = point
@@ -25,15 +25,15 @@ class MultiVarFunction:
 
     def insertPoint(self):
         p1, p2, p3 = self.point
-        x, y, z = MultiVarFunction.variables
-        return self.function.subs([(x, p1), (y, p2), (z, p3)])
+        return self.function.subs([(self.x, p1), (self.y, p2), (self.z, p3)])
 
     def getGradient(self):
         """Returns the gradient of a function. Very useful helper function.
         """
         partialDiffList = []
-        for var in MultiVarFunction.variables:
-            partialDiff = MultiVarFunction(diff(self.function, var), self.point).insertPoint()
+        for var in [self.x, self.y, self.z]:
+            partialDiff = MultiVarFunction(
+                diff(self.function, var), self.point).insertPoint()
             partialDiffList.append(partialDiff)
         return Matrix([partialDiffList])
 
@@ -42,14 +42,21 @@ class MultiVarFunction:
         """
         return self.getGradient().dot(vector / vector.norm())
 
+    def getDirectionalDiffInfo(self, increasing=True):
+        gradient = self.getGradient()
+        maximum = gradient.norm() if increasing else -gradient.norm()
+        unitVector = gradient/gradient.norm() if increasing else - \
+            (gradient/gradient.norm())
+        return (maximum, unitVector)
+
     def getLinearization(self):
         """Returns the linearization equation for local-linear approximation.
         """
-        x, y, z = MultiVarFunction.variables
         p1, p2, p3 = self.point
         gradient = self.getGradient()
         functionAtPoint = self.insertPoint()
-        return functionAtPoint + gradient[0] * (x - p1) + gradient[1] * (y - p1) + gradient[2] * (z - p2)
+        return functionAtPoint + gradient[0] * (self.x - p1) + gradient[1] * (self.y - p1) + \
+            gradient[2] * (self.z - p2)
 
     def getTangentPlane(self):
         pass
@@ -57,9 +64,7 @@ class MultiVarFunction:
     def getNormalLine(self):
         pass
 
+
 if __name__ == "__main__":
     x, y, z = symbols("x y z")
     func = 3*x**2-2*y**2+x*z**3
-    p = Point(-1,2,1)
-    vectorFunc = MultiVarFunction(func, p)
-    print(vectorFunc.getLinearization())
