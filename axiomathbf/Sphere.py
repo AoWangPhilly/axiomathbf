@@ -16,7 +16,6 @@ class Sphere():
 
     def __formatEquation(self):
         eq = self.eq.as_coefficients_dict()
-        radiusSquared = eq[1]
         center = []
 
         for squaredVar in [self.__x**2, self.__y**2, self.__z**2]:
@@ -27,12 +26,14 @@ class Sphere():
         for key in eq:
             eq[key] /= coeff
 
+        radiusSquared = eq[1]
         for var in [self.__x, self.__y, self.__z]:
             radiusSquared -= self.__completeTheSquare(eq[var])
-            center.append(sqrt(eq[var]))
+            center.append(eq[var]/2)
 
+        center = Point(center)
         return ((self.__x-center.x)**2 + (self.__y-center.y)**2 +
-                (self.__z-center.z)**2 + radiusSquared, Point(center), sqrt(abs(radiusSquared)))
+                (self.__z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
 
     def isPointInSphere(self, point):
         c1, c2, c3 = self.getCenter()
