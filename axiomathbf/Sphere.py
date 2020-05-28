@@ -14,11 +14,11 @@ class Sphere():
     def __completeTheSquare(self, n):
         return (n/2)**2
 
-    def __getCenter(self, n):
-        return Point(sqrt(-n[0]), sqrt(-n[1]), sqrt(n[2]*2))
-
     def __formatEquation(self):
         eq = self.eq.as_coefficients_dict()
+        radiusSquared = eq[1]
+        center = []
+
         for squaredVar in [self.__x**2, self.__y**2, self.__z**2]:
             coeff = eq[squaredVar]
             if coeff != 1:
@@ -26,15 +26,19 @@ class Sphere():
 
         for key in eq:
             eq[key] /= coeff
-    
-        completedSquare = [-self.__completeTheSquare(
-            eq[var]) for var in [self.__x, self.__y, self.__z]]
 
-        radius = eq[1] + sum(completedSquare)
-        center = self.__getCenter(completedSquare)
+        for var in [self.__x, self.__y, self.__z]:
+            radiusSquared -= self.__completeTheSquare(eq[var])
+            center.append(sqrt(eq[var]))
 
         return ((self.__x-center.x)**2 + (self.__y-center.y)**2 +
-                (self.__z-center.z)**2 + radius, center, abs(radius))
+                (self.__z-center.z)**2 + radiusSquared, Point(center), sqrt(abs(radiusSquared)))
+
+    def isPointInSphere(self, point):
+        c1, c2, c3 = self.getCenter()
+        checkZero = self.getEquation().subs(
+            [(self.__x, c1), (self.__y, c2), (self.__z, c3)])
+        return checkZero == 0
 
     def getEquation(self):
         if self.eq:
@@ -42,21 +46,11 @@ class Sphere():
         return (self.__x-self.center.x)**2 + (self.__y-self.center.y)**2 + \
             (self.__z-self.center.z)**2 - self.radius**2
 
-    def isPointInSphere(self, point):
-        c1, c2, c3 = self.center
-        checkZero = self.getEquation().subs(
-            [(self.__x, c1), (self.__y, c2), (self.__z, c3)])
-        return checkZero == 0
-
     def getCenter(self):
-        if self.eq:
-            return self.__formatEquation()[1]
-        return self.center
+        return self.__formatEquation()[1] if self.eq else self.center
 
     def getRadius(self):
-        if self.eq:
-            return sqrt(self.__formatEquation()[2])
-        return self.radius
+        return self.__formatEquation()[2] if self.eq else self.radius
 
     def setCenter(self, center):
         self.center = center
