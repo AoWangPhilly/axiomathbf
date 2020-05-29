@@ -1,7 +1,7 @@
 from sympy import *
 
 
-class MultiVarFunction:
+class Gradient:
 
     def __init__(self, function, point=Point(0, 0, 0)):
         self.function = function
@@ -32,7 +32,7 @@ class MultiVarFunction:
         """
         partialDiffList = []
         for var in [self.x, self.y, self.z]:
-            partialDiff = MultiVarFunction(
+            partialDiff = Gradient(
                 diff(self.function, var), self.point).insertPoint()
             partialDiffList.append(partialDiff)
         return Matrix([partialDiffList])
