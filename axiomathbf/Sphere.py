@@ -11,25 +11,35 @@ class Sphere():
     def __str__(self):
         return str(self.getEquation())
 
+    def __eq__(self, other):
+        return Eq(self.getEquation(), other.getEquation())
+
+    def __nq__(self, other):
+        return not self.__eq__(other)
+
     def __completeTheSquare(self, n):
         return (n/2)**2
 
     def __formatEquation(self):
+        self.eq = simplify(factor(self.eq))
         eq = self.eq.as_coefficients_dict()
         center = []
 
         for squaredVar in [self.__x**2, self.__y**2, self.__z**2]:
             coeff = eq[squaredVar]
+            if coeff == 0:
+                continue
             if coeff != 1:
                 break
 
-        for key in eq:
-            eq[key] /= coeff
+        if coeff != 0:
+            for key in eq:
+                eq[key] /= coeff
 
         radiusSquared = eq[1]
         for var in [self.__x, self.__y, self.__z]:
             radiusSquared -= self.__completeTheSquare(eq[var])
-            center.append(eq[var]/2)
+            center.append(-eq[var]/2)
 
         center = Point(center)
         return ((self.__x-center.x)**2 + (self.__y-center.y)**2 +
@@ -65,7 +75,7 @@ class Sphere():
 
 if __name__ == "__main__":
     x, y, z = symbols("x y z")
-    sph = Sphere(eq=100*x**2+100*y**2-100*x+240*y-56)
-    print(sph)
-    # print(sph.getCenter())
-    # print(sph.getRadius())
+    sphere1 = Sphere(eq=4*x**2 + 4*y**2 - 16*x - 24*y + 51)
+    sphere2 = Sphere(eq=(x - 2)**2 + (y - 3)**2 - 1/4)
+    print(sphere1)
+    print(sphere2)
