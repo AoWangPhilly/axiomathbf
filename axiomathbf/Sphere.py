@@ -1,4 +1,4 @@
-from sympy import *
+from sympy import Point, Eq, simplify, factor, sqrt, symbols
 
 
 class Sphere():
