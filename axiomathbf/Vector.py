@@ -15,7 +15,7 @@ class Vector:
         return acos(self.vector.dot(other) / (self.vector.norm() * other.norm()))
 
     def getDirCosine(self):
-        pass
+        return [acos(unit/self.vector.norm()) for unit in self.vector]
 
     def getProjection(self, other):
         return (self.vector.dot(other)/(other.norm()**2))*other
@@ -37,6 +37,16 @@ class Vector:
         return normVect[0] * (self.x - point.x) + normVect[1] * (self.y - point.y) +\
             normVect[2] * (self.z - point.z)
 
+    def compareVector(self, other):
+        result = ""
+        if self.vector.dot(other) == 0:
+            result = "Perpendicular"
+        elif self.vector.cross(other).norm() == 0:
+            result = "Parallel"
+        else:
+            result = "Skew"
+        return "{} and {}: {}".format(self.vector, other, result)
+
     def getPointVectorLine(self, point):
         x, y, z = point
         v1, v2, v3 = self.vector
@@ -46,13 +56,20 @@ class Vector:
         domain = Interval(-oo, oo)
         domainOfFunctions = []
         t = self.__t
-        for func in self.vector:
-            domainOfFunctions.append(continuous_domain(func, t, S.Reals))
-            domain = Intersection(continuous_domain(func, t, S.Reals), domain)
+        for function in self.vector:
+            domainOfFunctions.append(continuous_domain(function, t, S.Reals))
+            domain = Intersection(continuous_domain(
+                function, t, S.Reals), domain)
         return (domain, domainOfFunctions)
 
     def derive(self):
-        return Matrix([diff(func, self.__t) for func in self.vector])
+        return Matrix([diff(function, self.__t) for function in self.vector])
 
     def integrate(self):
-        return Matrix([integrate(func, self.__t) for func in self.vector])
+        return Matrix([integrate(function, self.__t) for function in self.vector])
+
+    def getTangentLine(self, point, t):
+        pass
+
+if __name__ == "__main__":
+    pass
