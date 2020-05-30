@@ -5,10 +5,11 @@ from sympy.calculus.util import continuous_domain
 class Vector:
     def __init__(self, i=0, j=0, k=0):
         self.vector = Matrix((i, j, k))
+        self.__t = Symbol('t')
 
     def __str__(self):
         v = self.vector
-        return "{}i + {}j + {}k".format(v[0], v[1], v[2])
+        return '{}i + {}j + {}k'.format(v[0], v[1], v[2])
 
     def getAngle(self, other):
         return acos(self.vector.dot(other) / (self.vector.norm() * other.norm()))
@@ -31,16 +32,21 @@ class Vector:
     def getPointVectorLine(self, point):
         x, y, z = point
         v1, v2, v3 = self.vector
-        return "<x,y,z> = <{},{},{}> + <{},{},{}>t".format(x, y, z, v1, v2, v3)
+        return '<x,y,z> = <{},{},{}> + <{},{},{}>t'.format(x, y, z, v1, v2, v3)
 
     def getDomainOfVectFunc(self):
-        t = Symbol("t")
         domain = Interval(-oo, oo)
-        domains = []
-        for i in range(len(v)):
-            if s:
-                print("{}: {}".format(
-                    v[i], continuous_domain(v[i], t, S.Reals)))
-            domains.append(latex(continuous_domain(v[i], t, S.Reals)))
-            domain = Intersection(continuous_domain(v[i], t, S.Reals), domain)
-        return domain, domains
+        domainOfFunctions = []
+        t = self.__t
+        for func in self.vector:
+            domainOfFunctions.append(continuous_domain(func, t, S.Reals))
+            domain = Intersection(continuous_domain(func, t, S.Reals), domain)
+        return (domain, domainOfFunctions)
+
+    def derive(self):
+        return Matrix([diff(func, self.__t) for func in self.vector])
+
+    def integrate(self):
+        return Matrix([integrate(func, self.__t) for func in self.vector])
+
+    
