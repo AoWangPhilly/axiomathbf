@@ -1,4 +1,5 @@
 from sympy import *
+from Vector import Vector
 
 
 class MVFunction:
@@ -58,12 +59,16 @@ class MVFunction:
         return functionAtPoint + gradient[0] * (self.x - p1) + gradient[1] * (self.y - p1) + \
             gradient[2] * (self.z - p2)
 
-    def getTangentPlane(self):
-        pass
+    def getTangentPlane(self, point):
+        normalVect = Vector().setVector(self.getGradient())
+        return normalVect.getPlane(point)
 
-    def getNormalLine(self):
-        pass
+    def getNormalLine(self, point):
+        normalVect = Vector().setVector(self.getGradient())
+        return normalVect.getPointVectorLine(point)
 
+    def getRelativeExtreme(self):
+        pass
 
 if __name__ == "__main__":
     x, y, z = symbols("x y z")

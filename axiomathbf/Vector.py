@@ -23,11 +23,19 @@ class Vector:
     def getVector(self):
         return self.vector
 
+    def setVector(self, vector):
+        self.vector = vector
+
     def getCrossArea(self, other):
         return self.vector.cross(other).norm()
 
     def getPPVolume(self, v, w):
         return abs(self.vector.dot(v.cross(w)))
+
+    def getPlane(self, point):
+        normVect = self.vector
+        return normVect[0] * (self.x - point.x) + normVect[1] * (self.y - point.y) +\
+            normVect[2] * (self.z - point.z)
 
     def getPointVectorLine(self, point):
         x, y, z = point
@@ -48,5 +56,3 @@ class Vector:
 
     def integrate(self):
         return Matrix([integrate(func, self.__t) for func in self.vector])
-
-    
