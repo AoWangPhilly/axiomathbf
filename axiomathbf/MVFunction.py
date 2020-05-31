@@ -3,7 +3,10 @@ from Vector import Vector
 
 
 class MVFunction:
+    """
 
+
+    """
     def __init__(self, function, point=Point(0, 0, 0)):
         self.function = function
         self.point = point
@@ -22,14 +25,21 @@ class MVFunction:
         self.point = point
 
     def __str__(self):
+        """
+
+        """
         return "{} at {}".format(self.function, self.point)
 
     def insertPoint(self):
+        """
+
+        """
         p1, p2, p3 = self.point
         return self.function.subs([(self.x, p1), (self.y, p2), (self.z, p3)])
 
     def getGradient(self):
         """Returns the gradient of a function. Very useful helper function.
+
         """
         partialDiffList = []
         for var in [self.x, self.y, self.z]:
@@ -40,10 +50,14 @@ class MVFunction:
 
     def getDirectionalDiff(self, vector):
         """Returns the directional derivative at a point.
+
         """
         return self.getGradient().dot(vector / vector.norm())
 
     def getDirectionalDiffInfo(self, increasing=True):
+        """
+
+        """
         gradient = self.getGradient()
         maximum = gradient.norm() if increasing else -gradient.norm()
         unitVector = gradient/gradient.norm() if increasing else - \
@@ -52,6 +66,7 @@ class MVFunction:
 
     def getLinearization(self):
         """Returns the linearization equation for local-linear approximation.
+
         """
         p1, p2, p3 = self.point
         gradient = self.getGradient()
@@ -60,14 +75,23 @@ class MVFunction:
             gradient[2] * (self.z - p2)
 
     def getTangentPlane(self, point):
+        """
+
+        """
         normalVect = Vector().setVector(self.getGradient())
         return normalVect.getPlane(point)
 
     def getNormalLine(self, point):
+        """
+
+        """
         normalVect = Vector().setVector(self.getGradient())
         return normalVect.getPointVectorLine(point)
 
     def getRelativeExtreme(self):
+        """
+
+        """
         pass
 
 if __name__ == "__main__":

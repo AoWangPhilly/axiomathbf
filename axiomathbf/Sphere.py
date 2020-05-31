@@ -2,6 +2,10 @@ from sympy import Point, Eq, simplify, factor, sqrt, symbols
 
 
 class Sphere():
+    """
+
+
+    """
     def __init__(self, center=Point(0, 0, 0), radius=1, eq=None):
         self.center = center
         self.radius = radius
@@ -9,18 +13,33 @@ class Sphere():
         self.__x, self.__y, self.__z = symbols("x y z")
 
     def __str__(self):
+        """
+
+        """
         return str(self.getEquation())
 
     def __eq__(self, other):
+        """
+
+        """
         return Eq(self.getEquation(), other.getEquation())
 
     def __nq__(self, other):
+        """
+
+        """
         return not self.__eq__(other)
 
     def __completeTheSquare(self, n):
+        """
+
+        """
         return (n/2)**2
 
     def __formatEquation(self):
+        """
+
+        """
         self.eq = simplify(factor(self.eq))
         eq = self.eq.as_coefficients_dict()
         center = []
@@ -46,12 +65,18 @@ class Sphere():
                 (self.__z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
 
     def isPointInSphere(self, point):
+        """
+
+        """
         c1, c2, c3 = self.getCenter()
         checkZero = self.getEquation().subs(
             [(self.__x, c1), (self.__y, c2), (self.__z, c3)])
         return checkZero == 0
 
     def getEquation(self):
+        """
+
+        """
         if self.eq:
             return self.__formatEquation()[0]
         return (self.__x-self.center.x)**2 + (self.__y-self.center.y)**2 + \
