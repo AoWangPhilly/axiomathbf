@@ -141,16 +141,5 @@ class Sphere():
 
 
 if __name__ == "__main__":
-    print(Sphere(eq=x**2+y**2-4*x+12*y-8)) # z**2 + (x - 2)**2 + (y + 6)**2 + 48
-    print(Sphere(eq=x**2+y**2+4*x+6*y-36).getCenter()) # Point3D(-2, -3, 0)
-    print(Sphere(eq=x**2+y**2+6*x-12*y+20)) # z**2 + (x + 3)**2 + (y - 6)**2 - 25
-    print(Sphere(eq=x**2+y**2+4*x+6*y-36)) # z**2 + (x + 2)**2 + (y + 3)**2 - 49
-
-    sph1 = Sphere(eq=x**2+y**2-10*x+8*y-8)
-    print(sph1.getCenter(), sph1.getRadius()) # Point3D(5, -4, 0) 7
-    print(Sphere(eq=x**2+y**2-10*x+8*y-23).getRadius()) # 8
-
-    sph2 = Sphere(eq=x**2+y**2+14*x-2*y+1)
-    print(sph2.getCenter(), sph2.getRadius()) # Point3D(-7, 1, 0) 7
-
-    print(Sphere(eq=x**2+y**2-12*x+8*y+3)) # z**2 + (x - 6)**2 + (y + 4)**2 - 49
+    eq = x**2+y**2-4*x+12*y-8
+    print(Sphere(eq=eq))
