@@ -8,6 +8,7 @@ Date: June 08, 2020
 from sympy import Point, Eq, simplify, factor, sqrt, symbols
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Sphere():
@@ -60,10 +61,7 @@ class Sphere():
         """
         self.eq = simplify(factor(self.eq))
         equationDict = self.eq.as_coefficients_dict()
-        secondOrder = []
-        for var in [x**2, y**2, z**2]:
-            if equationDict[var] != 0:
-                secondOrder.append(equationDict[var])
+        secondOrder = [equationDict[var] for var in [x**2, y**2, z**2] if equationDict[var] != 0]
 
         for idx in range(len(secondOrder)-1):
             if secondOrder[idx] != secondOrder[idx+1]:
@@ -96,11 +94,26 @@ class Sphere():
         return checkZero == 0
 
     def draw(self):
-        """
+        """Draws the sphere with the appropriate center and radius
 
-
+        Credit to: https://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html
         """
-        pass
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        r = float(self.getRadius())
+        c = self.getCenter()
+
+        # Make data
+        u = np.linspace(0, 2 * np.pi, 100)
+        v = np.linspace(0, np.pi, 100)
+        x = r * np.outer(np.cos(u), np.sin(v)) + float(c.x)
+        y = r * np.outer(np.sin(u), np.sin(v)) + float(c.y)
+        z = r * np.outer(np.ones(np.size(u)), np.cos(v)) + float(c.z)
+
+        # Plot the surface
+        ax.plot_surface(x, y, z)
+
+        plt.show()
 
     def getEquation(self):
         if self.eq:
@@ -127,4 +140,7 @@ class Sphere():
 if __name__ == "__main__":
     x, y, z = symbols("x y z")
     eq = 2*x**2+2*y**2+6*x-8*y+12
-    print(Sphere(eq=eq))
+    sp = Sphere(eq=eq)
+    print(sp)
+    sp.draw()
+
