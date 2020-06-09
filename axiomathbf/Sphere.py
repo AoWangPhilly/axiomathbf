@@ -1,11 +1,25 @@
+"""
+Program: Sphere.py
+Purpose: A module used to create or clean Sphere equation
+Author: Ao Wang
+Date: June 08, 2020
+"""
+
 from sympy import Point, Eq, simplify, factor, sqrt, symbols
 
 
 class Sphere():
+    """The Sphere class is used to create a sphere either from inputting a center or radius,
+       or equation. If inputting an equation, it will be formatted bycenter-radius form. 
+
+    :param center: The center of the sphere
+    :type center: sympy.geometry.point.Point3D
+    :param radius: The radius of the sphere
+    :type radius: int
+    :param eq: The equation of the sphere
+    :type eq: sympy.core.add.Add
     """
 
-
-    """
     def __init__(self, center=Point(0, 0, 0), radius=1, eq=None):
         self.center = center
         self.radius = radius
@@ -13,32 +27,44 @@ class Sphere():
         self.__x, self.__y, self.__z = symbols("x y z")
 
     def __str__(self):
-        """
+        """Overloads the str method and prints out the equation of the circle. 
 
+        :returns: The sphere equation
+        :rtype: str
         """
         return str(self.getEquation())
 
     def __eq__(self, other):
-        """
+        """Overloads the eq method and checks if two spheres are equal
 
+        :returns: Whether the spheres are equal
+        :rtype: bool
         """
         return Eq(self.getEquation(), other.getEquation())
 
     def __nq__(self, other):
-        """
+        """Overloads the eq method and checks if two spheres are not equal
 
+        :returns: Whether the spheres are not equal
+        :rtype: bool
         """
         return not self.__eq__(other)
 
     def __completeTheSquare(self, n):
-        """
+        """A helper method that helps complete the square to format the sphere equation.
 
+        :param n: The term coefficient 
+        :type n: int
+        :returns: The term coefficient halfed and squared
+        :rtype: int
         """
         return (n/2)**2
 
     def __formatEquation(self):
-        """
+        """Formats the equation to center-radius form
 
+        :returns: The clean center-radius equation
+        :type eq: sympy.core.add.Add
         """
         self.eq = simplify(factor(self.eq))
         eq = self.eq.as_coefficients_dict()
@@ -65,8 +91,12 @@ class Sphere():
                 (self.__z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
 
     def isPointInSphere(self, point):
-        """
+        """Checkers whether the point is in the sphere
 
+        :param point: A random point
+        :type point: sympy.geometry.point.Point3D
+        :returns: Whether the point is in the sphere
+        :rtype: bool
         """
         c1, c2, c3 = self.getCenter()
         checkZero = self.getEquation().subs(
@@ -74,9 +104,6 @@ class Sphere():
         return checkZero == 0
 
     def getEquation(self):
-        """
-
-        """
         if self.eq:
             return self.__formatEquation()[0]
         return (self.__x-self.center.x)**2 + (self.__y-self.center.y)**2 + \
@@ -104,3 +131,4 @@ if __name__ == "__main__":
     sphere2 = Sphere(eq=(x - 2)**2 + (y - 3)**2 - 1/4)
     print(sphere1)
     print(sphere2)
+    print(type(4*x**2 + 4*y**2 - 16*x - 24*y + 51))
