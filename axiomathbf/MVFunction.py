@@ -7,6 +7,7 @@ class MVFunction:
 
 
     """
+
     def __init__(self, function, point=Point(0, 0, 0)):
         self.function = function
         self.point = point
@@ -89,10 +90,27 @@ class MVFunction:
         return normalVect.getPointVectorLine(point)
 
     def getRelativeExtreme(self):
-        """
+        x1, y1 = 0, 0
+        fx, fy = diff(self.function, x), diff(self.function, y)
+        x1, y1 = solve(fx), solve(fy)
+        points = [[i, j] for i in x1 for j in y1]
+        for i in points:
+            fxx, fyy, fxy = (
+                diff(fx, x).replace(x, i[0]),
+                diff(fy, y).replace(y, i[1]),
+                diff(fx, y).replace(x, i[0]).replace(y, i[1]),
+            )
+            result = fxx * fyy - fxy ** 2
+            if result > 0:
+                if fxx > 0:
+                    print("Relative minimum: " + str((i[0], i[1])))
+                else:
+                    print("Relative minimum: " + str((i[0], i[1])))
+            elif result < 0:
+                print("Saddle point: " + str((i[0], i[1])))
+            else:
+                print("Inconclusive: " + str((i[0], i[1])))
 
-        """
-        pass
 
 if __name__ == "__main__":
     x, y, z = symbols("x y z")

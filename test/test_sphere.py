@@ -22,3 +22,26 @@ def test_format_equation3():
 
 def test_format_equation4():
     pass
+
+
+def test_format_equation5():
+    pass
+
+
+def test_format_equation6():
+    pass
+
+def test_get_center1():
+    pass
+
+def test_get_radius1():
+    pass
+
+def test_get_radius_and_center1():
+    pass
+
+def test_get_radius_and_center2():
+    pass
+
+def test_get_radius_and_center3():
+    pass
