@@ -8,7 +8,6 @@ Date: June 08, 2020
 from sympy import Point, Eq, simplify, factor, sqrt, symbols
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-import time
 
 
 class Sphere():
@@ -59,7 +58,7 @@ class Sphere():
         :returns: The clean center-radius equation
         :type eq: sympy.core.add.Add
         """
-        self.eq = factor(self.eq)
+        self.eq = simplify(factor(self.eq))
         equationDict = self.eq.as_coefficients_dict()
         secondOrder = []
         for var in [x**2, y**2, z**2]:
@@ -68,7 +67,7 @@ class Sphere():
 
         for idx in range(len(secondOrder)-1):
             if secondOrder[idx] != secondOrder[idx+1]:
-                raise Exception("Nonsymmetrical, not a sphere!")
+                raise Exception("Not symmetrical, not a sphere!")
         else:
             for key in equationDict:
                 equationDict[key] /= secondOrder[0]
@@ -77,8 +76,8 @@ class Sphere():
         radiusSquared = center.x**2 + center.y**2 + \
             center.z**2 - equationDict[1]
 
-        if radiusSquared < 0:
-            raise Exception("Radius is negative, not a sphere!")
+        if radiusSquared <= 0:
+            raise Exception("Radius is non-positive, not a sphere!")
 
         return ((self.__x-center.x)**2 + (self.__y-center.y)**2 +
                 (self.__z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
@@ -97,6 +96,10 @@ class Sphere():
         return checkZero == 0
 
     def draw(self):
+        """
+
+
+        """
         pass
 
     def getEquation(self):
@@ -123,6 +126,5 @@ class Sphere():
 
 if __name__ == "__main__":
     x, y, z = symbols("x y z")
-    eq = x**2+z**2-4*x-8*z+13
-    start = time.time()
+    eq = 2*x**2+2*y**2+6*x-8*y+12
     print(Sphere(eq=eq))
