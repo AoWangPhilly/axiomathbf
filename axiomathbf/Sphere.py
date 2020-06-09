@@ -10,8 +10,6 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 
-x, y, z = symbols("x y z")
-
 
 class Sphere():
     """The Sphere class is used to create a sphere either from inputting a center or radius,
@@ -29,6 +27,7 @@ class Sphere():
         self.center = center
         self.radius = radius
         self.eq = eq
+        self.__x, self.__y, self.__z = symbols("x y z")
 
     def __str__(self):
         """Overloads the str method and prints out the equation of the circle. 
@@ -63,7 +62,7 @@ class Sphere():
         self.eq = simplify(factor(self.eq))
         equationDict = self.eq.as_coefficients_dict()
         secondOrder = [equationDict[var] for var in [
-            x**2, y**2, z**2] if equationDict[var] != 0]
+            self.__x**2, self.__y**2, self.__z**2] if equationDict[var] != 0]
 
         for idx in range(len(secondOrder)-1):
             if secondOrder[idx] != secondOrder[idx+1]:
@@ -73,15 +72,15 @@ class Sphere():
                 equationDict[key] /= secondOrder[0]
 
         center = Point(
-            [equationDict[var]/-2 for var in [x, y, z]])
+            [equationDict[var]/-2 for var in [self.__x, self.__y, self.__z]])
         radiusSquared = center.x**2 + center.y**2 + \
             center.z**2 - equationDict[1]
 
         if radiusSquared <= 0:
             raise Exception("Radius is non-positive, not a sphere!")
 
-        return ((x-center.x)**2 + (y-center.y)**2 +
-                (z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
+        return ((self.__x-center.x)**2 + (self.__y-center.y)**2 +
+                (self.__z-center.z)**2 + radiusSquared, center, sqrt(abs(radiusSquared)))
 
     def isPointInSphere(self, point):
         """Checkers whether the point is in the sphere
@@ -93,7 +92,7 @@ class Sphere():
         """
         c1, c2, c3 = self.getCenter()
         checkZero = self.getEquation().subs(
-            [(x, c1), (y, c2), (z, c3)])
+            [(self.__x, c1), (self.__y, c2), (self.__z, c3)])
         return checkZero == 0
 
     def draw(self):
@@ -121,8 +120,8 @@ class Sphere():
     def getEquation(self):
         if self.eq:
             return self.__formatEquation()[0]
-        return (x-self.center.x)**2 + (y-self.center.y)**2 + \
-            (z-self.center.z)**2 - self.radius**2
+        return (self.__x-self.center.x)**2 + (self.__y-self.center.y)**2 + \
+            (self.__z-self.center.z)**2 - self.radius**2
 
     def getCenter(self):
         return self.__formatEquation()[1] if self.eq else self.center
