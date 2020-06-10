@@ -57,7 +57,7 @@ class Sphere():
     def __formatEquation(self):
         """Formats the equation to center-radius form
 
-        :returns: The clean center-radius equation
+        :returns: A tuple of the clean center-radius equation, the center, and radius
         :type eq: sympy.core.add.Add
         """
         self.eq = simplify(factor(self.eq))
@@ -141,5 +141,9 @@ class Sphere():
 
 
 if __name__ == "__main__":
-    eq = x**2+y**2-4*x+12*y-8
-    print(Sphere(eq=eq))
+    eq = 4*x**2+4*y**2-16*x+24*y-36
+    sph = Sphere(eq=eq)
+    print("Equation: {}".format(sph))
+    print("Center: {}".format(sph.getCenter()))
+    print("Radius: {}".format(sph.getRadius()))
+    sph.draw()

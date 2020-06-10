@@ -1,11 +1,21 @@
+"""
+
+
+"""
+
 from sympy import *
 from Vector import Vector
 
 
 class MVFunction:
-    """
-
-
+    """The MVFunction class is used to learn more about Multivariate Functions,
+       like finding the gradient, relative extremes, directional derivatives,
+       linearization, and much more.
+    
+    :param function: The multivariate function
+    :type function: 
+    :param point: A point on the plane
+    :type point:
     """
 
     def __init__(self, function, point=Point(0, 0, 0)):
@@ -26,14 +36,19 @@ class MVFunction:
         self.point = point
 
     def __str__(self):
-        """
+        """Overloading the str method to print out the function and point for
+           the object.
 
+        :returns: The equation and point
+        :rtype: str
         """
         return "{} at {}".format(self.function, self.point)
 
     def insertPoint(self):
-        """
+        """Substitutes the variables with the point
 
+        :returns: The output of the equation at given point
+        :rtype: 
         """
         p1, p2, p3 = self.point
         return self.function.subs([(self.x, p1), (self.y, p2), (self.z, p3)])
@@ -41,6 +56,8 @@ class MVFunction:
     def getGradient(self):
         """Returns the gradient of a function. Very useful helper function.
 
+        :returns:
+        :rtype:
         """
         partialDiffList = []
         for var in [self.x, self.y, self.z]:
@@ -52,12 +69,19 @@ class MVFunction:
     def getDirectionalDiff(self, vector):
         """Returns the directional derivative at a point.
 
+        :param vector:
+        :type vector:
+        :returns:
+        :rtype:
         """
         return self.getGradient().dot(vector / vector.norm())
 
     def getDirectionalDiffInfo(self, increasing=True):
         """
-
+        :param increasing:
+        :type increasing: bool
+        :returns:
+        :rtype: tuple of
         """
         gradient = self.getGradient()
         maximum = gradient.norm() if increasing else -gradient.norm()
@@ -68,6 +92,8 @@ class MVFunction:
     def getLinearization(self):
         """Returns the linearization equation for local-linear approximation.
 
+        :returns:
+        :rtype:
         """
         p1, p2, p3 = self.point
         gradient = self.getGradient()
@@ -78,6 +104,8 @@ class MVFunction:
     def getTangentPlane(self, point):
         """
 
+        :returns:
+        :rtype:    
         """
         normalVect = Vector().setVector(self.getGradient())
         return normalVect.getPlane(point)
@@ -85,11 +113,18 @@ class MVFunction:
     def getNormalLine(self, point):
         """
 
+        :param point:
+        :type point:
         """
         normalVect = Vector().setVector(self.getGradient())
         return normalVect.getPointVectorLine(point)
 
     def getRelativeExtreme(self):
+        """
+
+        :returns:
+        :rtype:
+        """
         x1, y1 = 0, 0
         fx, fy = diff(self.function, x), diff(self.function, y)
         x1, y1 = solve(fx), solve(fy)
