@@ -4,7 +4,7 @@
 """
 
 from sympy import *
-from Vector import Vector
+from .Vector import Vector
 
 
 class MVFunction:
