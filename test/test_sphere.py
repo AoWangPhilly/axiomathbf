@@ -1,5 +1,5 @@
 import pytest
-from axiomathbf.Sphere import *
+from axiomathbf import Sphere
 from sympy import symbols, Point
 
 # export PYTHONPATH=/path/to/my/library:$PYTHONPATH

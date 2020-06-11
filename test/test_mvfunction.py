@@ -1,3 +1,3 @@
 import pytest
-from axiomathbf.MVFunction import *
+from axiomathbf import MVFunction
 from sympy import symbols, Point

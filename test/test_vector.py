@@ -1,3 +1,3 @@
 import pytest
-from axiomathbf.Vector import *
+from axiomathbf import Vector
 from sympy import symbols, Point
