@@ -1,5 +1,6 @@
 import math
-from sympy import simplify, diff, latex
+from sympy import simplify, diff, latex, sqrt
+import sympy
 from IPython.display import display, Math
 
 
@@ -12,7 +13,7 @@ class Matrix():
 
     def _repr_pretty_(self, p, cycle):
         i, j, k = self.matrix
-        return display(Math('\\left[\\begin{matrix}' + '{}\\\\{}\\\\{}\\end'.format(i, j, k) + '{matrix}\\right]'))
+        return p.text(self.__str__()) if cycle else display(Math('\\left[\\begin{matrix}' + '{}\\\\{}\\\\{}\\end'.format(i, j, k) + '{matrix}\\right]'))
 
     def __add__(self, other):
         if isinstance(other, int) or isinstance(other, float):
@@ -43,10 +44,10 @@ class Matrix():
         return Matrix(m[0], m[1], m[2])
 
     def __mul__(self, other):
-        if isinstance(other, int) or isinstance(other, float):
-            m = [unit*other for unit in self.matrix]
         if isinstance(other, Matrix):
             m = [self.matrix[idx]*other[idx] for idx in range(3)]
+        else:
+            m = [unit*other for unit in self.matrix]
         return Matrix(m[0], m[1], m[2])
 
     def __mod__(self, other):
@@ -82,7 +83,7 @@ class Matrix():
         return [[row[col1], row[col2]] for row in self._vstack(other)]
 
     def norm(self):
-        return math.sqrt(sum([unit**2 for unit in self.matrix]))
+        return sqrt(sum([unit**2 for unit in self.matrix]))
 
     def normalize(self):
         normalized = [unit/self.norm() for unit in self.matrix]
