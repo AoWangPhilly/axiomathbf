@@ -42,12 +42,12 @@ class Matrix():
         if isinstance(other, Matrix):
             m = [self.matrix[idx]*other[idx] for idx in range(3)]
         return Matrix(m[0], m[1], m[2])
-    
+
     def __mod__(self, other):
         if isinstance(other, int):
-            m = [unit%other for unit in self.matrix]
+            m = [unit % other for unit in self.matrix]
         if isinstance(other, Matrix):
-            m = [self.matrix[idx]%other[idx] for idx in range(3)]
+            m = [self.matrix[idx] % other[idx] for idx in range(3)]
         return Matrix(m[0], m[1], m[2])
 
     def __getitem__(self, index):
@@ -60,9 +60,9 @@ class Matrix():
         return sum([self.matrix[idx]*other[idx] for idx in range(3)])
 
     def cross(self, other):
-        i = self. _det(other, 1, 2)
-        j = -self. _det(other, 0, 2)
-        k = self. _det(other, 0, 1)
+        i = self._det(other, 1, 2)
+        j = -self._det(other, 0, 2)
+        k = self._det(other, 0, 1)
         return Matrix(i, j, k)
 
     def _det(self, other, col1, col2):
@@ -73,17 +73,13 @@ class Matrix():
         return [self.matrix, other]
 
     def _section2by2(self, other, col1, col2):
-        twoByTwo = []
-        vstack = self._vstack(other)
-        for row in vstack:
-            twoByTwo.append([row[col1], row[col2]])
-        return twoByTwo
+        return [[row[col1], row[col2]] for row in self._vstack(other)]
 
     def norm(self):
         return math.sqrt(sum([unit**2 for unit in self.matrix]))
 
     def normalize(self):
-        normalized = [unit/norm for unit in self.matrix]
+        normalized = [unit/self.norm() for unit in self.matrix]
         return Matrix(normalized[0], normalized[1], normalized[2])
 
     def getMatrix(self):
@@ -96,4 +92,4 @@ class Matrix():
 if __name__ == "__main__":
     u = Matrix(1, 2, 3)
     v = Matrix(4, 5, 6)
-    print(u%2)
+    print(u.normalize())
