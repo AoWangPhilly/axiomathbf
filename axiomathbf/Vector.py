@@ -1,6 +1,7 @@
 from sympy.calculus.util import continuous_domain
 from sympy import acos, Symbol, Interval, Intersection, diff, integrate, S, oo
 from axiomathbf.Matrix import Matrix
+from IPython.display import display, Math
 
 
 class Vector(Matrix):
@@ -9,7 +10,7 @@ class Vector(Matrix):
     """
 
     def __init__(self, i=0, j=0, k=0):
-        super().__init__(i, j, k)
+        self.matrix = Matrix(i, j, k)
         self.__t = Symbol('t')
 
     def __str__(self):
@@ -18,6 +19,10 @@ class Vector(Matrix):
         """
         v = self.matrix
         return '{}i + {}j + {}k'.format(v[0], v[1], v[2])
+
+    def _repr_pretty_(self, p, cycle):
+        i, j, k = self.matrix
+        return p.text(self.__str__()) if cycle else display(Math(str(i) + '\hat{i}+' + str(j) + '\hat{j}+' + str(k) + '\hat{k}'))
 
     def getAngle(self, other):
         """
@@ -35,6 +40,8 @@ class Vector(Matrix):
         """
 
         """
+        print((self.matrix.dot(other)/(other.norm()**2)))
+        print(type((self.matrix.dot(other)/(other.norm()**2))))
         return (self.matrix.dot(other)/(other.norm()**2))*other
 
     def getVector(self):
@@ -102,13 +109,15 @@ class Vector(Matrix):
         """
 
         """
-        return Matrix([diff(function, self.__t) for function in self.matrix])
+        i, j, k = [diff(function, self.__t) for function in self.matrix]
+        return Vector(i, j, k)
 
     def integrate(self):
         """
 
         """
-        return Matrix([integrate(function, self.__t) for function in self.matrix])
+        i, j, k = [integrate(function, self.__t) for function in self.matrix]
+        return Vector(i, j, k)
 
     def getTangentLine(self, point, t):
         """
@@ -118,7 +127,10 @@ class Vector(Matrix):
 
 
 if __name__ == "__main__":
-    u = Vector(0, 2, 3)
-    v = Vector(3, 4, 2)
-    print(u)
-    print(u.dot(v))
+    # u = Vector(0, 2, 3)
+    # v = Vector(3, 4, 2)
+    # print(u)
+    # print(u.getCrossArea(v))
+    v = Vector(1,2)
+    b = Vector(-3,4)
+    print(v.getProjection(b))
