@@ -1,8 +1,8 @@
 from sympy import *
 from sympy.calculus.util import continuous_domain
+from axiomathbf import Matrix
 
-
-class Vector:
+class Vector(Matrix):
     """
 
     """
