@@ -1,4 +1,6 @@
 import math
+from sympy import simplify, diff, latex
+from IPython.display import display, Math
 
 
 class Matrix():
@@ -7,6 +9,10 @@ class Matrix():
 
     def __str__(self):
         return str(self.getMatrix())
+
+    def _repr_pretty_(self, p, cycle):
+        i, j, k = self.matrix
+        return display(Math('\\left[\\begin{matrix}' + '{}\\\\{}\\\\{}\\end'.format(i, j, k) + '{matrix}\\right]'))
 
     def __add__(self, other):
         if isinstance(other, int) or isinstance(other, float):
@@ -81,6 +87,15 @@ class Matrix():
     def normalize(self):
         normalized = [unit/self.norm() for unit in self.matrix]
         return Matrix(normalized[0], normalized[1], normalized[2])
+
+    def getJacobian(self, respect):
+        matrix = []
+        for i in self.matrix:
+            arr = []
+            for j in respect:
+                arr.append(diff(i, j))
+                matrix.append(arr)
+        return simplify(Matrix(matrix).det())
 
     def getMatrix(self):
         return self.matrix
