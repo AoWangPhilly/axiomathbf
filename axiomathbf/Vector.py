@@ -1,5 +1,5 @@
 from sympy.calculus.util import continuous_domain
-from sympy import acos, Symbol, Interval, Intersection, diff, integrate, S, oo
+from sympy import acos, Symbol, Interval, Intersection, diff, integrate, S, oo, Rational, Integer
 from axiomathbf.Matrix import Matrix
 from IPython.display import display, Math
 
@@ -10,39 +10,47 @@ class Vector(Matrix):
     """
 
     def __init__(self, i=0, j=0, k=0):
-        self.matrix = Matrix(i, j, k)
+        super().__init__(i, j, k)
         self.__t = Symbol('t')
 
     def __str__(self):
         """
 
         """
-        v = self.matrix
-        return '{}i + {}j + {}k'.format(v[0], v[1], v[2])
+        i, j, k = self.matrix
+        return '{}i + {}j + {}k'.format(i, j, k)
 
     def _repr_pretty_(self, p, cycle):
         i, j, k = self.matrix
         return p.text(self.__str__()) if cycle else display(Math(str(i) + '\hat{i}+' + str(j) + '\hat{j}+' + str(k) + '\hat{k}'))
 
+    def _dunderHelper(self, other, operator):
+        if isinstance(other, Vector):
+            print("reached1")
+            m = eval('[{0}[idx]{1}{2}[idx] for idx in range(3)]'.format(
+                self.matrix, operator, other))
+        if isinstance(other, (int, float, Rational, Integer)):
+            m = eval('[unit{0}{1} for unit in self.matrix]'.format(
+                operator, other))
+        return Vector(m[0], m[1], m[2])
+
     def getAngle(self, other):
         """
 
         """
-        return acos(self.matrix.dot(other) / (self.matrix.norm() * other.norm()))
+        return acos(self.dot(other) / (self.norm() * other.norm()))
 
     def getDirCosine(self):
         """
 
         """
-        return [acos(unit/self.matrix.norm()) for unit in self.matrix]
+        return [acos(unit/self.norm()) for unit in self.matrix]
 
     def getProjection(self, other):
         """
 
         """
-        print((self.matrix.dot(other)/(other.norm()**2)))
-        print(type((self.matrix.dot(other)/(other.norm()**2))))
-        return (self.matrix.dot(other)/(other.norm()**2))*other
+        return other*(self.dot(other)/(other.norm()**2))
 
     def getVector(self):
         return self.matrix
@@ -54,13 +62,13 @@ class Vector(Matrix):
         """
 
         """
-        return self.matrix.cross(other).norm()
+        return self.cross(other).norm()
 
     def getPPVolume(self, v, w):
         """
 
         """
-        return abs(self.matrix.dot(v.cross(w)))
+        return abs(self.dot(v.cross(w)))
 
     def getPlane(self, point):
         """
@@ -76,9 +84,9 @@ class Vector(Matrix):
 
         """
         result = ""
-        if self.matrix.dot(other) == 0:
+        if self.dot(other) == 0:
             result = "Perpendicular"
-        elif self.matrix.cross(other).norm() == 0:
+        elif self.cross(other).norm() == 0:
             result = "Parallel"
         else:
             result = "Skew"
@@ -127,10 +135,9 @@ class Vector(Matrix):
 
 
 if __name__ == "__main__":
-    # u = Vector(0, 2, 3)
-    # v = Vector(3, 4, 2)
-    # print(u)
-    # print(u.getCrossArea(v))
-    v = Vector(1,2)
-    b = Vector(-3,4)
-    print(v.getProjection(b))
+    u = Vector(0, 2, 3)
+    v = Vector(3, 4, 2)
+    print(u)
+    print(u.getCrossArea(v))
+    print(u.dot(v))
+    print(u.getProjection(v))
