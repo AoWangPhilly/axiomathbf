@@ -1,4 +1,4 @@
-from .MVFunction import MVFunction
 from .Sphere import Sphere
+from .Matrix import MatrixBase
 from .Vector import Vector
-from .Matrix import Matrix
+from .MVFunction import MVFunction
