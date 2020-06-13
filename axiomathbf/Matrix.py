@@ -6,7 +6,8 @@ Author: Ao Wang
 Date: June 13, 2020
 """
 
-from sympy import simplify, diff, latex, sqrt, Rational
+import math
+from sympy import simplify, diff, latex, sqrt, Rational, Integer, Pow
 from IPython.display import display, Math
 
 
@@ -55,8 +56,8 @@ class Matrix():
         """
         if isinstance(other, Matrix):
             m = eval('[{0}[idx]{1}{2}[idx] for idx in range(3)]'.format(
-                self.matrix, operator, other))
-        if isinstance(other, (int, float, Rational)):
+                self.matrix, operator, other.matrix))
+        if isinstance(other, (int, float, Rational, Integer, Pow)):
             m = eval('[unit{0}{1} for unit in self.matrix]'.format(
                 operator, other))
         return Matrix(m[0], m[1], m[2])
@@ -79,11 +80,55 @@ class Matrix():
     def __mod__(self, other):
         return self._dunderHelper(other, '%')
 
+    def __pow__(self, other):
+        return self._dunderHelper(other, '**')
+
+    def __radd__(self, other):
+        return self._dunderHelper(other, '+')
+
+    def __rsub__(self, other):
+        return self._dunderHelper(other, '-')
+
+    def __rfloordiv__(self, other):
+        return self._dunderHelper(other, '//')
+
+    def __rtruediv__(self, other):
+        return self._dunderHelper(other, '/')
+
+    def __rmul__(self, other):
+        return self._dunderHelper(other, '*')
+
+    def __rmod__(self, other):
+        return self._dunderHelper(other, '%')
+
+    def __rpow__(self, other):
+        return self._dunderHelper(other, '**')
+
     def __getitem__(self, index):
         return self.matrix[index]
 
     def __len__(self):
         return len(self.matrix)
+
+    def __neg__(self):
+        m = [-unit for unit in self.matrix]
+        return Matrix(m[0], m[1], m[2])
+
+    def __abs__(self):
+        m = [abs(unit) for unit in self.matrix]
+        return Matrix(m[0], m[1], m[2])
+
+    def __round__(self, n):
+        m = [round(unit, n) for unit in self.matrix]
+        return Matrix(m[0], m[1], m[2])
+
+    def __floor__(self):
+        m = [math.floor(unit) for unit in self.matrix]
+        return Matrix(m[0], m[1], m[2])
+
+    def __ceil__(self):
+        m = [math.ceil(unit) for unit in self.matrix]
+        return Matrix(m[0], m[1], m[2])
 
     def dot(self, other):
         """The dot product operation 
