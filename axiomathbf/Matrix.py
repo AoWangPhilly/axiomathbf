@@ -6,7 +6,6 @@ Author: Ao Wang
 Date: June 13, 2020
 """
 
-import math
 from sympy import simplify, diff, latex, sqrt, Rational
 from IPython.display import display, Math
 
@@ -124,7 +123,7 @@ class Matrix():
         sqrMatrix = self._section2by2(other, col1, col2)
         return sqrMatrix[0][0]*sqrMatrix[1][1] - sqrMatrix[0][1]*sqrMatrix[1][0]
 
-    def _vstack(self, other):
+    def _vstack(self, *other):
         """Vertically stacks two lists, used as a helper method for the section2by2 method
 
         :param other: Another list
@@ -132,7 +131,8 @@ class Matrix():
         :returns: Vertically stacked list
         :rtype: list
         """
-        return [self.matrix, other]
+
+        return [self.matrix.append(l) for l in other]
 
     def _section2by2(self, other, col1, col2):
         """Creates a 2 by 2 two dimensional array, and a helper method for the det method
@@ -164,19 +164,6 @@ class Matrix():
         """
         normalized = [unit/self.norm() for unit in self.matrix]
         return Matrix(normalized[0], normalized[1], normalized[2])
-
-    def getJacobian(self, respect):
-        """
-
-
-        """
-        matrix = []
-        for i in self.matrix:
-            arr = []
-            for j in respect:
-                arr.append(diff(i, j))
-                matrix.append(arr)
-        return simplify(Matrix(matrix).det())
 
     def getMatrix(self):
         return self.matrix
