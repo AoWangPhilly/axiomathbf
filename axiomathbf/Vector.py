@@ -8,7 +8,7 @@ Date: June 13, 2020
 
 
 from sympy.calculus.util import continuous_domain
-from sympy import acos, Symbol, Interval, Intersection, diff, integrate, S, oo, Rational, subs, Point
+from sympy import *
 from axiomathbf.Matrix import Matrix
 from IPython.display import display, Math
 
@@ -37,18 +37,30 @@ class Vector(Matrix):
     def _repr_pretty_(self, p, cycle):
         """Displays the vector using the ijk notation in Latex"""
         i, j, k = self.matrix
-        return p.text(self.__str__()) if cycle else display(Math(str(i) + '\hat{i}+' + str(j) + '\hat{j}+' + str(k) + '\hat{k}'))
+        return p.text(self.__str__()) if cycle else display(Math(latex(i) + '\hat{i}+' + latex(j) + '\hat{j}+' + latex(k) + '\hat{k}'))
 
     def _dunderHelper(self, other, operator):
         """Overrided the Matrix method to return a Vector instead"""
         if isinstance(other, Vector):
-            print("reached1")
             m = eval('[{0}[idx]{1}{2}[idx] for idx in range(3)]'.format(
-                self.matrix, operator, other))
-        if isinstance(other, (int, float, Rational)):
+                self.matrix, operator, other.matrix))
+        if isinstance(other, (int, float, Rational, Integer, Pow)):
             m = eval('[unit{0}{1} for unit in self.matrix]'.format(
                 operator, other))
         return Vector(m[0], m[1], m[2])
+
+    def cross(self, other):
+        """The cross product operation
+
+        :param other: Another Matrix object
+        :type other: Matrix
+        :returns: The cross product
+        :rtype: Matrix
+        """
+        i = self._det(other, 1, 2)
+        j = -self._det(other, 0, 2)
+        k = self._det(other, 0, 1)
+        return Vector(i, j, k)
 
     def getAngle(self, other):
         """Returns the angle between two vectors
@@ -79,7 +91,7 @@ class Vector(Matrix):
         return other*(self.dot(other)/(other.norm()**2))
 
     def getVector(self):
-        return self.matrix
+        return self.__str__()
 
     def setVector(self, matrix):
         self.matrix = matrix
@@ -132,7 +144,7 @@ class Vector(Matrix):
             result = "Parallel"
         else:
             result = "Skew"
-        return "{} and {}: {}".format(self.matrix, other, result)
+        return "{} and {}: {}".format(self.getVector(), other, result)
 
     def getPointVectorLine(self, point):
         """Returns point vector line
@@ -144,7 +156,14 @@ class Vector(Matrix):
         """
         x, y, z = point
         v1, v2, v3 = self.matrix
-        return '<x,y,z> = <{},{},{}> + <{},{},{}>t'.format(x, y, z, v1, v2, v3)
+        try:
+            x, y, z = latex(x), latex(y), latex(z)
+            v1, v2, v3 = latex(v1), latex(v2), latex(v3)
+            get_ipython
+            display(
+                Math('\\vec{\\ell(t)} = \\langle' + '{}, {}, {}'.format(x, y, z) + '\\rangle +t \\langle' + '{}, {}, {}'.format(v1, v2, v3) + '\\rangle'))
+        except:
+            print('<x,y,z> = <{},{},{}> + <{},{},{}>t'.format(x, y, z, v1, v2, v3))
 
     def getDomainOfVectFunc(self):
         """Returns the intersection of the domain of the vector function and
@@ -181,7 +200,7 @@ class Vector(Matrix):
         i, j, k = [integrate(function, self.__t) for function in self.matrix]
         return Vector(i, j, k)
 
-    def getTangentLine(self, point):
+    def getTangentLine(self, tau):
         """Return the line tangent to the Vector Function
 
         :param point: The point on Vector Function
@@ -190,12 +209,12 @@ class Vector(Matrix):
         :rtype: str
         """
         t = self.__t
-        p = Point(self.matrix[0].subs(t, point.x), self.matrix[1].subs(
-            t, point.y), self.matrix[2].subs(t, point.z))
+        p = Point(self.matrix[0].subs(t, tau), self.matrix[1].subs(
+            t, tau), self.matrix[2].subs(t, tau))
 
         derived = self.derive()
-        v = Vector(derived[0].subs(t, point.x), derived[1].subs(
-            t, point.y), derived[2].subs(t, point.z))
+        v = Vector(derived[0].subs(t, tau), derived[1].subs(
+            t, tau), derived[2].subs(t, tau))
         return v.getPointVectorLine(p)
 
 
@@ -203,6 +222,3 @@ if __name__ == "__main__":
     u = Vector(0, 2, 3)
     v = Vector(3, 4, 2)
     print(u)
-    print(u.getCrossArea(v))
-    print(u.dot(v))
-    print(u.getProjection(v))
