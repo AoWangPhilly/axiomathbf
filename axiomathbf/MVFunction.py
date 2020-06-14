@@ -1,19 +1,24 @@
 """
-
-
+Program: Matrix.py
+Purpose:
+Author: Ao Wang
+Date: June 13, 2020
 """
 
 from sympy import *
 from axiomathbf.Vector import Vector
+from IPython.display import display
+
+x, y, z = symbols("x y z")
 
 
-class MVFunction:
+class MVFunction():
     """The MVFunction class is used to learn more about Multivariate Functions,
        like finding the gradient, relative extremes, directional derivatives,
        linearization, and much more.
-    
+
     :param function: The multivariate function
-    :type function: 
+    :type function:
     :param point: A point on the plane
     :type point:
     """
@@ -21,7 +26,6 @@ class MVFunction:
     def __init__(self, function, point=Point(0, 0, 0)):
         self.function = function
         self.point = point
-        self.x, self.y, self.z = symbols("x y z")
 
     def getFunction(self):
         return self.function
@@ -48,10 +52,10 @@ class MVFunction:
         """Substitutes the variables with the point
 
         :returns: The output of the equation at given point
-        :rtype: 
+        :rtype:
         """
         p1, p2, p3 = self.point
-        return self.function.subs([(self.x, p1), (self.y, p2), (self.z, p3)])
+        return self.function.subs([(x, p1), (y, p2), (z, p3)])
 
     def getGradient(self):
         """Returns the gradient of a function. Very useful helper function.
@@ -60,11 +64,11 @@ class MVFunction:
         :rtype:
         """
         partialDiffList = []
-        for var in [self.x, self.y, self.z]:
+        for var in [x, y, z]:
             partialDiff = MVFunction(
                 diff(self.function, var), self.point).insertPoint()
             partialDiffList.append(partialDiff)
-        return Matrix([partialDiffList])
+        return Vector(partialDiffList[0], partialDiffList[1], partialDiffList[2])
 
     def getDirectionalDiff(self, vector):
         """Returns the directional derivative at a point.
@@ -85,8 +89,7 @@ class MVFunction:
         """
         gradient = self.getGradient()
         maximum = gradient.norm() if increasing else -gradient.norm()
-        unitVector = gradient/gradient.norm() if increasing else - \
-            (gradient/gradient.norm())
+        unitVector = gradient.normalize() if increasing else -gradient.normalize()
         return (maximum, unitVector)
 
     def getLinearization(self):
@@ -98,26 +101,26 @@ class MVFunction:
         p1, p2, p3 = self.point
         gradient = self.getGradient()
         functionAtPoint = self.insertPoint()
-        return functionAtPoint + gradient[0] * (self.x - p1) + gradient[1] * (self.y - p1) + \
-            gradient[2] * (self.z - p2)
+        return functionAtPoint + gradient[0] * (x - p1) + gradient[1] * (y - p2) + \
+            gradient[2] * (z - p3)
 
-    def getTangentPlane(self, point):
+    def getTangentPlane(self):
         """
 
         :returns:
-        :rtype:    
+        :rtype:
         """
-        normalVect = Vector().setVector(self.getGradient())
-        return normalVect.getPlane(point)
+        normalVect = self.getGradient()
+        return normalVect.getPlane(self.point)
 
-    def getNormalLine(self, point):
+    def getNormalLine(self):
         """
 
         :param point:
         :type point:
         """
-        normalVect = Vector().setVector(self.getGradient())
-        return normalVect.getPointVectorLine(point)
+        normalVect = self.getGradient()
+        return normalVect.getPointVectorLine(self.point)
 
     def getRelativeExtreme(self):
         """
@@ -125,26 +128,25 @@ class MVFunction:
         :returns:
         :rtype:
         """
-        x1, y1 = 0, 0
         fx, fy = diff(self.function, x), diff(self.function, y)
         x1, y1 = solve(fx), solve(fy)
         points = [[i, j] for i in x1 for j in y1]
-        for i in points:
+        for point in points:
             fxx, fyy, fxy = (
-                diff(fx, x).replace(x, i[0]),
-                diff(fy, y).replace(y, i[1]),
-                diff(fx, y).replace(x, i[0]).replace(y, i[1]),
+                diff(fx, x).subs([(x, point[0]), (y, point[1])]),
+                diff(fy, y).subs([(x, point[0]), (y, point[1])]),
+                diff(fx, y).subs([(x, point[0]), (y, point[1])]),
             )
             result = fxx * fyy - fxy ** 2
             if result > 0:
                 if fxx > 0:
-                    print("Relative minimum: " + str((i[0], i[1])))
+                    print("Relative minimum: {}".format((point[0], point[1])))
                 else:
-                    print("Relative minimum: " + str((i[0], i[1])))
+                    print("Relative minimum: {}".format((point[0], point[1])))
             elif result < 0:
-                print("Saddle point: " + str((i[0], i[1])))
+                print("Saddle point: {}".format((point[0], point[1])))
             else:
-                print("Inconclusive: " + str((i[0], i[1])))
+                print("Inconclusive: {}".format((point[0], point[1])))
 
 
 if __name__ == "__main__":
