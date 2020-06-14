@@ -165,7 +165,7 @@ class Vector(Matrix):
         except:
             print('<x,y,z> = <{},{},{}> + <{},{},{}>t'.format(x, y, z, v1, v2, v3))
 
-    def getDomainOfVectFunc(self):
+    def getDomainOf(self):
         """Returns the intersection of the domain of the vector function and
            tuple of the domain for each function
 
