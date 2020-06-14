@@ -6,7 +6,7 @@ Author: Ao Wang
 Date: June 13, 2020
 """
 
-
+import math
 from sympy.calculus.util import continuous_domain
 from sympy import *
 from axiomathbf.Matrix import Matrix
@@ -49,6 +49,11 @@ class Vector(Matrix):
                 operator, other))
         return Vector(m[0], m[1], m[2])
 
+    def normalize(self):
+        """Normalizes the Vector"""
+        normalized = [unit/self.norm() for unit in self.matrix]
+        return Vector(normalized[0], normalized[1], normalized[2])
+
     def cross(self, other):
         """The cross product operation
 
@@ -61,6 +66,26 @@ class Vector(Matrix):
         j = -self._det(other, 0, 2)
         k = self._det(other, 0, 1)
         return Vector(i, j, k)
+
+    def __neg__(self):
+        m = [-unit for unit in self.matrix]
+        return Vector(m[0], m[1], m[2])
+
+    def __abs__(self):
+        m = [abs(unit) for unit in self.matrix]
+        return Vector(m[0], m[1], m[2])
+
+    def __round__(self, n):
+        m = [round(unit, n) for unit in self.matrix]
+        return Vector(m[0], m[1], m[2])
+
+    def __floor__(self):
+        m = [math.floor(unit) for unit in self.matrix]
+        return Vector(m[0], m[1], m[2])
+
+    def __ceil__(self):
+        m = [math.ceil(unit) for unit in self.matrix]
+        return Vector(m[0], m[1], m[2])
 
     def getAngle(self, other):
         """Returns the angle between two vectors
