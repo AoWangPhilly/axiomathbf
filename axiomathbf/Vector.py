@@ -12,6 +12,8 @@ from sympy import *
 from axiomathbf.Matrix import Matrix
 from IPython.display import display, Math
 
+x, y, z = symbols("x y z")
+
 
 class Vector(Matrix):
     """The Vector class solves vector related problems, like getting the cross area,
@@ -152,8 +154,7 @@ class Vector(Matrix):
         :rtype: sympy.core.add.Add
         """
         normVect = self.matrix
-        return normVect[0] * (self.x - point.x) + normVect[1] * (self.y - point.y) +\
-            normVect[2] * (self.z - point.z)
+        return simplify(normVect[0] * (x - point.x) + normVect[1] * (y - point.y) + normVect[2] * (z - point.z))
 
     def compare(self, other):
         """Compares two vectors, checks to see if they are perpendicular,
@@ -186,7 +187,7 @@ class Vector(Matrix):
             v1, v2, v3 = latex(v1), latex(v2), latex(v3)
             get_ipython
             display(
-                Math('\\vec{\\ell(t)} = \\langle' + '{}, {}, {}'.format(x, y, z) + '\\rangle +t \\langle' + '{}, {}, {}'.format(v1, v2, v3) + '\\rangle'))
+                Math('\\vec{\\ell(t)} = \\langle' + '{}, {}, {}'.format(x, y, z) + '\\rangle +t \\langle ' + ' {}, {}, {}'.format(v1, v2, v3) + '\\rangle'))
         except:
             print('<x,y,z> = <{},{},{}> + <{},{},{}>t'.format(x, y, z, v1, v2, v3))
 
