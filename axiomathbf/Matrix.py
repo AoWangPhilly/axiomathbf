@@ -168,7 +168,7 @@ class Matrix():
         sqrMatrix = self._section2by2(other, col1, col2)
         return sqrMatrix[0][0]*sqrMatrix[1][1] - sqrMatrix[0][1]*sqrMatrix[1][0]
 
-    def _vstack(self, *other):
+    def _vstack(self, other):
         """Vertically stacks two lists, used as a helper method for the section2by2 method
 
         :param other: Another list
@@ -177,7 +177,7 @@ class Matrix():
         :rtype: list
         """
 
-        return [self.matrix.append(l) for l in other]
+        return [self.matrix, other]
 
     def _section2by2(self, other, col1, col2):
         """Creates a 2 by 2 two dimensional array, and a helper method for the det method
@@ -222,3 +222,4 @@ if __name__ == "__main__":
     v = Matrix(4, 5, 6)
     u += 2
     print(u+v)
+    print(u.cross(v))
