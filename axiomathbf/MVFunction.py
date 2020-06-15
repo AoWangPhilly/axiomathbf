@@ -1,5 +1,5 @@
 """
-Program: Matrix.py
+Program: MVFunction.py
 Purpose:
 Author: Ao Wang
 Date: June 13, 2020
