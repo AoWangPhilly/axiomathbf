@@ -1,8 +1,9 @@
 """
 Program: MVFunction.py
-Purpose:
+Purpose: I created the MVFunction module to check my work for finding the
+multivarite calculus equation's gradient and other processes quickly
 Author: Ao Wang
-Date: June 13, 2020
+Date: June 14, 2020
 """
 
 from sympy import *
@@ -18,9 +19,9 @@ class MVFunction():
        linearization, and much more.
 
     :param function: The multivariate function
-    :type function:
+    :type function: sympy.core.add.Add
     :param point: A point on the plane
-    :type point:
+    :type point: sympy.geometry.point.Point3D
     """
 
     def __init__(self, function, point=Point(0, 0, 0)):
@@ -52,7 +53,7 @@ class MVFunction():
         """Substitutes the variables with the point
 
         :returns: The output of the equation at given point
-        :rtype:
+        :rtype: sympy.core.numbers.Integer
         """
         p1, p2, p3 = self.point
         return self.function.subs([(x, p1), (y, p2), (z, p3)])
@@ -60,8 +61,8 @@ class MVFunction():
     def getGradient(self):
         """Returns the gradient of a function. Very useful helper function.
 
-        :returns:
-        :rtype:
+        :returns: The gradient of a function
+        :rtype: Vector
         """
         partialDiffList = []
         for var in [x, y, z]:
@@ -73,19 +74,19 @@ class MVFunction():
     def getDirectionalDiff(self, vector):
         """Returns the directional derivative at a point.
 
-        :param vector:
-        :type vector:
-        :returns:
-        :rtype:
+        :param vector: The direction
+        :type vector: Vector
+        :returns: The directional derivative as a point
+        :rtype: sympy.core.numbers.Integer
         """
         return self.getGradient().dot(vector / vector.norm())
 
     def getDirectionalDiffInfo(self, increasing=True):
         """
-        :param increasing:
+        :param increasing: Whether the function is increasing or decreasing
         :type increasing: bool
-        :returns:
-        :rtype: tuple of
+        :returns: More information about directional derivative
+        :rtype: tuple of sympy.core.numbers.Integer and Vector
         """
         gradient = self.getGradient()
         maximum = gradient.norm() if increasing else -gradient.norm()
@@ -95,8 +96,8 @@ class MVFunction():
     def getLinearization(self):
         """Returns the linearization equation for local-linear approximation.
 
-        :returns:
-        :rtype:
+        :returns: The linearization equation
+        :rtype: sympy.core.add.Add
         """
         p1, p2, p3 = self.point
         gradient = self.getGradient()
@@ -105,48 +106,22 @@ class MVFunction():
             gradient[2] * (z - p3)
 
     def getTangentPlane(self):
-        """
+        """Returns the tangent plane of a function at a point
 
-        :returns:
-        :rtype:
+        :returns: The tangent plane of a function at a point
+        :rtype: sympy.core.add.Add
         """
         normalVect = self.getGradient()
         return normalVect.getPlane(self.point)
 
     def getNormalLine(self):
-        """
+        """Returns the normal line of a function at a point
 
-        :param point:
-        :type point:
+        :returns: The normal line of a function at a point
+        :rtype: str
         """
         normalVect = self.getGradient()
         return normalVect.getPointVectorLine(self.point)
-
-    def getRelativeExtreme(self):
-        """
-
-        :returns:
-        :rtype:
-        """
-        fx, fy = diff(self.function, x), diff(self.function, y)
-        x1, y1 = solve(fx), solve(fy)
-        points = [[i, j] for i in x1 for j in y1]
-        for point in points:
-            fxx, fyy, fxy = (
-                diff(fx, x).subs([(x, point[0]), (y, point[1])]),
-                diff(fy, y).subs([(x, point[0]), (y, point[1])]),
-                diff(fx, y).subs([(x, point[0]), (y, point[1])]),
-            )
-            result = fxx * fyy - fxy ** 2
-            if result > 0:
-                if fxx > 0:
-                    print("Relative minimum: {}".format((point[0], point[1])))
-                else:
-                    print("Relative minimum: {}".format((point[0], point[1])))
-            elif result < 0:
-                print("Saddle point: {}".format((point[0], point[1])))
-            else:
-                print("Inconclusive: {}".format((point[0], point[1])))
 
 
 if __name__ == "__main__":
