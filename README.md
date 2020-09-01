@@ -23,7 +23,7 @@ I decided to start the project when I began taking Math 200 at Drexel University
 ##  <div id="install"> Installation </div>
 
 ``` bash
-git git@github.com:ow-wow-wang/axiomathbf.git
+git clone git@github.com:ow-wow-wang/axiomathbf.git
 ```
 
 ``` bash
