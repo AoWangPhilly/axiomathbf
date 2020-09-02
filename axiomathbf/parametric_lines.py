@@ -15,6 +15,18 @@ class ParametricLine():
         v1, v2, v3 = self.vector
         return '<x, y, z> = <{}, {}, {}> + <{}, {}, {}>t'.format(x, y, z, v1, v2, v3)
 
+    def getPoint(self):
+        return self.point
+    
+    def setPoint(self, point):
+        self.point = point
+
+    def getVector(self):
+        return self.vector
+
+    def setVector(self, vector):
+        self.vector = vector
+        
     def compare(self, other):
         if isinstance(other, ParametricLine):
             if self.vector.dot(other.vector) == 0:
