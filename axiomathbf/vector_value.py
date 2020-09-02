@@ -36,11 +36,13 @@ class VectorFunction():
 
     def derive(self):
         '''Derives each of the functions in the vector function'''
-        return VectorFunction(list(map(sympy.diff, self.__lst)))
+        t = sympy.Symbol('t')
+        return VectorFunction([sympy.diff(elem, t) for elem in self.__lst])
 
     def integrate(self):
         '''Integrates each of the functions in the vector function'''
-        return VectorFunction(list(map(sympy.integrate, self.__lst)))
+        t = sympy.Symbol('t')
+        return VectorFunction([sympy.integrate(elem, t) for elem in self.__lst])
 
     def getDomain(self):
         '''Returns domain of vector-value function
@@ -54,8 +56,9 @@ class VectorFunction():
 
         # Intersection for each function's domain
         for vector in self.__lst:
-            domain = sympy.Intersection(continuous_domain(
-                vector, sympy.Symbol('t'), sympy.S.Reals), domain)
+            if type(vector) != int:
+                domain = sympy.Intersection(continuous_domain(
+                    vector, sympy.Symbol('t'), sympy.S.Reals), domain)
         return domain
     
     def plugin(self, pt):
@@ -86,8 +89,33 @@ class VectorFunction():
         point, vector = self.plugin(tau), self.derive().plugin(tau)
         return ParametricLine(point.__lst, vector.__lst)
 
+    def solveIntegration(self, tau, initial):
+        '''Solve for position function, given a velocity function, point, and start position
+
+        Parameters
+        ==========
+            tau (int): the point
+            initial (list): the initial vector-value position
+        
+        Return
+        ======
+            VectorFunction: the position vector-value function
+        '''
+        pos = self.integrate()
+        plugged = pos.plugin(tau).__lst
+        c = initial[0] - plugged[0]
+        return VectorFunction([i+c for i in pos.__lst])
 
 if __name__ == '__main__':
     t = sympy.Symbol('t')
     v = VectorFunction([sympy.cos(t), sympy.sin(t), t])
-    print(v.getTangentLine(sympy.pi/2))    
+    print(v.getTangentLine(sympy.pi/2))
+    v2 = VectorFunction([4*t, sympy.E**t])
+    print(v2.solveIntegration(0, [2,3]).getVector())
+
+    v1 = VectorFunction([t**2, sympy.sqrt(1-t), -1/t])
+    v2 = VectorFunction([sympy.ln(t+1), 1/((sympy.E**t)-2), t])
+    v3 = VectorFunction([sympy.cos(t), sympy.sin(t), 5])
+    print(v1.getDomain())
+    print(v2.getDomain())
+    print(v3.getDomain())
