@@ -6,7 +6,6 @@ date: 09/02/2020
 import sympy
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
-from sympy import Plane
 
 class ParametricLine():
     '''A ParametricLine class that determines if lines are parallel,
@@ -50,19 +49,17 @@ class ParametricLine():
         ======
             str: string that shows if intersecting, parallel, or skew
         '''
-        if isinstance(other, ParametricLine):
-            if self.intersect(other):
-                if self.vector.dot(other.vector) == 0:
-                    symbol = 'Perpendicular'
-                else:
-                    symbol = 'Intersecting'
-            elif self.vector.cross(other.vector).norm() == 0:
-                symbol = 'Parallel' 
+        if self.intersect(other):
+            if self.vector.dot(other.vector) == 0:
+                symbol = 'Perpendicular'
             else:
-                symbol = 'Skew'
-            return symbol
-        if isinstance(other, Plane):
-            pass
+                symbol = 'Intersecting'
+        elif self.vector.cross(other.vector).norm() == 0:
+            symbol = 'Parallel' 
+        else:
+            symbol = 'Skew'
+        return symbol
+
 
 
     def getPointVector(self):
@@ -91,16 +88,16 @@ class ParametricLine():
         for i in indices:
             first, latter = i
             r1 = [self.vector[first], -other.vector[first],
-                  other.point[first]-self.point[first]]
+                other.point[first]-self.point[first]]
             r2 = [self.vector[latter], -other.vector[latter],
-                  other.point[latter]-self.point[latter]]
-            if r1 == r2:
-                continue
+                other.point[latter]-self.point[latter]]
+            if r1 == r2: continue
             a = Matrix([r1, r2])
             solutions.append(sympy.solve_linear_system(a, x, y))
         if None not in solutions and solutions.count(solutions[0]) == len(solutions):
             return [pt + v*solutions[0][x] for (pt, v) in zip(self.point, self.vector)]
         return None
+
 
 
 if __name__ == '__main__':
