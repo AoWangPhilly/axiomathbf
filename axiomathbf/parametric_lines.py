@@ -7,6 +7,7 @@ import sympy
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
 
+
 class ParametricLine():
     '''A ParametricLine class that determines if lines are parallel,
        intersecting, or skew, point of intersection, and displaying
@@ -17,6 +18,7 @@ class ParametricLine():
         point (Point): the point of xyz parametric equations
         vector (Matrix): the directional vector of parametric line
     '''
+
     def __init__(self, point, vector):
         self.point = sympy.Point(point)
         self.vector = Matrix(vector)
@@ -44,7 +46,7 @@ class ParametricLine():
         Parameter
         =========
             other (ParametricLine): the other line
-        
+
         Return
         ======
             str: string that shows if intersecting, parallel, or skew
@@ -55,12 +57,17 @@ class ParametricLine():
             else:
                 symbol = 'Intersecting'
         elif self.vector.cross(other.vector).norm() == 0:
-            symbol = 'Parallel' 
+            symbol = 'Parallel'
         else:
             symbol = 'Skew'
         return symbol
 
+    def distance(self, other):
+        if isinstance(other, ParametricLine):
+            pass
 
+        elif isinstance(other, sympy.Point):
+            pass
 
     def getPointVector(self):
         '''Returns latex form of the vector in point vector form
@@ -88,16 +95,16 @@ class ParametricLine():
         for i in indices:
             first, latter = i
             r1 = [self.vector[first], -other.vector[first],
-                other.point[first]-self.point[first]]
+                  other.point[first]-self.point[first]]
             r2 = [self.vector[latter], -other.vector[latter],
-                other.point[latter]-self.point[latter]]
-            if r1 == r2: continue
+                  other.point[latter]-self.point[latter]]
+            if r1 == r2:
+                continue
             a = Matrix([r1, r2])
             solutions.append(sympy.solve_linear_system(a, x, y))
         if None not in solutions and solutions.count(solutions[0]) == len(solutions):
             return [pt + v*solutions[0][x] for (pt, v) in zip(self.point, self.vector)]
         return None
-
 
 
 if __name__ == '__main__':

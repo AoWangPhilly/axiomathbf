@@ -8,7 +8,7 @@ Date: June 14, 2020
 
 from sympy import *
 from IPython.display import display
-from parametric_lines import parametric_lines
+from .parametric_lines import ParametricLine
 
 x, y, z = symbols("x y z")
 

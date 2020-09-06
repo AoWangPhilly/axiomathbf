@@ -2,7 +2,7 @@
 
 '''
 import sympy
-from parametric_lines import ParametricLine
+from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 
 
@@ -36,6 +36,14 @@ class Plane():
     def setPlane(self, plane):
         self.plane = plane
 
+    def angle(self, other):
+        if isinstance(other, Plane):
+            return self.plane.angle_between(other.plane)
+        elif isinstance(other, ParametricLine):
+            l, m, n = other.vector
+            a, b, c = self.plane.normal_vector
+            return sympy.asin(sympy.abs(a*l + b*m + c*n)/(sympy.sqrt(a**2+b**2+c**2)*sympy.sqrt(l**2+m**2+n**2)))
+
     def compare(self, other):
         '''
 
@@ -49,6 +57,24 @@ class Plane():
                 return 'Neither parallel or perpendicular'
         # check for parametric line too
         elif isinstance(other, ParametricLine):
+            if sympy.Matrix(other.plane.normal_vector).dot(other.vector) == 0:
+                return 'Parallel'
+            elif (sympy.Matrix(other.plane.normal_vector).cross(other.vector)).norm() == 0:
+                return 'Perpendicular'
+            else:
+                return 'Neither parallel or perpendicular'
+
+    def distance(self, other):
+        '''
+
+        '''
+        if isinstance(other, Plane):
+            pass
+
+        elif isinstance(other, ParametricLine):
+            pass
+
+        elif isinstance(other, sympy.Point):
             pass
 
     def intersect(self, other):
@@ -72,7 +98,6 @@ class Plane():
                 point = list(a.inv()*b)
                 point.append(0)
                 return ParametricLine(point=point, vector=d)
-            return None
         elif isinstance(other, ParametricLine):
             lineEq = [
                 pt + vec*t for (pt, vec) in zip(other.getPoint(), other.getVector())]
@@ -81,8 +106,6 @@ class Plane():
                 self.plane.equation(xLine, yLine, zLine), t)
             if tIntersect:
                 return sympy.Point([elem.subs(t, tIntersect[0]) for elem in lineEq])
-            else:
-                return 'No intersection!'
 
 
 if __name__ == '__main__':

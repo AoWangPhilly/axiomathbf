@@ -7,7 +7,8 @@ from sympy.calculus.util import continuous_domain
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
 import sympy
-from parametric_lines import ParametricLine
+from sympy import E, ln, sqrt, sin, cos
+from .parametric_lines import ParametricLine
 
 
 class VectorFunction():
@@ -75,6 +76,7 @@ class VectorFunction():
         t = sympy.Symbol('t')
         return VectorFunction([elem.subs(t, pt) for elem in self.__lst])
 
+    # TODO add tau=None, point=None
     def getTangentLine(self, tau):
         '''Gets the parametric equation of the tangent line to the original function
         
@@ -89,6 +91,7 @@ class VectorFunction():
         point, vector = self.plugin(tau), self.derive().plugin(tau)
         return ParametricLine(point.__lst, vector.__lst)
 
+    # TODO add tau=None, point=None
     def solveIntegration(self, tau, initial):
         '''Solve for position function, given a velocity function, point, and start position
 
@@ -108,14 +111,10 @@ class VectorFunction():
 
 if __name__ == '__main__':
     t = sympy.Symbol('t')
-    v = VectorFunction([sympy.cos(t), sympy.sin(t), t])
-    print(v.getTangentLine(sympy.pi/2))
-    v2 = VectorFunction([4*t, sympy.E**t])
-    print(v2.solveIntegration(0, [2,3]).getVector())
-
-    v1 = VectorFunction([t**2, sympy.sqrt(1-t), -1/t])
-    v2 = VectorFunction([sympy.ln(t+1), 1/((sympy.E**t)-2), t])
-    v3 = VectorFunction([sympy.cos(t), sympy.sin(t), 5])
-    print(v1.getDomain())
-    print(v2.getDomain())
-    print(v3.getDomain())
+    v1 = VectorFunction([t**2, sqrt(1-t), -1/t])
+    v2 = VectorFunction([ln(t+1), 1/(E**t-2), t])
+    v3 = VectorFunction([cos(t), sin(t), 5])
+    v4 = VectorFunction([ln(t), t+1, E**t])
+    v5 = VectorFunction([sin(t), ln(abs(t)), sqrt(t)])
+    for v in (v1, v2, v3, v4, v5):
+        print(v.getDomain())
