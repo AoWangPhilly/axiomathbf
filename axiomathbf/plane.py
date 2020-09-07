@@ -9,6 +9,7 @@ from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 from sympy import sqrt
 
+
 class Plane():
     '''The plane class that can initalize with 3 points, a point and a normal vector, or equation
 
@@ -51,13 +52,11 @@ class Plane():
 
         Argument
         ========
-            other (Plane or ParametricLine):
-        
+            other (Plane or ParametricLine): another 3D object
 
         Return
         ======
-
-
+            sympy.Numbers: the angle between planes or a parametric line
         '''
         if isinstance(other, Plane):
             return self.plane.angle_between(other.plane)
@@ -71,11 +70,11 @@ class Plane():
 
         Arguments
         =========
-            others
+            other (Plane or ParametricLine): another 3D object
 
         Return
         ======
-        
+            str: whether the objects are perpendicular, parallel, or neither
         '''
         if isinstance(other, Plane):
             if other.plane.is_perpendicular(self.plane):
@@ -98,11 +97,11 @@ class Plane():
 
         Arguments
         =========
-            others
+            other (Plane, ParametricLine, Point): another 3D object
 
         Return
         ======
-        
+            sympy.Numbers: returns distance between 3D objects
         '''
         selfEq = self.plane.equation.coeffs()
         a, b, c, d1 = selfEq
@@ -123,11 +122,12 @@ class Plane():
 
         Arguments
         =========
-            others
+            other (Plane or ParametricLine): another 3D object
 
         Return
         ======
-        
+            sympy.Point or ParametricLine: returns the point intersection of plane and
+            line or paramatric line of intersection betweeen two planes
 
         '''
         if isinstance(other, Plane):
