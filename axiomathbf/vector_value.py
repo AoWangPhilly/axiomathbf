@@ -8,6 +8,7 @@ from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
 import sympy
 from sympy import E, ln, sqrt, sin, cos
+from sympy.abc import t
 from .parametric_lines import ParametricLine
 
 
@@ -37,12 +38,10 @@ class VectorFunction():
 
     def derive(self):
         '''Derives each of the functions in the vector function'''
-        t = sympy.Symbol('t')
         return VectorFunction([sympy.diff(elem, t) for elem in self.__lst])
 
     def integrate(self):
         '''Integrates each of the functions in the vector function'''
-        t = sympy.Symbol('t')
         return VectorFunction([sympy.integrate(elem, t) for elem in self.__lst])
 
     def getDomain(self):
@@ -59,7 +58,7 @@ class VectorFunction():
         for vector in self.__lst:
             if type(vector) != int:
                 domain = sympy.Intersection(continuous_domain(
-                    vector, sympy.Symbol('t'), sympy.S.Reals), domain)
+                    vector, t, sympy.S.Reals), domain)
         return domain
     
     def plugin(self, pt):
@@ -73,31 +72,36 @@ class VectorFunction():
         ======
             VectorFunction: the vector-value function at point t
         '''
-        t = sympy.Symbol('t')
-        return VectorFunction([elem.subs(t, pt) for elem in self.__lst])
+        return [elem.subs(t, pt) for elem in self.__lst]
 
     # TODO add tau=None, point=None
-    def getTangentLine(self, tau):
+    def getTangentLine(self, tau=None, point=None):
         '''Gets the parametric equation of the tangent line to the original function
         
         Parameter
         =========
-            tau (int): the point
+            tau (int): the time at t
+            point (list of numbers): the point at t
         
         Return
         ======
             ParametricLine: the parametic tangent line at t
         '''
-        point, vector = self.plugin(tau), self.derive().plugin(tau)
-        return ParametricLine(point.__lst, vector.__lst)
+        if tau != None: 
+            point, vector = self.plugin(tau), self.derive().plugin(tau)
+        elif point != None: 
+            derived = self.derive().__lst
+            vector = [elem.subs(t, p) for elem, p in zip(derived, point)]
+        return ParametricLine(point, vector)
 
     # TODO add tau=None, point=None
-    def solveIntegration(self, tau, initial):
+    def solveIntegration(self, initial, tau=None, point=None):
         '''Solve for position function, given a velocity function, point, and start position
 
         Parameters
         ==========
-            tau (int): the point
+            tau (int): the time at t
+            point (list of numbers): the point at t
             initial (list): the initial vector-value position
         
         Return
@@ -105,7 +109,8 @@ class VectorFunction():
             VectorFunction: the position vector-value function
         '''
         pos = self.integrate()
-        plugged = pos.plugin(tau).__lst
+        if tau != None: plugged = pos.plugin(tau)
+        elif point != None: plugged = [elem.subs(t, p) for elem, p in zip(pos.__lst, point)]
         c = initial[0] - plugged[0]
         return VectorFunction([i+c for i in pos.__lst])
 
