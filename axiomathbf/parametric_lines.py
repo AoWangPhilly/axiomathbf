@@ -28,6 +28,9 @@ class ParametricLine():
         v1, v2, v3 = self.vector
         return '<x, y, z> = <{}, {}, {}> + <{}, {}, {}>t'.format(x, y, z, v1, v2, v3)
 
+    def __eq__(self, other):
+        return self.point == other.point and self.vector/self.vector.norm() == other.vector/other.vector.norm()
+
     def getPoint(self):
         return self.point
 
