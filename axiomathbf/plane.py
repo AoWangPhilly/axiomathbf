@@ -1,14 +1,24 @@
 '''
-
+description: plane class
+author: ao wang
+date: 09/06/2020
 '''
+
 import sympy
 from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
-
+from sympy import sqrt
 
 class Plane():
-    '''
+    '''The plane class that can initalize with 3 points, a point and a normal vector, or equation
 
+    Attributes
+    ==========
+        p1 (sympy.Point): the first point
+        p2 (sympy.Point): the second point
+        p3 (sympy.Point): the first point
+        normal_vector (list): the normal vector
+        eq (sympy.Add): the Plane equation
     '''
 
     def __init__(self, p1=None, p2=None, p3=None, normal_vector=None, eq=None):
@@ -37,6 +47,18 @@ class Plane():
         self.plane = plane
 
     def angle(self, other):
+        '''Finds the angle between a Plane and a Plane or a Plane and a ParametricLine
+
+        Argument
+        ========
+            other (Plane or ParametricLine):
+        
+
+        Return
+        ======
+
+
+        '''
         if isinstance(other, Plane):
             return self.plane.angle_between(other.plane)
         elif isinstance(other, ParametricLine):
@@ -45,8 +67,15 @@ class Plane():
             return sympy.asin(sympy.abs(a*l + b*m + c*n)/(sympy.sqrt(a**2+b**2+c**2)*sympy.sqrt(l**2+m**2+n**2)))
 
     def compare(self, other):
-        '''
+        '''Returns whether a Plane or ParametricLine are parallel, perpendicular, or neither
 
+        Arguments
+        =========
+            others
+
+        Return
+        ======
+        
         '''
         if isinstance(other, Plane):
             if other.plane.is_perpendicular(self.plane):
@@ -65,21 +94,40 @@ class Plane():
                 return 'Neither parallel or perpendicular'
 
     def distance(self, other):
-        '''
+        '''Returns the distance between Planes, Lines, and Points
 
+        Arguments
+        =========
+            others
+
+        Return
+        ======
+        
         '''
+        selfEq = self.plane.equation.coeffs()
+        a, b, c, d1 = selfEq
         if isinstance(other, Plane):
-            pass
-
+            otherEq = other.plane.equation.coeffs()
+            d2 = otherEq[3]
+            return abs(d2-d1)/(sqrt(a**2+b**2+c**2))
         elif isinstance(other, ParametricLine):
-            pass
-
+            p1, p2, p3 = other.getPoint()
+            return abs(a*p1+b*p2+c*p3+d1)/(sqrt(a**2+b**2+c**2))
         elif isinstance(other, sympy.Point):
-            pass
+            p1, p2, p3 = other
+            return abs(a*p1+b*p2+c*p3+d1)/(sqrt(a**2+b**2+c**2))
 
     def intersect(self, other):
-        '''
+        '''Returns where line or plane intersects
 
+
+        Arguments
+        =========
+            others
+
+        Return
+        ======
+        
 
         '''
         if isinstance(other, Plane):
