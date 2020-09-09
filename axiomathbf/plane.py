@@ -41,10 +41,10 @@ class Plane():
             plane = sympy.Plane(point, normal_vector=norm_vect)
         self.plane = plane
 
-    def getPlane(self):
+    def get_plane(self):
         return self.plane
 
-    def setPlane(self, plane):
+    def set_plane(self, plane):
         self.plane = plane
 
     def angle(self, other):
@@ -132,8 +132,8 @@ class Plane():
         '''
         if isinstance(other, Plane):
             # Find directional vector
-            d = sympy.Matrix(self.getPlane().normal_vector).cross(
-                sympy.Matrix(other.getPlane().normal_vector))
+            d = sympy.Matrix(self.get_plane().normal_vector).cross(
+                sympy.Matrix(other.get_plane().normal_vector))
             selfEq = sympy.Poly(self.plane.equation())
             otherEq = sympy.Poly(other.plane.equation())
             if len(selfEq.free_symbols) == 3 and len(otherEq.free_symbols) == 3:
