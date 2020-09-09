@@ -31,7 +31,7 @@ class VectorFunction():
     def __eq__(self, other):
         return self.__lst == other.__lst
 
-    def getVector(self):
+    def get_vector(self):
         '''Converts Matrix vector into a vector object'''
         C = CoordSys3D('')
         return matrix_to_vector(self.vector, C)
@@ -44,7 +44,7 @@ class VectorFunction():
         '''Integrates each of the functions in the vector function'''
         return VectorFunction([sympy.integrate(elem, t) for elem in self.__lst])
 
-    def getDomain(self):
+    def get_domain(self):
         '''Returns domain of vector-value function
         
         Return:
@@ -75,7 +75,7 @@ class VectorFunction():
         return [elem.subs(t, pt) for elem in self.__lst]
 
     # TODO add tau=None, point=None
-    def getTangentLine(self, tau=None, point=None):
+    def get_tangent_line(self, tau=None, point=None):
         '''Gets the parametric equation of the tangent line to the original function
         
         Parameter
@@ -95,7 +95,7 @@ class VectorFunction():
         return ParametricLine(point, vector)
 
     # TODO add tau=None, point=None
-    def solveIntegration(self, initial, tau=None, point=None):
+    def solve_integration(self, initial, tau=None, point=None):
         '''Solve for position function, given a velocity function, point, and start position
 
         Parameters
@@ -122,4 +122,4 @@ if __name__ == '__main__':
     v4 = VectorFunction([ln(t), t+1, E**t])
     v5 = VectorFunction([sin(t), ln(abs(t)), sqrt(t)])
     for v in (v1, v2, v3, v4, v5):
-        print(v.getDomain())
+        print(v.get_domain())
