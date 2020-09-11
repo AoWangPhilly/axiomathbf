@@ -185,30 +185,35 @@ class MVFunction(Gradient):
 
 
 if __name__ == "__main__":
-    f1, p1, v1 = x**4-y**4, [0, -2, 0], [sqrt(2)/2, sqrt(2)/2, 0]
-    f2, p2, v2 = y*sin(x), [pi/2, 1, 0], [1, -1, 0]
-    f3, p3, v3 = E**x*cos(y*z), [1, pi, 0], [-2, 1, -3]
-    dd1 = DirectionalDerivative(function=f1, point=p1, unit_vector=v1)
-    dd2 = DirectionalDerivative(function=f2, point=p2, unit_vector=v2)
-    dd3 = DirectionalDerivative(function=f3, point=p3, unit_vector=v3)
+    # f1, p1, v1 = x**4-y**4, [0, -2, 0], [sqrt(2)/2, sqrt(2)/2, 0]
+    # f2, p2, v2 = y*sin(x), [pi/2, 1, 0], [1, -1, 0]
+    # f3, p3, v3 = E**x*cos(y*z), [1, pi, 0], [-2, 1, -3]
+    # dd1 = DirectionalDerivative(function=f1, point=p1, unit_vector=v1)
+    # dd2 = DirectionalDerivative(function=f2, point=p2, unit_vector=v2)
+    # dd3 = DirectionalDerivative(function=f3, point=p3, unit_vector=v3)
 
-    f4, p4 = 3*x*y-y**2*x**3, [1, -1, 0]
-    f5, p5 = cos(2*x-y**2), [pi/4, 0, 0]
-    f6, p6 = 4*x*y*z-y**2*z**3+4*z**3*y, [2, 3, 1]
+    # f4, p4 = 3*x*y-y**2*x**3, [1, -1, 0]
+    # f5, p5 = cos(2*x-y**2), [pi/4, 0, 0]
+    # f6, p6 = 4*x*y*z-y**2*z**3+4*z**3*y, [2, 3, 1]
 
-    g1, g2, g3 = Gradient(f4), Gradient(f5), Gradient(f6)
+    # g1, g2, g3 = Gradient(f4), Gradient(f5), Gradient(f6)
 
-    f7, p7 = E**(x*y**2), [1, 3, 0]
-    f8, p8 = sqrt(4-x**2-y**2-z**2), [1, -1, 0]
+    # f7, p7 = E**(x*y**2), [1, 3, 0]
+    # f8, p8 = sqrt(4-x**2-y**2-z**2), [1, -1, 0]
 
-    print(dd1)
-    print(dd2)
-    print(dd3)
+    # print(dd1)
+    # print(dd2)
+    # print(dd3)
 
-    print(g1.at(p4))
-    print(g2.at(p5))
-    print(g3.at(p6))
+    # print(g1.at(p4))
+    # print(g2.at(p5))
+    # print(g3.at(p6))
 
-    dd4, dd5 = DirectionalDerivative(f7, p7), DirectionalDerivative(f8, p8)
-    print(dd4.info())
-    print(dd5.info())
+    # dd4, dd5 = DirectionalDerivative(f7, p7), DirectionalDerivative(f8, p8)
+    # print(dd4.info())
+    # print(dd5.info())
+
+    s1, p1 = sympy.ln(x+y+z) - 2, [-1, E**2, 1]
+    mv1 = MVFunction(s1, p1)
+    print(mv1.get_tangent_plane())
+    print(mv1.get_normal_line())

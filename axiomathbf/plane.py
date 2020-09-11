@@ -5,7 +5,7 @@ date: 09/06/2020
 '''
 
 import sympy
-from .parametric_lines import ParametricLine
+from parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 from sympy import sqrt
 
@@ -39,7 +39,13 @@ class Plane():
             point = sympy.Point(
                 [point.subs([(x, 0), (y, 0), (z, 0)]) for point in pointEq])
             plane = sympy.Plane(point, normal_vector=norm_vect)
+
+        gcd = sympy.gcd(plane.normal_vector)
+        plane = sympy.Plane(plane.p1, [elem/gcd for elem in plane.normal_vector])
         self.plane = plane
+
+    def __str__(self):
+        return str(self.plane.equation())
 
     def get_plane(self):
         return self.plane

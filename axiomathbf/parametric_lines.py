@@ -21,7 +21,8 @@ class ParametricLine():
 
     def __init__(self, point, vector):
         self.point = sympy.Point(point)
-        self.vector = Matrix(vector)
+        gcd = sympy.gcd(list(vector))
+        self.vector = Matrix([elem/gcd for elem in vector])
 
     def __str__(self):
         x, y, z = self.point
