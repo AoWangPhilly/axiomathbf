@@ -12,18 +12,29 @@ class Extrema():
     def get_function(self):
         return self.function
 
-    def define_d(self):
-        pass
-
     def get_critical_points(self):
         gradient = sympy.derive_by_array(self.function, (x, y))
-        return gradient
+        stationary_points = sympy.solve(gradient, (x, y))
+        return stationary_points
 
     def get_relative(self):
-        pass
+        results = ''
+        gradient = sympy.derive_by_array(self.function, (x, y))
+        hessian = sympy.Matrix(sympy.derive_by_array(gradient, (x, y)))
+        crit_points = sympy.solve(gradient, (x, y))
 
-    def get_absolute(self):
-        pass
+        for point in crit_points:
+            hess = hessian.subs({x: point[0], y: point[1]})
+            eigenvals = hess.eigenvals()
+            if all(ev > 0 for ev in eigenvals):
+                results += 'Relative minimum at {}\n'.format(point)
+            elif all(ev < 0 for ev in eigenvals):
+                results += 'Relative maximum at {}\n'.format(point)
+            elif any(ev > 0 for ev in eigenvals) and any(ev < 0 for ev in eigenvals):
+                results += 'Saddle point at {}\n'.format(point)
+            else:
+                results += 'Results inconclusive at {}\n'.format(point)
+        return results
 
 
 if __name__ == '__main__':
@@ -35,5 +46,5 @@ if __name__ == '__main__':
     # print(f1.get_critical_points())
     # print(f2.get_critical_points())
     # print(f3.get_critical_points())
-    print(f4.get_critical_points())
-    print(f5.get_critical_points())
+    print(f4.get_relative())
+    print(f5.get_relative())
