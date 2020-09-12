@@ -46,7 +46,7 @@ class Gradient():
         ======
             list: the differientiation of x, y, z for the function
         '''
-        return [sympy.diff(self.function, var) for var in (x, y, z)]
+        return sympy.derive_by_array(self.function, (x, y, z))
 
     def __get_latex(self):
         '''Returns the latex code for gradient vector
@@ -214,6 +214,11 @@ if __name__ == "__main__":
     # print(dd5.info())
 
     s1, p1 = sympy.ln(x+y+z) - 2, [-1, E**2, 1]
+    s2, p2 = x**2-y**2, [1,2,0]
+
     mv1 = MVFunction(s1, p1)
+    mv2 = MVFunction(s2, p2)
     print(mv1.get_tangent_plane())
     print(mv1.get_normal_line())
+
+    print(mv2.get_linearization())
