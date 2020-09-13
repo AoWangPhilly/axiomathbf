@@ -46,7 +46,7 @@ class Gradient():
         ======
             list: the differientiation of x, y, z for the function
         '''
-        return sympy.derive_by_array(self.function, (x, y, z))
+        return list(sympy.derive_by_array(self.function, (x, y, z)))
 
     def __get_latex(self):
         '''Returns the latex code for gradient vector
