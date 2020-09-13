@@ -71,12 +71,12 @@ class Extrema():
         Parameter
         =========
             edge_cases (list of tuples of ints): the other points to test out
-        
+
         Return
         ======
             dict: the absolute minimum and maximum
         '''
-        
+
         # Gets critical points and edge cases
         points = self.get_critical_points()
         points.extend(edge_cases)
@@ -91,7 +91,8 @@ class Extrema():
             if val < minimum:
                 minimum = val
                 min_p = p
-        return {'max':(max_p, maximum), 'min':(min_p, minimum)}
+        return {'max': {'point': max_p, 'value': maximum},
+                'min': {'point': min_p, 'value': minimum}}
 
 
 if __name__ == '__main__':
@@ -106,5 +107,4 @@ if __name__ == '__main__':
     # print(f4.get_relative())
     # print(f5.get_relative())
     f6 = Extrema(5 - 4*y - 2*x)
-    print(f6.get_absolute([(3,0), (0,1), (1,2)]))
-
+    print(f6.get_absolute([(3, 0), (0, 1), (1, 2)]))
