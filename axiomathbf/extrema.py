@@ -66,11 +66,22 @@ class Extrema():
         return results
 
     def get_absolute(self, edge_cases=None):
-        '''
+        '''Gets the absolute extrema of a function
 
+        Parameter
+        =========
+            edge_cases (list of tuples of ints): the other points to test out
+        
+        Return
+        ======
+            dict: the absolute minimum and maximum
         '''
+        
+        # Gets critical points and edge cases
         points = self.get_critical_points()
         points.extend(edge_cases)
+
+        # Subsitute the values and find the max and min
         maximum, minimum = -float('inf'), float('inf')
         for p in points:
             val = self.function.subs({x: p[0], y: p[1]})
