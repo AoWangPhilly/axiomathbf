@@ -1,13 +1,16 @@
 '''
-
+description: chainrule class
+author: ao wang
+date: 09/12/2020
 '''
+
 import sympy
 from sympy.abc import x, y, z, w, r, s, t
 import re
 
 
 class ChainRule():
-    '''
+    '''Chain rule class
 
     '''
 
@@ -18,14 +21,24 @@ class ChainRule():
         return str(self.__dict__)
 
     def __make_diff(self, top, bot):
-        '''
+        '''Returns the partial derivative symbol
 
+        Return
+        ======
+            str: returns the string format for partial derivative
         '''
         return '∂{}/∂{}'.format(top, bot)
 
     def get_equation(self, diff):
-        '''
+        '''Gets the equation with partial derivatives
 
+        Parameter
+        =========
+            diff (str):
+
+        Return
+        ======
+            str:
         '''
         diff = diff.split('/')
         root, leaf = diff[0][1], diff[1][1]
@@ -38,29 +51,47 @@ class ChainRule():
         return ' + '.join([' * '.join(i) for i in eq])
 
     def get_latex_equation(self, diff):
-        '''
+        '''Gets the equation with partial derivatives
 
+        Parameter
+        =========
+            diff (str):
+
+        Return
+        ======
+            str:
         '''
-        match, latex_eq = '∂.\/∂.', []
+        match = '∂.\/∂.'
         eq = self.get_equation(diff)
         partials = re.findall(match, eq)
         for p in partials:
             diff = p.split('/')
             root, leaf = diff[0][1], diff[1][1]
-            latex_eq.append('\\frac{' + '\\partial {}'.format(
-                root) + '}{' + '\\partial {}'.format(leaf) + '}')
-
-        for l, d in zip(latex_eq, partials):
-            eq = eq.replace(d, l)
+            eq = eq.replace(p, ('\\frac{' + '\\partial {}'.format(
+                root) + '}{' + '\\partial {}'.format(leaf) + '}'))
 
         eq = eq.replace(' * ', '')
         return sympy.latex('${}$'.format(eq))
 
-    def get_latex_tree(self):
+    def solve(self, diff, **kwargs):
         '''
 
+
         '''
-        pass
+        match, info = '∂.\/∂.', {}
+        for key in kwargs:
+            info[key] = tuple(kwargs[key].free_symbols)
+        self.__dict__ = info
+
+        eq = self.get_equation(diff)
+        partials = re.findall(match, eq)
+
+        for p in partials:
+            sep = p.split('/')
+            top, bot = sep[0][1], sep[1][1]
+            eq = eq.replace(p, str(sympy.diff(kwargs[top], sympy.Symbol(bot))))
+
+        return sympy.parse_expr(eq)
 
 
 if __name__ == '__main__':
@@ -81,3 +112,5 @@ if __name__ == '__main__':
     # sympy.preview(c2.get_latex_equation('dz/dt'),
     #               viewer='file', filename='oo2.png')
 
+    c3 = ChainRule()
+    print(c3.solve('dz/dt', z=2*x-y, x=sympy.sin(t), y=3*t))
