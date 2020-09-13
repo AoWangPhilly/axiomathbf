@@ -42,7 +42,7 @@ class Extrema():
 
     def get_relative(self):
         '''Gets the relative extremas of the function
-        
+
         Return
         ======
             str: determines if point of mini, max, of saddle point
@@ -66,17 +66,34 @@ class Extrema():
         return results
 
     def get_absolute(self, edge_cases=None):
-        pass
+        '''
+
+        '''
+        points = self.get_critical_points()
+        points.extend(edge_cases)
+        maximum, minimum = -float('inf'), float('inf')
+        for p in points:
+            val = self.function.subs({x: p[0], y: p[1]})
+            if val > maximum:
+                maximum = val
+                max_p = p
+            if val < minimum:
+                minimum = val
+                min_p = p
+        return {'max':(max_p, maximum), 'min':(min_p, minimum)}
 
 
 if __name__ == '__main__':
     # f1 = Extrema(x**2+y**2-3*x-4*y+6)
     # f2 = Extrema(x**2+4*y**2-4*y-2)
     # f3 = Extrema(4*x**2-3*y**2+8*x-9*y-4)
-    f4 = Extrema(x**3-3*x+y**2-6*y)
-    f5 = Extrema(x**2*y-6*y**2-3*x**2)
+    # f4 = Extrema(x**3-3*x+y**2-6*y)
+    # f5 = Extrema(x**2*y-6*y**2-3*x**2)
     # print(f1.get_critical_points())
     # print(f2.get_critical_points())
     # print(f3.get_critical_points())
-    print(f4.get_relative())
-    print(f5.get_relative())
+    # print(f4.get_relative())
+    # print(f5.get_relative())
+    f6 = Extrema(5 - 4*y - 2*x)
+    print(f6.get_absolute([(3,0), (0,1), (1,2)]))
+
