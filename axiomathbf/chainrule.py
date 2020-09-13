@@ -1,5 +1,5 @@
 '''
-description: chainrule class
+description: chain rule class
 author: ao wang
 date: 09/12/2020
 '''
@@ -10,8 +10,15 @@ import re
 
 
 class ChainRule():
-    '''Chain rule class
+    '''Chain rule class that shows the equation and format for deriving chain rule
 
+    Attributes
+    ==========
+        kwargs: the function example of tuples
+
+    Example
+    =======
+        c1 = ChainRule(f=(x, y, z, w), x=(r, s, t), y=(r, t), z=(r, s), w=(s, t))
     '''
 
     def __init__(self, **kwargs):
@@ -21,7 +28,7 @@ class ChainRule():
         return str(self.__dict__)
 
     def __make_diff(self, top, bot):
-        '''Returns the partial derivative symbol
+        '''Helper method that returns the partial derivative symbol
 
         Return
         ======
@@ -34,11 +41,11 @@ class ChainRule():
 
         Parameter
         =========
-            diff (str):
+            diff (str): the derivative, i.e. dz/dt
 
         Return
         ======
-            str:
+            str: the chain rule formula
         '''
         diff = diff.split('/')
         root, leaf = diff[0][1], diff[1][1]
@@ -55,11 +62,11 @@ class ChainRule():
 
         Parameter
         =========
-            diff (str):
+            diff (str): the derivative, i.e. dz/dt
 
         Return
         ======
-            str:
+            str: the chain rule formula in latex code
         '''
         match = '∂.\/∂.'
         eq = self.get_equation(diff)
@@ -84,6 +91,11 @@ class ChainRule():
         Return
         ======
             sympy.core.add.Add: the chainrule equation
+
+        Example
+        =======
+            c3 = ChainRule()
+            print(c3.solve('dz/dt', z=2*x-y, x=sympy.sin(t), y=3*t))
         '''
         match, info = '∂.\/∂.', {}
         for key in kwargs:
