@@ -74,9 +74,16 @@ class ChainRule():
         return sympy.latex('${}$'.format(eq))
 
     def solve(self, diff, **kwargs):
-        '''
+        '''Finds the differientation given the functions and apply chain rule
 
+        Parameters
+        ==========
+            diff (str): the derivative, i.e. dz/dt
+            kwargs: the list of functions
 
+        Return
+        ======
+            sympy.core.add.Add: the chainrule equation
         '''
         match, info = '∂.\/∂.', {}
         for key in kwargs:
