@@ -1,10 +1,27 @@
+'''
+description: extrema class
+author: ao wang
+date: 09/12/2020
+'''
+
 import sympy
 from sympy.abc import x, y, z
 
 
 class Extrema():
+    '''Extrema class that can find the critical points of the function, infer if the points are
+       relative minimum, maximum, or saddlepoint, and also absolute max/min.
+
+    Attribute
+    =========
+        function (sympy.core.add.Add): the function
+    '''
+
     def __init__(self, function):
         self.function = function
+
+    def __str__(self):
+        return str(function)
 
     def set_function(self, function):
         self.function = function
@@ -13,11 +30,23 @@ class Extrema():
         return self.function
 
     def get_critical_points(self):
+        '''Returns all critical points of a function
+
+        Return
+        ======
+            list of tuples of ints: the critical points
+        '''
         gradient = sympy.derive_by_array(self.function, (x, y))
         stationary_points = sympy.solve(gradient, (x, y))
         return stationary_points
 
     def get_relative(self):
+        '''Gets the relative extremas of the function
+        
+        Return
+        ======
+            str: determines if point of mini, max, of saddle point
+        '''
         results = ''
         gradient = sympy.derive_by_array(self.function, (x, y))
         hessian = sympy.Matrix(sympy.derive_by_array(gradient, (x, y)))
@@ -35,6 +64,9 @@ class Extrema():
             else:
                 results += 'Results inconclusive at {}\n'.format(point)
         return results
+
+    def get_absolute(self, edge_cases=None):
+        pass
 
 
 if __name__ == '__main__':
