@@ -32,16 +32,16 @@ class ParametricLine():
     def __eq__(self, other):
         return self.point == other.point and self.vector/self.vector.norm() == other.vector/other.vector.norm()
 
-    def getPoint(self):
+    def get_point(self):
         return self.point
 
-    def setPoint(self, point):
+    def set_point(self, point):
         self.point = point
 
-    def getVector(self):
+    def get_vector(self):
         return self.vector
 
-    def setVector(self, vector):
+    def set_vector(self, vector):
         self.vector = vector
 
     def compare(self, other):
@@ -73,7 +73,7 @@ class ParametricLine():
         elif isinstance(other, sympy.Point):
             pass
 
-    def getPointVector(self):
+    def get_point_vector(self):
         '''Returns latex form of the vector in point vector form
 
         Return

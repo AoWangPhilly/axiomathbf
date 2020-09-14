@@ -5,7 +5,7 @@ date: 09/06/2020
 '''
 
 import sympy
-from parametric_lines import ParametricLine
+from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 from sympy import sqrt
 
@@ -109,14 +109,14 @@ class Plane():
         ======
             sympy.Numbers: returns distance between 3D objects
         '''
-        selfEq = self.plane.equation.coeffs()
-        a, b, c, d1 = selfEq
+        self_eq = self.plane.equation.coeffs()
+        a, b, c, d1 = self_eq
         if isinstance(other, Plane):
-            otherEq = other.plane.equation.coeffs()
-            d2 = otherEq[3]
+            other_eq = other.plane.equation.coeffs()
+            d2 = other_eq[3]
             return abs(d2-d1)/(sqrt(a**2+b**2+c**2))
         elif isinstance(other, ParametricLine):
-            p1, p2, p3 = other.getPoint()
+            p1, p2, p3 = other.get_point()
             return abs(a*p1+b*p2+c*p3+d1)/(sqrt(a**2+b**2+c**2))
         elif isinstance(other, sympy.Point):
             p1, p2, p3 = other
@@ -140,12 +140,12 @@ class Plane():
             # Find directional vector
             d = sympy.Matrix(self.get_plane().normal_vector).cross(
                 sympy.Matrix(other.get_plane().normal_vector))
-            selfEq = sympy.Poly(self.plane.equation())
-            otherEq = sympy.Poly(other.plane.equation())
-            if len(selfEq.free_symbols) == 3 and len(otherEq.free_symbols) == 3:
-                coeffSelf, coeffOther = selfEq.coeffs(), otherEq.coeffs()
-                x1, y1, _, c1 = coeffSelf
-                x2, y2, _, c2 = coeffOther
+            self_eq = sympy.Poly(self.plane.equation())
+            other_eq = sympy.Poly(other.plane.equation())
+            if len(self_eq.free_symbols) == 3 and len(other_eq.free_symbols) == 3:
+                coeff_self, coeff_other = self_eq.coeffs(), other_eq.coeffs()
+                x1, y1, _, c1 = coeff_self
+                x2, y2, _, c2 = coeff_other
                 a = sympy.Matrix([[x1, y1],
                                   [x2, y2]])
                 b = sympy.Matrix([-c1, -c2])
@@ -153,13 +153,13 @@ class Plane():
                 point.append(0)
                 return ParametricLine(point=point, vector=d)
         elif isinstance(other, ParametricLine):
-            lineEq = [
-                pt + vec*t for (pt, vec) in zip(other.getPoint(), other.getVector())]
-            xLine, yLine, zLine = lineEq
-            tIntersect = sympy.solve(
-                self.plane.equation(xLine, yLine, zLine), t)
-            if tIntersect:
-                return sympy.Point([elem.subs(t, tIntersect[0]) for elem in lineEq])
+            line_eq = [
+                pt + vec*t for (pt, vec) in zip(other.get_point(), other.get_vector())]
+            x_line, y_line, z_line = line_eq
+            t_intersect = sympy.solve(
+                self.plane.equation(x_line, y_line, z_line), t)
+            if t_intersect:
+                return sympy.Point([elem.subs(t, t_intersect[0]) for elem in line_eq])
 
 
 if __name__ == '__main__':
