@@ -21,7 +21,7 @@ class Extrema():
         self.function = function
 
     def __str__(self):
-        return str(function)
+        return str(self.function)
 
     def set_function(self, function):
         self.function = function
