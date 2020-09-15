@@ -6,7 +6,6 @@ date: 09/12/2020
 
 import sympy
 from sympy.abc import x, y, z
-from environment import isnotebook
 from IPython.display import display, Math
 
 
@@ -21,6 +20,9 @@ class Extrema():
 
     def __init__(self, function):
         self.function = function
+
+    def __repr__(self):
+        return self.__str__()
 
     def __str__(self):
         return str(self.function)

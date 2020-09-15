@@ -12,7 +12,7 @@ import sympy
 from sympy import sqrt, sin, E, cos, pi
 from sympy.abc import x, y, z
 from sympy.vector import CoordSys3D, matrix_to_vector
-from environment import isnotebook
+from axiomathbf.environment import isnotebook
 from IPython.display import display, Math
 
 
@@ -35,7 +35,7 @@ class Gradient():
         if isnotebook():
             display(Math(self.__get_latex().replace('\\', '\\\\')))
             return ''
-        return self.__str__
+        return self.__str__()
 
     def __str__(self):
         v1, v2, v3 = self.vector
@@ -105,7 +105,7 @@ class DirectionalDerivative(Gradient):
             self.value = self.__get_directional_diff()
 
     def __repr__(self):
-        return self.__str__
+        return self.__str__()
 
     def __str__(self):
         return 'Function: {}\nPoint: {}\n'.format(self.function, self.point)
@@ -154,7 +154,7 @@ class MVFunction(Gradient):
         self.value = self.function.subs(([x, p1], [y, p2], [z, p3]))
 
     def __repr__(self):
-        return self.__str__
+        return self.__str__()
 
     def __str__(self):
         return '{} at {} is {}'.format(self.function, self.point, self.value)

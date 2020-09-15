@@ -10,7 +10,7 @@ import sympy
 from sympy import E, ln, sqrt, sin, cos
 from sympy.abc import t
 from .parametric_lines import ParametricLine
-from environment import isnotebook
+from axiomathbf.environment import isnotebook
 from IPython.display import display, Math
 
 
@@ -31,7 +31,7 @@ class VectorFunction():
         if isnotebook():
             display(Math(sympy.latex(self.get_vector())))
             return ''
-        return self.__str__
+        return self.__str__()
 
     def __str__(self):
         '''Prints out list'''

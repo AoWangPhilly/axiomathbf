@@ -8,7 +8,7 @@ import sympy
 from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 from sympy import sqrt
-from environment import isnotebook
+from axiomathbf.environment import isnotebook
 from IPython.display import display, Math
 
 
@@ -51,7 +51,7 @@ class Plane():
         if isnotebook():
             display(Math(sympy.latex(self.plane.equation())))
             return ''
-        return self.__str__
+        return self.__str__()
 
     def __str__(self):
         return str(self.plane.equation())

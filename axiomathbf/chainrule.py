@@ -5,7 +5,6 @@ date: 09/12/2020
 '''
 
 import sympy
-from environment import isnotebook
 from sympy.abc import x, y, z, w, r, s, t
 from IPython.display import display, Math
 import re
@@ -25,6 +24,9 @@ class ChainRule():
 
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
+
+    def __repr__(self):
+        return self.__str__()
 
     def __str__(self):
         return str(self.__dict__)
