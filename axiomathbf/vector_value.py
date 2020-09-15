@@ -10,6 +10,8 @@ import sympy
 from sympy import E, ln, sqrt, sin, cos
 from sympy.abc import t
 from .parametric_lines import ParametricLine
+from environment import isnotebook
+from IPython.display import display, Math
 
 
 class VectorFunction():
@@ -20,14 +22,21 @@ class VectorFunction():
         lst (list): private variable of vectors
         vector (Matrix): matrix object of the vectors
     '''
+
     def __init__(self, lst):
         self.__lst = lst
         self.vector = Matrix(lst)
 
+    def __repr__(self):
+        if isnotebook():
+            display(Math(sympy.latex(self.get_vector())))
+            return ''
+        return self.__str__
+
     def __str__(self):
         '''Prints out list'''
         return str(self.__lst)
-    
+
     def __eq__(self, other):
         return self.__lst == other.__lst
 
@@ -46,7 +55,7 @@ class VectorFunction():
 
     def get_domain(self):
         '''Returns domain of vector-value function
-        
+
         Return:
             Union: the domain of the vector-value function
         '''
@@ -60,14 +69,14 @@ class VectorFunction():
                 domain = sympy.Intersection(continuous_domain(
                     vector, t, sympy.S.Reals), domain)
         return domain
-    
+
     def plugin(self, pt):
         '''Returns Vector-Value Function given a point
 
         Parameter
         ========
             pt (int): a point at t
-        
+
         Return
         ======
             VectorFunction: the vector-value function at point t
@@ -77,19 +86,19 @@ class VectorFunction():
     # TODO add tau=None, point=None
     def get_tangent_line(self, tau=None, point=None):
         '''Gets the parametric equation of the tangent line to the original function
-        
+
         Parameter
         =========
             tau (int): the time at t
             point (list of numbers): the point at t
-        
+
         Return
         ======
             ParametricLine: the parametic tangent line at t
         '''
-        if tau != None: 
+        if tau != None:
             point, vector = self.plugin(tau), self.derive().plugin(tau)
-        elif point != None: 
+        elif point != None:
             derived = self.derive().__lst
             vector = [elem.subs(t, p) for elem, p in zip(derived, point)]
         return ParametricLine(point, vector)
@@ -103,16 +112,19 @@ class VectorFunction():
             tau (int): the time at t
             point (list of numbers): the point at t
             initial (list): the initial vector-value position
-        
+
         Return
         ======
             VectorFunction: the position vector-value function
         '''
         pos = self.integrate()
-        if tau != None: plugged = pos.plugin(tau)
-        elif point != None: plugged = [elem.subs(t, p) for elem, p in zip(pos.__lst, point)]
+        if tau != None:
+            plugged = pos.plugin(tau)
+        elif point != None:
+            plugged = [elem.subs(t, p) for elem, p in zip(pos.__lst, point)]
         c = initial[0] - plugged[0]
         return VectorFunction([i+c for i in pos.__lst])
+
 
 if __name__ == '__main__':
     t = sympy.Symbol('t')

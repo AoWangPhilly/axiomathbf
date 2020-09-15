@@ -7,6 +7,8 @@ import sympy
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
 import math
+from environment import isnotebook
+from IPython.display import display, Math
 
 
 class ParametricLine():
@@ -25,6 +27,12 @@ class ParametricLine():
 
         # Simplifies the directional vector
         self.vector = Matrix(vector)/sympy.gcd(list(vector))
+
+    def __repr__(self):
+        if isnotebook():
+            display(Math(self.get_point_vector().replace('\\', '\\\\')))
+            return ''
+        return self.__str__
 
     def __str__(self):
         x, y, z = self.point

@@ -6,12 +6,14 @@ Author: Ao Wang
 Date: June 14, 2020
 """
 
-from parametric_lines import ParametricLine
-from plane import Plane
+from .parametric_lines import ParametricLine
+from .plane import Plane
 import sympy
 from sympy import sqrt, sin, E, cos, pi
 from sympy.abc import x, y, z
 from sympy.vector import CoordSys3D, matrix_to_vector
+from environment import isnotebook
+from IPython.display import display, Math
 
 
 class Gradient():
@@ -28,6 +30,12 @@ class Gradient():
         self.function = function
         self.vector = self.__get_gradient()
         self.latex = self.__get_latex
+
+    def __repr__(self):
+        if isnotebook():
+            display(Math(self.__get_latex().replace('\\', '\\\\')))
+            return ''
+        return self.__str__
 
     def __str__(self):
         v1, v2, v3 = self.vector
@@ -96,6 +104,8 @@ class DirectionalDerivative(Gradient):
             self.unit_vector = unit_vector/unit_vector.norm()
             self.value = self.__get_directional_diff()
 
+    def __repr__(self):
+        return self.__str__
 
     def __str__(self):
         return 'Function: {}\nPoint: {}\n'.format(self.function, self.point)
@@ -143,6 +153,9 @@ class MVFunction(Gradient):
         p1, p2, p3 = self.point
         self.value = self.function.subs(([x, p1], [y, p2], [z, p3]))
 
+    def __repr__(self):
+        return self.__str__
+
     def __str__(self):
         return '{} at {} is {}'.format(self.function, self.point, self.value)
 
@@ -154,7 +167,7 @@ class MVFunction(Gradient):
 
     def get_value(self):
         return self.value
-    
+
     def get_linearization(self):
         """Returns the linearization equation for local-linear approximation.
 
@@ -181,7 +194,6 @@ class MVFunction(Gradient):
         :rtype: str
         """
         return ParametricLine(point=self.point, vector=self.at(self.point))
-
 
 
 if __name__ == "__main__":
@@ -214,7 +226,7 @@ if __name__ == "__main__":
     # print(dd5.info())
 
     s1, p1 = sympy.ln(x+y+z) - 2, [-1, E**2, 1]
-    s2, p2 = x**2-y**2, [1,2,0]
+    s2, p2 = x**2-y**2, [1, 2, 0]
 
     mv1 = MVFunction(s1, p1)
     mv2 = MVFunction(s2, p2)

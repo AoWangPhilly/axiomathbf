@@ -5,7 +5,9 @@ date: 09/12/2020
 '''
 
 import sympy
+from environment import isnotebook
 from sympy.abc import x, y, z, w, r, s, t
+from IPython.display import display, Math
 import re
 
 

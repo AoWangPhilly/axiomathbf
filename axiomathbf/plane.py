@@ -8,6 +8,8 @@ import sympy
 from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
 from sympy import sqrt
+from environment import isnotebook
+from IPython.display import display, Math
 
 
 class Plane():
@@ -41,8 +43,15 @@ class Plane():
             plane = sympy.Plane(point, normal_vector=norm_vect)
 
         gcd = sympy.gcd(plane.normal_vector)
-        plane = sympy.Plane(plane.p1, [elem/gcd for elem in plane.normal_vector])
+        plane = sympy.Plane(
+            plane.p1, [elem/gcd for elem in plane.normal_vector])
         self.plane = plane
+
+    def __repr__(self):
+        if isnotebook():
+            display(Math(sympy.latex(self.plane.equation())))
+            return ''
+        return self.__str__
 
     def __str__(self):
         return str(self.plane.equation())
