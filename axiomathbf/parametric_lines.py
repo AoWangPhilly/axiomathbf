@@ -6,6 +6,7 @@ date: 09/02/2020
 import sympy
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
+import math
 
 
 class ParametricLine():
@@ -21,8 +22,9 @@ class ParametricLine():
 
     def __init__(self, point, vector):
         self.point = sympy.Point(point)
-        gcd = sympy.gcd(list(vector))
-        self.vector = Matrix([elem/gcd for elem in vector])
+
+        # Simplifies the directional vector
+        self.vector = Matrix(vector)/sympy.gcd(list(vector))
 
     def __str__(self):
         x, y, z = self.point
@@ -30,7 +32,8 @@ class ParametricLine():
         return '<x, y, z> = <{}, {}, {}> + <{}, {}, {}>t'.format(x, y, z, v1, v2, v3)
 
     def __eq__(self, other):
-        return self.point == other.point and self.vector/self.vector.norm() == other.vector/other.vector.norm()
+        # Checks equality of two Parametric Lines given they have the same point and same direction vectors
+        return self.point == other.point and (self.vector == other.vector or self.vector == -other.vector)
 
     def get_point(self):
         return self.point
@@ -67,11 +70,29 @@ class ParametricLine():
         return symbol
 
     def distance(self, other):
-        if isinstance(other, ParametricLine):
-            pass
+        '''Calculates the distance between another ParametricLine object or sympy.Point object
 
+        Parameter
+        =========
+            other (sympy.Point or ParametricLine): the other ParametricLine or a sympy.Point
+
+        Return
+        ======
+            sympy.Number: the distance between the two objects
+        '''
+        if isinstance(other, ParametricLine):
+            pq = Matrix(other.point-self.point)
+            lines = self.compare(other)
+            if lines == 'Skew':
+                return abs(pq.dot(other.vector.cross(self.vector)))/(other.vector.cross(self.vector).norm())
+            elif lines == 'Parallel':
+                v = (pq.dot(self.vector)/(self.vector.norm())**2)*self.vector
+                return (pq - v).norm()
+            else:
+                return 0
         elif isinstance(other, sympy.Point):
-            pass
+            pq = Matrix(other - self.point)
+            return pq.cross(self.vector).norm()/self.vector.norm()
 
     def get_point_vector(self):
         '''Returns latex form of the vector in point vector form
@@ -150,3 +171,6 @@ if __name__ == '__main__':
 
     # print(ParametricLine([1, 3, 5], [2, 5, 2]).intersect(
     #     ParametricLine([0, 11, 4], [1, -1, 1])))
+    l1 = ParametricLine(point=[5, 3, 0], vector=[3, 9, 0])
+    l2 = ParametricLine(point=[1, 0, 1], vector=[1, 3, 0])
+    print(math.isclose(sympy.sqrt(910)/10, sympy.sqrt(91/10)))
