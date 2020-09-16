@@ -35,11 +35,11 @@ class Plane():
             eq = sympy.Poly(eq)
             # gets all the coeffients of each variable
             norm_vect = eq.coeffs()[:3]
-            pointEq = sympy.solve(eq, x, y, z)[0]  # solves x,y,z to 0
+            point_eq = sympy.solve(eq, x, y, z)[0]  # solves x,y,z to 0
 
             # Finds a point on the plane
             point = sympy.Point(
-                [point.subs([(x, 0), (y, 0), (z, 0)]) for point in pointEq])
+                [point.subs([(x, 0), (y, 0), (z, 0)]) for point in point_eq])
             plane = sympy.Plane(point, normal_vector=norm_vect)
 
         gcd = sympy.gcd(plane.normal_vector)
@@ -55,6 +55,9 @@ class Plane():
 
     def __str__(self):
         return str(self.plane.equation())
+
+    def __eq__(self, other):
+        return self.plane == other.plane
 
     def get_plane(self):
         return self.plane
@@ -118,18 +121,18 @@ class Plane():
         ======
             sympy.Numbers: returns distance between 3D objects
         '''
-        self_eq = self.plane.equation.coeffs()
-        a, b, c, d1 = self_eq
+
         if isinstance(other, Plane):
-            other_eq = other.plane.equation.coeffs()
-            d2 = other_eq[3]
-            return abs(d2-d1)/(sqrt(a**2+b**2+c**2))
+            if self.compare(other) == 'Parallel':
+                pq = sympy.Matrix(other.plane.p1-self.plane.p1)
+                return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
+            return None
         elif isinstance(other, ParametricLine):
-            p1, p2, p3 = other.get_point()
-            return abs(a*p1+b*p2+c*p3+d1)/(sqrt(a**2+b**2+c**2))
+            pq = sympy.Matrix(other.point-self.plane.p1)
+            return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
         elif isinstance(other, sympy.Point):
-            p1, p2, p3 = other
-            return abs(a*p1+b*p2+c*p3+d1)/(sqrt(a**2+b**2+c**2))
+            pq = sympy.Matrix(other-self.plane.p1)
+            return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
 
     def intersect(self, other):
         '''Returns where line or plane intersects
