@@ -101,20 +101,12 @@ class ChainRule():
             c3 = ChainRule()
             print(c3.solve('dz/dt', z=2*x-y, x=sympy.sin(t), y=3*t))
         '''
-        match, info = '∂.\/∂.', {}
-        for key in kwargs:
-            info[key] = tuple(kwargs[key].free_symbols)
-        self.__dict__ = info
-
-        eq = self.get_equation(diff)
-        partials = re.findall(match, eq)
-
-        for p in partials:
-            sep = p.split('/')
-            top, bot = sep[0][1], sep[1][1]
-            eq = eq.replace(p, str(sympy.diff(kwargs[top], sympy.Symbol(bot))))
-
-        return sympy.parse_expr(eq)
+        diff = diff.split('/')
+        root, leaf = diff[0][1], diff[1][1]
+        top = kwargs[root]
+        kwargs.pop(root, None)
+        top = top.subs(kwargs)
+        return sympy.diff(top, sympy.Symbol(leaf))
 
 
 if __name__ == '__main__':
