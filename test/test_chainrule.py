@@ -8,6 +8,7 @@ import sympy
 def test_equation():
     f, x, y, z = (x, y, z, w), (r, s, t), (r, t), (r, s)
     
+    
 
 def test_solve():
     z1, x1, y1 = 2*x-y, sin(t), 3*t
