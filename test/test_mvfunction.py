@@ -1,43 +1,90 @@
 from axiomathbf import MVFunction, Gradient, DirectionalDerivative, Plane, ParametricLine
 import pytest
-import sympy
 from sympy.abc import x, y, z
-from sympy import sin, ln, E, pi, cos, tan, atan, sqrt
+from sympy import sin, ln, E, pi, cos, tan, atan, sqrt, Matrix, asin
 
 # Gradient
 
 
+def test_str():
+    f1 = Gradient(x*3-2*x*y**2)
+    f2 = Gradient(3*x**2*y**3)
+    sols = ['<3*x**2-2*y**2, -4*x*y, 0>',
+            '<6*x*y**3, 9*x**2*y**2, 0>']
+    for f, sol in zip((f1, f2), sols):
+        assert str(f) == sol
+
+
 def test_gradient_vector():
-    pass
+    f1 = Gradient(x*3-2*x*y**2)
+    f2 = Gradient(3*x**2*y**3)
+    sols = [[3*x**2-2*y**2, -4*x*y, 0],
+            [6*x*y**3, 9*x**2*y**2, 0]]
+    for f, sol in zip((f1, f2), sols):
+        assert f.vector == sol
 
 
 def test_at():
-    pass
+    f1, p1 = Gradient(3*x*y-y**2*x**3), [1, -1, 0]
+    f2, p2 = Gradient(cos(2*x-y**2)), [pi/4, 0, 0]
+    f3, p3 = Gradient(4*x*y*z-y**2*z**3+4*z**3*y), [2, 3, 1]
+    sols = [Matrix([-6, 5, 0]), Matrix([-2, 0, 0]), Matrix([12, 6, 33])]
+    for f, sol in zip(((f1, p1), (f2, p2), (f3, p3)), sols):
+        assert f[0].at(f[1]) == sol
 
 # DirectionalDerivative
 
 
 def test_directional_diff():
-    pass
+    f1, v1, p1 = x**4-y**4, [sqrt(2)/2, sqrt(2)/2, 0], [0, -2, 0]
+    f2, v2, p2 = y*sin(x), [1, -1, 0], [pi/2, 1, 0]
+    f3, v3, p3 = E**x*cos(y*z), [-2, 1, -3], [1, pi, 0]
+    sols = [32/sqrt(2), -1/sqrt(2), -2*E/(sqrt(14))]
+    for f, sol in zip(((f1, v1, p1), (f2, v2, p1), (f3, v3, p3)), sols):
+        assert DirectionalDerivative(
+            function=f[0], point=f[2], unit_vector=f[1]).value == sol
 
 
 def test_info():
-    pass
+    f1 = DirectionalDerivative(E**(x*y**2), [1, 3, 0])
+    f2 = DirectionalDerivative(sqrt(4-x**2-y**2-z**2), [1, -1, 0])
+    f3 = DirectionalDerivative(x**3*y*z**2, [2, -1, 1])
+    sols = []
 
 # MVFunction
 
 
 def test_linearization():
-    f1, p1 = x**2-y**2, [1, 2, 0]
-    f2, p2 = (x+y)/(x-y), [2, 1, 0]
-    f3, p3 = E**x*sin(y), [ln(3), pi/2, 0]
-    f4, p4 = ln(x**2-y**2), [2, sqrt(3), 0]
-    f5, p5 = atan(x/y), [1, 1, 0]
+    f1 = MVFunction(x**2-y**2, [1, 2, 0])
+    f2 = MVFunction((x+y)/(x-y), [2, 1, 0])
+    f3 = MVFunction(E**x*sin(y), [ln(3), pi/2, 0])
+    f4 = MVFunction(ln(x**2-y**2), [2, sqrt(3), 0])
+    f5 = MVFunction(atan(x/y), [1, 1, 0])
+    sols = [3+2*x-4*y, 3-2*x+4*y, 3-3*ln(3)+3*x,
+            -2+4*x-2*sqrt(3)*y, pi/4+(1/2)*x-(1/2)*y]
+    for f, sol in zip((f1, f2, f3, f4, f5), sols):
+        assert f.get_linearization() == sol
+
+
+s1 = MVFunction(ln(x+y+z), [-1, E**2, 1])
+s2 = MVFunction(x**2+y**2+z**2-1, [sqrt(3)/3, sqrt(3)/3, sqrt(3)/3])
+s3 = MVFunction(asin(x/y), [-1, -sqrt(2), pi/4])
+s4 = MVFunction(x**2-x*y+z**2, [2, 2, 3])
 
 
 def test_tangent_plane():
-    pass
+    sols = [Plane(eq=x+y+z-E**2), Plane(eq=x+y+z-sqrt(3)),
+            Plane(eq=-x+sqrt(2)/2*y-z+pi/4), Plane(eq=x-y+3*z-9)]
+    for s, sol in zip((s1, s2, s3, s4), sols):
+        assert s.get_tangent_plane() == sol
 
 
 def test_normal_line():
-    pass
+    sols = [ParametricLine(point=[-1, E**2, 1], vector=[1, 1, 1]),
+            ParametricLine(point=[sqrt(3)/3, sqrt(3)/3,
+                                  sqrt(3)/3], vector=[1, 1, 1]),
+            ParametricLine(point=[-1, -sqrt(2), pi/4],
+                           vector=[-1, sqrt(2)/2, -1]),
+            ParametricLine(point=[2, 2, 3], vector=[1, -1, 3])]
+    for s, sol in zip((s1, s2, s3, s4), sols):
+        assert s.get_normal_line() == sol
