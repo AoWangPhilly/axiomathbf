@@ -1,4 +1,5 @@
-# axiomathbf
+<img src='axiomathbflogo.png' style='display: block; margin-left: auto; margin-right: auto'>
+
 Axiomathbf is a Mathematical Aid package for Multivariate Calculus, used mainly for Jupyter Notebook since the outputs are mostly in Latex. But users can solve Multivariate Calculus problems from dot products and projections to finding the gradient and directional derivative of a function. 
 
 I decided to start the project when I began taking Math 200 at Drexel University around December. I wanted to combine what I learned in my CS courses. And math is what started my CS journey when I first programmed my TI-84. 
