@@ -1,9 +1,7 @@
 """
-Program: MVFunction.py
-Purpose: I created the MVFunction module to check my work for finding the
-multivarite calculus equation's gradient and other processes quickly
-Author: Ao Wang
-Date: June 14, 2020
+description: MVFunction.py
+author: Ao Wang
+date: 09/17/20
 """
 
 from .parametric_lines import ParametricLine
@@ -87,13 +85,9 @@ class DirectionalDerivative(Gradient):
 
     Attributes
     ==========
-        function:
-        unit_vector:
-        point:
-        value:
-        increasing:
-        info:
-
+        function (sympy.core.add.Add): the multivariable function
+        point (lst of int): the point at a function 
+        unit_vector (lst of int): the directional vector
     '''
 
     def __init__(self, function, point, unit_vector=None):
@@ -123,22 +117,25 @@ class DirectionalDerivative(Gradient):
         self.point = point
 
     def __get_directional_diff(self):
-        """Returns the directional derivative at a point.
+        '''Returns the directional derivative at a point.
 
-        :param vector: The direction
-        :type vector: Vector
-        :returns: The directional derivative as a point
-        :rtype: sympy.core.numbers.Integer
-        """
+        Return
+        ======
+            sympy.core.numbers.Integer: the directional derivative at a point
+        '''
         return self.at(self.point).dot(self.unit_vector)
 
     def info(self, increasing=True):
-        """
-        :param increasing: Whether the function is increasing or decreasing
-        :type increasing: bool
-        :returns: More information about directional derivative
-        :rtype: tuple of sympy.core.numbers.Integer and Vector
-        """
+        '''Provides more info about the directional derivative 
+
+        Parameter
+        ========
+            increasing (bool): whether the function is increasing or decreasing
+
+        Return
+        ======
+            tuple: the maximum value of directional derivative and direction vector
+        '''
         gradient = self.at(self.point)
         maximum = gradient.norm() if increasing else -gradient.norm()
         gradient /= gradient.norm()
@@ -148,6 +145,14 @@ class DirectionalDerivative(Gradient):
 
 class MVFunction(Gradient):
     def __init__(self, function, point):
+        '''MVFunction class that gets tangent plane, normal line, and linearization of a function
+
+        Attributes
+        ==========
+            function (sympy.core.add.Add): the multivariable function
+            point (lst of int): point at function
+            value (int): value of function at a point
+        '''
         super().__init__(function)
         self.point = point
         p1, p2, p3 = self.point
@@ -169,30 +174,33 @@ class MVFunction(Gradient):
         return self.value
 
     def get_linearization(self):
-        """Returns the linearization equation for local-linear approximation.
+        '''Calculates the linearization equation for local-linear approximation.
 
-        :returns: The linearization equation
-        :rtype: sympy.core.add.Add
-        """
+        Return
+        ======
+            sympy.core.add.Add: the linearization equation
+        '''
         p1, p2, p3 = self.point
         g1, g2, g3 = self.at(self.point)
         function_at_point = self.value
         return function_at_point + g1 * (x - p1) + g2 * (y - p2) + g3 * (z - p3)
 
     def get_tangent_plane(self):
-        """Returns the tangent plane of a function at a point
+        '''Calculates the tangent plane of a function at a point
 
-        :returns: The tangent plane of a function at a point
-        :rtype: sympy.core.add.Add
-        """
+        Return
+        ======
+            Plane: the tangent plane at a point at a function
+        '''
         return Plane(p1=self.point, normal_vector=self.at(self.point))
 
     def get_normal_line(self):
-        """Returns the normal line of a function at a point
+        '''Calculates the normal line of a function at a point
 
-        :returns: The normal line of a function at a point
-        :rtype: str
-        """
+        Return
+        ======
+            ParametricLine: the normal line of a function
+        '''
         return ParametricLine(point=self.point, vector=self.at(self.point))
 
 
