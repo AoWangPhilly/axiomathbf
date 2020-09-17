@@ -57,7 +57,7 @@ class Plane():
         return str(self.plane.equation())
 
     def __eq__(self, other):
-        return self.plane == other.plane
+        return self.plane.equation().equals(other.plane.equation())
 
     def get_plane(self):
         return self.plane
