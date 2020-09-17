@@ -79,9 +79,32 @@ class Extrema():
         return results
 
     def __get_area(self, p1, p2, p3):
+        '''Calculates area of triangle given three points
+
+        Parameters
+        ==========
+            p1 (tuple): first point
+            p2 (tuple): second point
+            p3 (tuple): third point
+        
+        Returns
+        =======
+            int: the area of a triangle
+        '''
         return abs(p1[0]*(p2[1]-p3[1])+p2[0]*(p3[1]-p1[1])+p3[0]*(p1[1]-p2[1]))
 
     def __is_inside(self, edge_cases, pt):
+        '''Checks to see if a point is inside a triangle
+
+        Parameters
+        ==========
+            edge_cases (list of tuples of ints): the other points to test out
+            pt (tuple): the point to check
+
+        Return
+        ======
+            bool: whether or not point is in triangle
+        '''
         a_total = self.__get_area(edge_cases[0], edge_cases[1], edge_cases[2])
         a1 = self.__get_area(pt, edge_cases[1], edge_cases[2])
         a2 = self.__get_area(edge_cases[0], pt, edge_cases[2])
