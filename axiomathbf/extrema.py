@@ -5,6 +5,7 @@ date: 09/12/2020
 '''
 
 import sympy
+from sympy import E
 from sympy.abc import x, y, z
 from IPython.display import display, Math
 
@@ -42,6 +43,8 @@ class Extrema():
         '''
         gradient = sympy.derive_by_array(self.function, (x, y))
         stationary_points = sympy.solve(gradient, (x, y))
+        if type(stationary_points) == dict:
+            return (stationary_points[x], stationary_points[y])
         return stationary_points
 
     def get_relative(self):
@@ -50,26 +53,42 @@ class Extrema():
         Return
         ======
             str: determines if point of mini, max, of saddle point
+
+        Warning
+        =======
+            Only considers triangle border
         '''
         results = ''
         gradient = sympy.derive_by_array(self.function, (x, y))
         hessian = sympy.Matrix(sympy.derive_by_array(gradient, (x, y)))
         crit_points = sympy.solve(gradient, (x, y))
 
+        if type(crit_points) == dict:
+            crit_points = [(crit_points[x], crit_points[y])]
         for point in crit_points:
             hess = hessian.subs({x: point[0], y: point[1]})
-            eigenvals = hess.eigenvals()
-            if all(ev > 0 for ev in eigenvals):
+            d, fxx = hess.det(), hess[0]
+            if d > 0 and fxx > 0:
                 results += 'Relative minimum at {}\n'.format(point)
-            elif all(ev < 0 for ev in eigenvals):
+            elif d > 0 and fxx < 0:
                 results += 'Relative maximum at {}\n'.format(point)
-            elif any(ev > 0 for ev in eigenvals) and any(ev < 0 for ev in eigenvals):
+            elif d < 0:
                 results += 'Saddle point at {}\n'.format(point)
             else:
                 results += 'Results inconclusive at {}\n'.format(point)
         return results
 
-    def get_absolute(self, edge_cases=None):
+    def __get_area(self, p1, p2, p3):
+        return abs(p1[0]*(p2[1]-p3[1])+p2[0]*(p3[1]-p1[1])+p3[0]*(p1[1]-p2[1]))
+
+    def __is_inside(self, edge_cases, pt):
+        a_total = self.__get_area(edge_cases[0], edge_cases[1], edge_cases[2])
+        a1 = self.__get_area(pt, edge_cases[1], edge_cases[2])
+        a2 = self.__get_area(edge_cases[0], pt, edge_cases[2])
+        a3 = self.__get_area(edge_cases[0], edge_cases[1], pt)
+        return a_total == (a1+a2+a3)
+
+    def get_absolute(self, edge_cases):
         '''Gets the absolute extrema of a function
 
         Parameter
@@ -81,9 +100,31 @@ class Extrema():
             dict: the absolute minimum and maximum
         '''
 
-        # Gets critical points and edge cases
+        # Gets critical points
         points = self.get_critical_points()
-        points.extend(edge_cases)
+
+        # Get the min and max of the x and y positions from edge cases
+        max_y, min_y, max_x, min_x = - \
+            float('inf'), float('inf'), -float('inf'), float('inf')
+        points = [points]
+        for p in edge_cases:
+            if p[1] > max_y: max_y = p[1]
+            if p[1] < min_y: min_y = p[1]
+            if p[0] > max_x: max_x = p[0]
+            if p[0] < min_x: min_x = p[0]
+
+        if any(points):  # Checks if there are any points to check
+            for p in points:
+                if p[0] < min_x or p[0] > max_x or p[1] < min_y or p[1] > max_y:
+                    points.remove(p)
+        else: # If not, remove the nested empty list
+            points.remove([])
+
+        # Loop through possible points for absolute extrema
+        for i in range(min_x, max_x+1):
+            for j in range(min_y, max_y+1):
+                if self.__is_inside(edge_cases=edge_cases, pt=(i, j)):
+                    points.append((i, j))
 
         # Subsitute the values and find the max and min
         maximum, minimum = -float('inf'), float('inf')
@@ -110,5 +151,6 @@ if __name__ == '__main__':
     # print(f3.get_critical_points())
     # print(f4.get_relative())
     # print(f5.get_relative())
-    f6 = Extrema(5 - 4*y - 2*x)
+    f6 = Extrema(5-4*y-2*x)
+
     print(f6.get_absolute([(3, 0), (0, 1), (1, 2)]))
