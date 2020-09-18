@@ -7,7 +7,7 @@ date: 09/06/2020
 import sympy
 from .parametric_lines import ParametricLine
 from sympy.abc import x, y, z, t
-from sympy import sqrt
+from sympy import sqrt, asin, Matrix
 from axiomathbf.environment import isnotebook
 from IPython.display import display, Math
 
@@ -30,21 +30,19 @@ class Plane():
         elif p1 and normal_vector:
             plane = sympy.Plane(p1, normal_vector=normal_vector)
         elif eq:
-            x, y, z = sympy.symbols('x y z')
-
-            eq = sympy.Poly(eq)
             # gets all the coeffients of each variable
-            norm_vect = eq.coeffs()[:3]
-            point_eq = sympy.solve(eq, x, y, z)[0]  # solves x,y,z to 0
+            coeff_dict = eq.as_coefficients_dict()
+            point_eq = sympy.solve(eq, x, y, z)[0]  # solves x, y, z to 0
 
             # Finds a point on the plane
             point = sympy.Point(
                 [point.subs([(x, 0), (y, 0), (z, 0)]) for point in point_eq])
-            plane = sympy.Plane(point, normal_vector=norm_vect)
+            plane = sympy.Plane(point, normal_vector=[coeff_dict.get(
+                x, 0), coeff_dict.get(y, 0), coeff_dict.get(z, 0)])
 
         gcd = sympy.gcd(plane.normal_vector)
         plane = sympy.Plane(
-            plane.p1, [elem/gcd for elem in plane.normal_vector])
+            p1=plane.p1, normal_vector=[elem/gcd for elem in plane.normal_vector])
         self.plane = plane
 
     def __repr__(self):
@@ -70,7 +68,7 @@ class Plane():
 
         Argument
         ========
-            other (Plane or ParametricLine): another 3D object
+            other (Plane, ParametricLine): another 3D object
 
         Return
         ======
@@ -79,9 +77,8 @@ class Plane():
         if isinstance(other, Plane):
             return self.plane.angle_between(other.plane)
         elif isinstance(other, ParametricLine):
-            l, m, n = other.vector
-            a, b, c = self.plane.normal_vector
-            return sympy.asin(sympy.abs(a*l + b*m + c*n)/(sympy.sqrt(a**2+b**2+c**2)*sympy.sqrt(l**2+m**2+n**2)))
+            norm_vect, line_dir = Matrix(self.plane.normal_vector), other.vector
+            return abs(asin(line_dir.dot(norm_vect)/(line_dir.norm()*norm_vect.norm())))
 
     def compare(self, other):
         '''Returns whether a Plane or ParametricLine are parallel, perpendicular, or neither
@@ -100,15 +97,14 @@ class Plane():
             elif other.plane.is_parallel(self.plane):
                 return 'Parallel'
             else:
-                return 'Neither parallel or perpendicular'
-        # check for parametric line too
+                return 'Neither parallel nor perpendicular'
         elif isinstance(other, ParametricLine):
-            if sympy.Matrix(other.plane.normal_vector).dot(other.vector) == 0:
+            if sympy.Matrix(self.plane.normal_vector).dot(other.vector) == 0:
                 return 'Parallel'
-            elif (sympy.Matrix(other.plane.normal_vector).cross(other.vector)).norm() == 0:
+            elif (sympy.Matrix(self.plane.normal_vector).cross(other.vector)).norm() == 0:
                 return 'Perpendicular'
             else:
-                return 'Neither parallel or perpendicular'
+                return 'Neither parallel nor perpendicular'
 
     def distance(self, other):
         '''Returns the distance between Planes, Lines, and Points
@@ -123,16 +119,12 @@ class Plane():
         '''
 
         if isinstance(other, Plane):
-            if self.compare(other) == 'Parallel':
-                pq = sympy.Matrix(other.plane.p1-self.plane.p1)
-                return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
-            return None
-        elif isinstance(other, ParametricLine):
-            pq = sympy.Matrix(other.point-self.plane.p1)
-            return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
+            return self.plane.distance(other.plane)
         elif isinstance(other, sympy.Point):
-            pq = sympy.Matrix(other-self.plane.p1)
-            return abs(pq.dot(self.plane.normal_vector))/self.plane.normal_vector.norm()
+            return self.plane.distance(other)
+        elif isinstance(other, ParametricLine):
+            pq, norm_vect = Matrix(other.point-self.plane.p1), Matrix(self.plane.normal_vector)
+            return abs(pq.dot(norm_vect))/norm_vect.norm()
 
     def intersect(self, other):
         '''Returns where line or plane intersects
@@ -149,21 +141,8 @@ class Plane():
 
         '''
         if isinstance(other, Plane):
-            # Find directional vector
-            d = sympy.Matrix(self.get_plane().normal_vector).cross(
-                sympy.Matrix(other.get_plane().normal_vector))
-            self_eq = sympy.Poly(self.plane.equation())
-            other_eq = sympy.Poly(other.plane.equation())
-            if len(self_eq.free_symbols) == 3 and len(other_eq.free_symbols) == 3:
-                coeff_self, coeff_other = self_eq.coeffs(), other_eq.coeffs()
-                x1, y1, _, c1 = coeff_self
-                x2, y2, _, c2 = coeff_other
-                a = sympy.Matrix([[x1, y1],
-                                  [x2, y2]])
-                b = sympy.Matrix([-c1, -c2])
-                point = list(a.inv()*b)
-                point.append(0)
-                return ParametricLine(point=point, vector=d)
+            line = other.plane.intersection(self.plane)[0]
+            return ParametricLine(point=line.p1, vector=list(line.p1-line.p2))
         elif isinstance(other, ParametricLine):
             line_eq = [
                 pt + vec*t for (pt, vec) in zip(other.get_point(), other.get_vector())]
