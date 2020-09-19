@@ -16,10 +16,10 @@ class ParametricLine():
        intersecting, or skew, point of intersection, and displaying
        the equations in latex.
 
-    Attributes
-    ==========
-        point (Point): the point of xyz parametric equations
-        vector (Matrix): the directional vector of parametric line
+    :param point: a point
+    :type point: sympy.geometry.point.Point3D
+    :param vector: a directonal vector
+    :type vector: sympy.matrices.dense.MutableDenseMatrix
     '''
 
     def __init__(self, point, vector):
@@ -44,27 +44,44 @@ class ParametricLine():
         return self.point == other.point and (self.vector == other.vector or self.vector == -other.vector)
 
     def get_point(self):
+        '''Gets the point class attribute
+
+        :return: the point class attribute
+        :rtype: sympy.geometry.point.Point3D
+        '''
         return self.point
 
     def set_point(self, point):
+        '''Sets the point class attribute
+
+        :param point: the point class attribute
+        :type point: sympy.geometry.point.Point3D
+        '''
         self.point = point
 
     def get_vector(self):
+        '''Gets the vector class attribute
+
+        :return: the vector class attribute
+        :rtype: sympy.matrices.dense.MutableDenseMatrix
+        '''
         return self.vector
 
     def set_vector(self, vector):
+        '''Sets the vector class attribute
+
+        :param vector: the vector class attribute
+        :type vector: sympy.matrices.dense.MutableDenseMatrix
+        '''
         self.vector = vector
 
     def compare(self, other):
         '''Compares two lines to see if they're intersecting, parallel, or skew
 
-        Parameter
-        =========
-            other (ParametricLine): the other line
-
-        Return
-        ======
-            str: string that shows if intersecting, parallel, or skew
+        :param other: the other line
+        :type other: axiomathbf.parametric_line.ParametricLine
+        :return: string that shows if intersecting, parallel, or skew
+        :rtype: str
         '''
         if self.intersect(other):
             if self.vector.dot(other.vector) == 0:
@@ -80,13 +97,10 @@ class ParametricLine():
     def distance(self, other):
         '''Calculates the distance between another ParametricLine object or sympy.Point object
 
-        Parameter
-        =========
-            other (sympy.Point or ParametricLine): the other ParametricLine or a sympy.Point
-
-        Return
-        ======
-            sympy.Number: the distance between the two objects
+        :param other: the other 3D object
+        :type other: sympy.geometry.point.Point3D or axiomathbf.parametric_line.ParametricLine
+        :return: the distance between the two objects
+        :rtype: sympy.core.numbers.Floats
         '''
         if isinstance(other, ParametricLine):
             pq = Matrix(other.point-self.point)
@@ -105,9 +119,8 @@ class ParametricLine():
     def get_point_vector(self):
         '''Returns latex form of the vector in point vector form
 
-        Return
-        ======
-            latex: renders latex of parametric line
+        :return: renders latex of parametric line
+        :rtype: str
         '''
         x, y, z = self.point
         v1, v2, v3 = self.vector
@@ -117,9 +130,8 @@ class ParametricLine():
     def intersect(self, other):
         '''Returns the point of intersection of two lines
 
-        Return
-        ======
-            list or None: returns list when intersecting, None if not intersecting
+        :return: the point of intersection
+        :rtype: returns list of ints when intersecting, None if not intersecting
         '''
         x, y = sympy.symbols('x y')
         indices = [(i, j) for i in range(3) for j in range(i+1, 3)]
@@ -138,47 +150,3 @@ class ParametricLine():
         if None not in solutions and solutions.count(solutions[0]) == len(solutions):
             return [pt + v*solutions[0][x] for (pt, v) in zip(self.point, self.vector)]
         return None
-
-
-if __name__ == '__main__':
-    # Parallel
-    pt1, vec1 = [2, 1, 4], [3, -2, 5]
-    pt2, vec2 = [3, -2, -1], [-6, 4, -10]
-    line1 = ParametricLine(pt1, vec1)
-    line2 = ParametricLine(pt2, vec2)
-    print(line1.compare(line2))
-
-    # Skew
-    pt3, vec3 = [1, 0, 2], [0, 1, -1]
-    pt4, vec4 = [2, 4, 0], [3, -3, 1]
-    line3 = ParametricLine(pt3, vec3)
-    line4 = ParametricLine(pt4, vec4)
-    print(line3.compare(line4))
-
-    # Intersection at (x,y,z) = (3,13,6)
-    pt5, vec5 = [1, 14, 5], [-2, 1, -1]
-    pt6, vec6 = [0, 4, 3], [1, 3, 1]
-    line5 = ParametricLine(pt5, vec5)
-    line6 = ParametricLine(pt6, vec6)
-    print(line5.compare(line6))
-    print(line5.intersect(line6))
-
-    # Skew
-    pt7, vec7 = [2, 4, 1], [5, -1, 1]
-    pt8, vec8 = [3, 1, 0], [6, -1, 1]
-    line7 = ParametricLine(pt7, vec7)
-    line8 = ParametricLine(pt8, vec8)
-    print(line7.compare(line8))
-
-    # Skew
-    pt9, vec9 = [1, 2, -1], [-1, 3, -2]
-    pt10, vec10 = [3, 1, 0], [4, -1, 0]
-    line9 = ParametricLine(pt9, vec9)
-    line10 = ParametricLine(pt10, vec10)
-    print(line9.compare(line10))
-
-    # print(ParametricLine([1, 3, 5], [2, 5, 2]).intersect(
-    #     ParametricLine([0, 11, 4], [1, -1, 1])))
-    l1 = ParametricLine(point=[5, 3, 0], vector=[3, 9, 0])
-    l2 = ParametricLine(point=[1, 0, 1], vector=[1, 3, 0])
-    print(math.isclose(sympy.sqrt(910)/10, sympy.sqrt(91/10)))

@@ -165,18 +165,3 @@ class Extrema():
         return {'max': {'point': max_p, 'value': maximum},
                 'min': {'point': min_p, 'value': minimum}}
 
-
-if __name__ == '__main__':
-    # f1 = Extrema(x**2+y**2-3*x-4*y+6)
-    # f2 = Extrema(x**2+4*y**2-4*y-2)
-    # f3 = Extrema(4*x**2-3*y**2+8*x-9*y-4)
-    # f4 = Extrema(x**3-3*x+y**2-6*y)
-    # f5 = Extrema(x**2*y-6*y**2-3*x**2)
-    # print(f1.get_critical_points())
-    # print(f2.get_critical_points())
-    # print(f3.get_critical_points())
-    # print(f4.get_relative())
-    # print(f5.get_relative())
-    f6 = Extrema(5-4*y-2*x)
-
-    print(f6.get_absolute([(3, 0), (0, 1), (1, 2)]))
