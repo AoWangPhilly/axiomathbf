@@ -1,12 +1,17 @@
 from setuptools import setup
+
+with open('README.md', 'r', encoding='utf-8') as f:
+    long_description = f.read()
 setup(
     name='axiomathbf',         # How you named your package folder (MyLib)
     packages=['axiomathbf'],   # Chose the same as "name"
-    version='0.0.2',      # Start with a small number and increase it with every change you make
+    version='0.0.4',      # Start with a small number and increase it with every change you make
     # Chose a license from here: https://help.github.com/articles/licensing-a-repository
     license='MIT',
     # Give a short description about your library
     description='Multivariable Calculus Aid',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Ao Wang',                   # Type in your name
     author_email='aw3338@drexel.edu',      # Type in your E-Mail
     # Provide either the link to your github or to your website
