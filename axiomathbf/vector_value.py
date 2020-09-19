@@ -17,10 +17,10 @@ from axiomathbf.environment import isnotebook
 class VectorFunction():
     '''Vector-Value Function that derives, integrates, and finds the domain of the vector
 
-    Attributes
-    ==========
-        lst (list): private variable of vectors
-        vector (Matrix): matrix object of the vectors
+    :param lst: private list of vectors
+    :type lst: lst of ints
+    :param vector: matrix object of the vectors
+    :type vector: sympy.matrices.dense.MutableDenseMatrix
     '''
 
     def __init__(self, lst):
@@ -41,23 +41,35 @@ class VectorFunction():
         return self.__lst == other.__lst
 
     def get_vector(self):
-        '''Converts Matrix vector into a vector object'''
+        '''Converts Matrix vector into a vector object
+
+        :return: the Vector-Value Function
+        :rtype: sympy.vector.vector.VectorAdd
+        '''
         C = CoordSys3D('')
         return matrix_to_vector(self.vector, C)
 
     def derive(self):
-        '''Derives each of the functions in the vector function'''
+        '''Derives each of the functions in the vector function
+
+        :return: the differientation of the Vector-Value Function
+        :rtype: axiomathbf.vector_value.VectorFunction
+        '''
         return VectorFunction([diff(elem, t) for elem in self.__lst])
 
     def integrate(self):
-        '''Integrates each of the functions in the vector function'''
+        '''Integrates each of the functions in the vector function
+
+        :return: the integrated version of the Vector-Value Function
+        :rtype: sympy.vector.vector.VectorAdd
+        '''
         return VectorFunction([integrate(elem, t) for elem in self.__lst])
 
     def get_domain(self):
         '''Returns domain of vector-value function
 
-        Return:
-            Union: the domain of the vector-value function
+        :return: the domain of the vector-value function
+        :rtype: sympy.sets.sets.Union
         '''
 
         # Starts domain in all reals
@@ -73,27 +85,22 @@ class VectorFunction():
     def plugin(self, pt):
         '''Returns Vector-Value Function given a point
 
-        Parameter
-        ========
-            pt (int): a point at t
-
-        Return
-        ======
-            VectorFunction: the vector-value function at point t
+        :param pt: a point at t
+        :type pt: int
+        :return: the vector-value function at point t
+        :rtype: list of ints
         '''
         return [elem.subs(t, pt) if type(elem) != int else elem for elem in self.__lst]
 
     def get_tangent_line(self, tau=None, point=None):
         '''Gets the parametric equation of the tan¸gent line to the original function
 
-        Parameter
-        =========
-            tau (int): the time at t
-            point (list of numbers): the point at t
-
-        Return
-        ======
-            ParametricLine: the parametic tangent line at t
+        :param tau: the time at t
+        :type tau: int
+        :param point: the point at t
+        :type point: list of ints
+        :return: the parametic tangent line at t
+        :rtype: axiomathbf.vector_value.VectorFunction
         '''
         if tau != None:
             point, vector = self.plugin(tau), self.derive().plugin(tau)
@@ -106,27 +113,14 @@ class VectorFunction():
     def solve_integration(self, initial, point):
         '''Solve for position function, given a velocity function, point, and start position
 
-        Parameters
-        ==========
-            point (list of numbers): the point at t
-            initial (list): the initial vector-value position
-
-        Return
-        ======
-            VectorFunction: the position vector-value function
+        :param point: the point at t
+        :type point: list of ints
+        :param initial: the initial vector-value position
+        :type initial: list of ints
+        :return: the position vector-value function
+        :rtype: axiomathbf.vector_value.VectorFunction
         '''
         pos = self.integrate()
         plugged = [elem.subs(t, point) for elem in pos.__lst]
         c_lst = [i - p for i, p in zip(initial, plugged)]  # solve for the c's
         return VectorFunction([i+c for i, c in zip(pos.__lst, c_lst)])
-
-
-if __name__ == '__main__':
-    t = Symbol('t')
-    v1 = VectorFunction([t**2, sqrt(1-t), -1/t])
-    v2 = VectorFunction([ln(t+1), 1/(E**t-2), t])
-    v3 = VectorFunction([cos(t), sin(t), 5])
-    v4 = VectorFunction([ln(t), t+1, E**t])
-    v5 = VectorFunction([sin(t), ln(abs(t)), sqrt(t)])
-    for v in (v1, v2, v3, v4, v5):
-        print(v.get_domain())
