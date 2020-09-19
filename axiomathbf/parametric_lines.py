@@ -3,12 +3,14 @@ description: parametric lines in 3D space
 author: ao wang
 date: 09/02/2020
 '''
+import math
+
 import sympy
+from IPython.display import Math, display
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
-import math
+
 from axiomathbf.environment import isnotebook
-from IPython.display import display, Math
 
 
 class ParametricLine():
@@ -30,7 +32,7 @@ class ParametricLine():
 
     def __repr__(self):
         if isnotebook():
-            display(Math(self.get_point_vector().replace('\\', '\\\\')))
+            display(Math(self.get_point_vector()))
             return ''
         return self.__str__()
 

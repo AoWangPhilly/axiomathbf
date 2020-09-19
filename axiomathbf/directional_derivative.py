@@ -4,10 +4,12 @@ author: Ao Wang
 date: 09/18/20
 '''
 
-from .gradient import Gradient
+from IPython.display import Math, display
 from sympy import Matrix
+
 from axiomathbf.environment import isnotebook
-from IPython.display import display, Math
+
+from .gradient import Gradient
 
 
 class DirectionalDerivative(Gradient):

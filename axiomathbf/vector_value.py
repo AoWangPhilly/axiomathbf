@@ -3,15 +3,17 @@ description: vector-value function class
 author: ao wang
 date: 09/01/2020
 '''
+from IPython.display import Math, display
+from sympy import (E, Intersection, Interval, S, Symbol, cos, diff, integrate,
+                   latex, ln, oo, sin, solve, sqrt)
+from sympy.abc import t
 from sympy.calculus.util import continuous_domain
 from sympy.matrices import Matrix
 from sympy.vector import CoordSys3D, matrix_to_vector
-from sympy import E, ln, sqrt, sin, cos, solve
-from sympy import latex, diff, integrate, Interval, oo, Intersection, S, Symbol
-from sympy.abc import t
-from IPython.display import display, Math
-from .parametric_lines import ParametricLine
+
 from axiomathbf.environment import isnotebook
+
+from .parametric_lines import ParametricLine
 
 
 class VectorFunction():

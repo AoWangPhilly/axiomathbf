@@ -4,10 +4,11 @@ author: Ao Wang
 date: 09/18/20
 '''
 
-from sympy import latex, Matrix, derive_by_array
+from IPython.display import Math, display
+from sympy import Matrix, derive_by_array, latex
 from sympy.abc import x, y, z
+
 from axiomathbf.environment import isnotebook
-from IPython.display import display, Math
 
 
 class Gradient():
@@ -28,7 +29,7 @@ class Gradient():
 
     def __repr__(self):
         if isnotebook():
-            display(Math(self.__get_latex().replace('\\', '\\\\')))
+            display(Math(self.__get_latex()))
             return ''
         return self.__str__()
 

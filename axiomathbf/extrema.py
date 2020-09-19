@@ -5,9 +5,9 @@ date: 09/12/2020
 '''
 
 import sympy
+from IPython.display import Math, display
 from sympy import E
 from sympy.abc import x, y, z
-from IPython.display import display, Math
 
 
 class Extrema():
@@ -164,4 +164,3 @@ class Extrema():
                 min_p = p
         return {'max': {'point': max_p, 'value': maximum},
                 'min': {'point': min_p, 'value': minimum}}
-

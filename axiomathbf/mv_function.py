@@ -4,12 +4,14 @@ author: Ao Wang
 date: 09/17/20
 '''
 
+from IPython.display import Math, display
+from sympy.abc import x, y, z
+
+from axiomathbf.environment import isnotebook
+
+from .gradient import Gradient
 from .parametric_lines import ParametricLine
 from .plane import Plane
-from .gradient import Gradient
-from sympy.abc import x, y, z
-from axiomathbf.environment import isnotebook
-from IPython.display import display, Math
 
 
 class MVFunction(Gradient):

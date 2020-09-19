@@ -5,11 +5,13 @@ date: 09/06/2020
 '''
 
 import sympy
-from .parametric_lines import ParametricLine
-from sympy.abc import x, y, z, t
-from sympy import sqrt, asin, Matrix
+from IPython.display import Math, display
+from sympy import Matrix, asin, sqrt
+from sympy.abc import t, x, y, z
+
 from axiomathbf.environment import isnotebook
-from IPython.display import display, Math
+
+from .parametric_lines import ParametricLine
 
 
 class Plane():
