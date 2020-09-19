@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>axiomathbf package &mdash; Axiomathbf 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="setup module" href="setup.html" />
+    <link rel="prev" title="axiomathbf" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Axiomathbf
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">axiomathbf</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">axiomathbf package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.chainrule">axiomathbf.chainrule module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.directional_derivative">axiomathbf.directional_derivative module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.environment">axiomathbf.environment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.extrema">axiomathbf.extrema module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.gradient">axiomathbf.gradient module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.mv_function">axiomathbf.mv_function module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.parametric_lines">axiomathbf.parametric_lines module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.plane">axiomathbf.plane module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf.vector_value">axiomathbf.vector_value module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-axiomathbf">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Axiomathbf</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">axiomathbf</a> &raquo;</li>
+        
+      <li>axiomathbf package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/axiomathbf.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="axiomathbf-package">
+<h1>axiomathbf package<a class="headerlink" href="#axiomathbf-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-axiomathbf.chainrule">
+<span id="axiomathbf-chainrule-module"></span><h2>axiomathbf.chainrule module<a class="headerlink" href="#module-axiomathbf.chainrule" title="Permalink to this headline">¶</a></h2>
+<p>description: chain rule class
+author: ao wang
+date: 09/12/2020</p>
+<dl class="py class">
+<dt id="axiomathbf.chainrule.ChainRule">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.chainrule.</code><code class="sig-name descname">ChainRule</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.chainrule.ChainRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The class is able to compute chain rule based on find the partial derivatives
+given the multivariable functions and also explicitly defined functions.</p>
+<p>Here’s an example: c1 = ChainRule(f=(x, y, z, w), x=(r, s, t), y=(r, t), z=(r, s), w=(s, t)).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> (<em>tuples of sympy.core.symbol.Symbol</em>) – the explicit defned functions</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.chainrule.ChainRule.get_equation">
+<code class="sig-name descname">get_equation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">diff</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.chainrule.ChainRule.get_equation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the formula for chain rule given the explicit functions 
+and differientiation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>diff</strong> (<em>str</em>) – the derivative, i.e. dz/dt</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the chain rule formula</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.chainrule.ChainRule.get_latex_equation">
+<code class="sig-name descname">get_latex_equation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">diff</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.chainrule.ChainRule.get_latex_equation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the formula for chain rule given the explicit functions 
+and differientiation and formats for LaTeX</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>diff</strong> (<em>str</em>) – the derivative, i.e. dz/dt</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the chain rule formula in LaTeX</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.chainrule.ChainRule.solve">
+<code class="sig-name descname">solve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">diff</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.chainrule.ChainRule.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the chain rule given the differientation and sympy functions
+Here’s an example: c1 = ChainRule(); print(c1.solve(‘dz/dt’, z=2*x-y, x=sympy.sin(t), y=3*t))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diff</strong> (<em>str</em>) – the derivative, i.e. dz/dt</p></li>
+<li><p><strong>kwargs</strong> (<em>sympy.core.add.Add</em>) – multivariate functions (sympy.core.add.Add)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the chainrule equation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.core.add.Add</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.directional_derivative">
+<span id="axiomathbf-directional-derivative-module"></span><h2>axiomathbf.directional_derivative module<a class="headerlink" href="#module-axiomathbf.directional_derivative" title="Permalink to this headline">¶</a></h2>
+<p>description: directional_derivative.py
+author: Ao Wang
+date: 09/18/20</p>
+<dl class="py class">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.directional_derivative.</code><code class="sig-name descname">DirectionalDerivative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em>, <em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">unit_vector</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axiomathbf.gradient.Gradient" title="axiomathbf.gradient.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">axiomathbf.gradient.Gradient</span></code></a></p>
+<p>The Directional Deriviative class calculates the its value, provide more info,
+like its maximum/minimum value and in which direction it increases most rapidly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function</strong> (<em>sympy.core.add.Add</em>) – the multivariable function</p></li>
+<li><p><strong>point</strong> (<em>list of int</em>) – the point at a function</p></li>
+<li><p><strong>unit_vector</strong> (<em>list of int</em>) – the directional vector</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative.get_point">
+<code class="sig-name descname">get_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative.get_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the point class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>the list of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative.get_unit_vector">
+<code class="sig-name descname">get_unit_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative.get_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the unit vector class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the unit vector class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>the list of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">increasing</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides more info about the directional derivative</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>increasing</strong> (<em>bool</em>) – whether the function is increasing or decreasing</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the maximum value of directional derivative and direction vector</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple of int and list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative.set_point">
+<code class="sig-name descname">set_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative.set_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>the list of ints</em>) – the point class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.directional_derivative.DirectionalDerivative.set_unit_vector">
+<code class="sig-name descname">set_unit_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">unit_vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.directional_derivative.DirectionalDerivative.set_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the unit vector class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unit_vector</strong> (<em>the list of ints</em>) – the unit vector class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.environment">
+<span id="axiomathbf-environment-module"></span><h2>axiomathbf.environment module<a class="headerlink" href="#module-axiomathbf.environment" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="axiomathbf.environment.isnotebook">
+<code class="sig-prename descclassname">axiomathbf.environment.</code><code class="sig-name descname">isnotebook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.environment.isnotebook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to see if the Python environment is in Jupyter Notebook or not.</p>
+<p>Credit: <a class="reference external" href="https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook/54967911#54967911">https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook/54967911#54967911</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether or not the working environment is in Jupyter Notebook</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.extrema">
+<span id="axiomathbf-extrema-module"></span><h2>axiomathbf.extrema module<a class="headerlink" href="#module-axiomathbf.extrema" title="Permalink to this headline">¶</a></h2>
+<p>description: extrema class
+author: ao wang
+date: 09/12/2020</p>
+<dl class="py class">
+<dt id="axiomathbf.extrema.Extrema">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.extrema.</code><code class="sig-name descname">Extrema</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Extrema class calculates the critical points of a function, infer if the points are
+relative minimum, maximum, or saddlepoint. It can also find a function’s absolute extremas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> (<em>sympy.core.add.Add</em>) – the multivariable function</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.extrema.Extrema.get_absolute">
+<code class="sig-name descname">get_absolute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">edge_cases</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema.get_absolute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the absolute extrema of a function.</p>
+<p>Warning!! Can only check for three edge cases for the closed region (i.e. a triangle border)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>edge_cases</strong> (<em>list of tuples of ints</em>) – the other points to test out</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the absolute extrema</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict of dict of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.extrema.Extrema.get_critical_points">
+<code class="sig-name descname">get_critical_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema.get_critical_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all critical points of a function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the critical points</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuples of ints or list of tuples of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.extrema.Extrema.get_function">
+<code class="sig-name descname">get_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the function class parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the function parameter</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.core.add.Add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.extrema.Extrema.get_relative">
+<code class="sig-name descname">get_relative</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema.get_relative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the relative extremas of the function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>determines if point of mini, max, of saddle point</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.extrema.Extrema.set_function">
+<code class="sig-name descname">set_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.extrema.Extrema.set_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the function class parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> (<em>sympy.core.add.Add</em>) – the multivariable function</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.gradient">
+<span id="axiomathbf-gradient-module"></span><h2>axiomathbf.gradient module<a class="headerlink" href="#module-axiomathbf.gradient" title="Permalink to this headline">¶</a></h2>
+<p>description: gradient.py
+author: Ao Wang
+date: 09/18/20</p>
+<dl class="py class">
+<dt id="axiomathbf.gradient.Gradient">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.gradient.</code><code class="sig-name descname">Gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.gradient.Gradient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Gradient class calculates the gradient vector and the gradient at a point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function</strong> (<em>sympy.core.add.Add</em>) – the function for gradient</p></li>
+<li><p><strong>vector</strong> (<em>list of int</em>) – the gradient vector</p></li>
+<li><p><strong>latex</strong> (<em>str</em>) – the latex code for gradient vector</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.gradient.Gradient.at">
+<code class="sig-name descname">at</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.gradient.Gradient.at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the gradient vector at a certain point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>list of ints</em>) – a 3D point</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a gradient at a certain point</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.matrices.dense.MutableDenseMatrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.gradient.Gradient.get_function">
+<code class="sig-name descname">get_function</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.gradient.Gradient.get_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the function class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the function class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.core.add.Add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.gradient.Gradient.set_function">
+<code class="sig-name descname">set_function</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.gradient.Gradient.set_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the function class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>function</strong> (<em>sympy.geometry.plane.Plane</em>) – the function class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.mv_function">
+<span id="axiomathbf-mv-function-module"></span><h2>axiomathbf.mv_function module<a class="headerlink" href="#module-axiomathbf.mv_function" title="Permalink to this headline">¶</a></h2>
+<p>description: MVFunction.py
+author: Ao Wang
+date: 09/17/20</p>
+<dl class="py class">
+<dt id="axiomathbf.mv_function.MVFunction">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.mv_function.</code><code class="sig-name descname">MVFunction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">function</span></em>, <em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axiomathbf.gradient.Gradient" title="axiomathbf.gradient.Gradient"><code class="xref py py-class docutils literal notranslate"><span class="pre">axiomathbf.gradient.Gradient</span></code></a></p>
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.get_linearization">
+<code class="sig-name descname">get_linearization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.get_linearization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the linearization equation for local-linear approximation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the linearization equation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.core.add.Add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.get_normal_line">
+<code class="sig-name descname">get_normal_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.get_normal_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the normal line of a function at a point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the normal line of a function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>axiomathbf.parametric_line.ParametricLine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.get_point">
+<code class="sig-name descname">get_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.get_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the point class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.get_tangent_plane">
+<code class="sig-name descname">get_tangent_plane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.get_tangent_plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the tangent plane of a function at a point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the tangent plane at a point at a function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#axiomathbf.plane.Plane" title="axiomathbf.plane.Plane">axiomathbf.plane.Plane</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.get_value">
+<code class="sig-name descname">get_value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.mv_function.MVFunction.set_point">
+<code class="sig-name descname">set_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.mv_function.MVFunction.set_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>list of ints</em>) – the point class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.parametric_lines">
+<span id="axiomathbf-parametric-lines-module"></span><h2>axiomathbf.parametric_lines module<a class="headerlink" href="#module-axiomathbf.parametric_lines" title="Permalink to this headline">¶</a></h2>
+<p>description: parametric lines in 3D space
+author: ao wang
+date: 09/02/2020</p>
+<dl class="py class">
+<dt id="axiomathbf.parametric_lines.ParametricLine">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.parametric_lines.</code><code class="sig-name descname">ParametricLine</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="simple">
+<dt>A ParametricLine class that determines if lines are parallel,</dt><dd><p>intersecting, or skew, point of intersection, and displaying
+the equations in latex.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>sympy.geometry.point.Point3D</em>) – a point</p></li>
+<li><p><strong>vector</strong> (<em>sympy.matrices.dense.MutableDenseMatrix</em>) – a directonal vector</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.compare">
+<code class="sig-name descname">compare</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two lines to see if they’re intersecting, parallel, or skew</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>axiomathbf.parametric_line.ParametricLine</em>) – the other line</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string that shows if intersecting, parallel, or skew</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.distance">
+<code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the distance between another ParametricLine object or sympy.Point object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<em>sympy.geometry.point.Point3D</em><em> or </em><em>axiomathbf.parametric_line.ParametricLine</em>) – the other 3D object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the distance between the two objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.core.numbers.Floats</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.get_point">
+<code class="sig-name descname">get_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.get_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the point class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.geometry.point.Point3D</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.get_point_vector">
+<code class="sig-name descname">get_point_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.get_point_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns latex form of the vector in point vector form</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>renders latex of parametric line</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.get_vector">
+<code class="sig-name descname">get_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.get_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the vector class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the vector class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.matrices.dense.MutableDenseMatrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.intersect">
+<code class="sig-name descname">intersect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.intersect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the point of intersection of two lines</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the point of intersection</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns list of ints when intersecting, None if not intersecting</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.set_point">
+<code class="sig-name descname">set_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.set_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the point class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>sympy.geometry.point.Point3D</em>) – the point class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.parametric_lines.ParametricLine.set_vector">
+<code class="sig-name descname">set_vector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">vector</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.parametric_lines.ParametricLine.set_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the vector class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vector</strong> (<em>sympy.matrices.dense.MutableDenseMatrix</em>) – the vector class attribute</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.plane">
+<span id="axiomathbf-plane-module"></span><h2>axiomathbf.plane module<a class="headerlink" href="#module-axiomathbf.plane" title="Permalink to this headline">¶</a></h2>
+<p>description: plane class
+author: ao wang
+date: 09/06/2020</p>
+<dl class="py class">
+<dt id="axiomathbf.plane.Plane">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.plane.</code><code class="sig-name descname">Plane</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">p1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">p2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">p3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">normal_vector</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">eq</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The plane class that can initalize with 3 points, a point and a normal vector, or equation.
+The class can also compare planes and lines to test if they are parallel, perpendicular, or skew,
+find points of intersection, and angle and distance between two 3D objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>sympy.geometry.point.Point3D</em>) – the first point</p></li>
+<li><p><strong>p2</strong> (<em>sympy.geometry.point.Point3D</em>) – the second point</p></li>
+<li><p><strong>p3</strong> (<em>sympy.geometry.point.Point3D</em>) – the third point</p></li>
+<li><p><strong>normal_vector</strong> (<em>list of ints</em>) – the normal vector</p></li>
+<li><p><strong>eq</strong> (<em>sympy.core.add.Add</em>) – the plane equation</p></li>
+<li><p><strong>plane</strong> (<em>sympy.geometry.plane.Plane</em>) – the sympy plane object</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.angle">
+<code class="sig-name descname">angle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the angle between 3D objects (Plane, ParametricLine)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#axiomathbf.plane.Plane" title="axiomathbf.plane.Plane"><em>Plane</em></a><em> or </em><a class="reference internal" href="#axiomathbf.parametric_lines.ParametricLine" title="axiomathbf.parametric_lines.ParametricLine"><em>ParametricLine</em></a>) – another 3D object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the angle between two 3D objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.core.numbers.Floats</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.compare">
+<code class="sig-name descname">compare</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds whether a Plane or ParametricLine are parallel, perpendicular, or neither</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#axiomathbf.plane.Plane" title="axiomathbf.plane.Plane"><em>Plane</em></a><em> or </em><a class="reference internal" href="#axiomathbf.parametric_lines.ParametricLine" title="axiomathbf.parametric_lines.ParametricLine"><em>ParametricLine</em></a>) – another 3D object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether the objects are perpendicular, parallel, or neither</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.distance">
+<code class="sig-name descname">distance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the distance between Planes, Lines, and Points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#axiomathbf.plane.Plane" title="axiomathbf.plane.Plane"><em>Plane</em></a><em>, </em><a class="reference internal" href="#axiomathbf.parametric_lines.ParametricLine" title="axiomathbf.parametric_lines.ParametricLine"><em>ParametricLine</em></a><em>, or </em><em>sympy.geometry.point.Point3D</em>) – another 3D object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the distance between 3D objects</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.core.numbers.Floats</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.get_plane">
+<code class="sig-name descname">get_plane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.get_plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the plane class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the plane class attribute</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.geometry.plane.Plane</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.intersect">
+<code class="sig-name descname">intersect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">other</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.intersect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates where the line or plane intersects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#axiomathbf.plane.Plane" title="axiomathbf.plane.Plane"><em>Plane</em></a><em> or </em><a class="reference internal" href="#axiomathbf.parametric_lines.ParametricLine" title="axiomathbf.parametric_lines.ParametricLine"><em>ParametricLine</em></a>) – another 3D object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>returns the point intersection of plane and line or paramatric line of intersection betweeen two planes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>sympy.geometry.point.Point3D or <a class="reference internal" href="#axiomathbf.parametric_lines.ParametricLine" title="axiomathbf.parametric_lines.ParametricLine">ParametricLine</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.plane.Plane.set_plane">
+<code class="sig-name descname">set_plane</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">plane</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.plane.Plane.set_plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the plane class attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plane</strong> (<em>sympy.geometry.plane.Plane</em>) – the sympy plane object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf.vector_value">
+<span id="axiomathbf-vector-value-module"></span><h2>axiomathbf.vector_value module<a class="headerlink" href="#module-axiomathbf.vector_value" title="Permalink to this headline">¶</a></h2>
+<p>description: vector-value function class
+author: ao wang
+date: 09/01/2020</p>
+<dl class="py class">
+<dt id="axiomathbf.vector_value.VectorFunction">
+<em class="property">class </em><code class="sig-prename descclassname">axiomathbf.vector_value.</code><code class="sig-name descname">VectorFunction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lst</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Vector-Value Function that derives, integrates, and finds the domain of the vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst</strong> (<em>lst of ints</em>) – private list of vectors</p></li>
+<li><p><strong>vector</strong> (<em>sympy.matrices.dense.MutableDenseMatrix</em>) – matrix object of the vectors</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.derive">
+<code class="sig-name descname">derive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.derive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Derives each of the functions in the vector function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the differientation of the Vector-Value Function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#axiomathbf.vector_value.VectorFunction" title="axiomathbf.vector_value.VectorFunction">axiomathbf.vector_value.VectorFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.get_domain">
+<code class="sig-name descname">get_domain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.get_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns domain of vector-value function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the domain of the vector-value function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.sets.sets.Union</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.get_tangent_line">
+<code class="sig-name descname">get_tangent_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tau</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">point</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.get_tangent_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the parametric equation of the tan¸gent line to the original function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tau</strong> (<em>int</em>) – the time at t</p></li>
+<li><p><strong>point</strong> (<em>list of ints</em>) – the point at t</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the parametic tangent line at t</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axiomathbf.vector_value.VectorFunction" title="axiomathbf.vector_value.VectorFunction">axiomathbf.vector_value.VectorFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.get_vector">
+<code class="sig-name descname">get_vector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.get_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts Matrix vector into a vector object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the Vector-Value Function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.vector.vector.VectorAdd</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.integrate">
+<code class="sig-name descname">integrate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.integrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integrates each of the functions in the vector function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the integrated version of the Vector-Value Function</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>sympy.vector.vector.VectorAdd</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.plugin">
+<code class="sig-name descname">plugin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Vector-Value Function given a point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pt</strong> (<em>int</em>) – a point at t</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the vector-value function at point t</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of ints</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="axiomathbf.vector_value.VectorFunction.solve_integration">
+<code class="sig-name descname">solve_integration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">point</span></em><span class="sig-paren">)</span><a class="headerlink" href="#axiomathbf.vector_value.VectorFunction.solve_integration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve for position function, given a velocity function, point, and start position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>list of ints</em>) – the point at t</p></li>
+<li><p><strong>initial</strong> (<em>list of ints</em>) – the initial vector-value position</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the position vector-value function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axiomathbf.vector_value.VectorFunction" title="axiomathbf.vector_value.VectorFunction">axiomathbf.vector_value.VectorFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-axiomathbf">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-axiomathbf" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="axiomathbf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Ao Wang
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
