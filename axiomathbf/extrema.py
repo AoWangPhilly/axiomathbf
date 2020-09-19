@@ -11,12 +11,11 @@ from IPython.display import display, Math
 
 
 class Extrema():
-    '''Extrema class that can find the critical points of the function, infer if the points are
-       relative minimum, maximum, or saddlepoint, and also absolute max/min.
+    '''The Extrema class calculates the critical points of a function, infer if the points are
+    relative minimum, maximum, or saddlepoint. It can also find a function's absolute extremas.
 
-    Attribute
-    =========
-        function (sympy.core.add.Add): the function
+    :param function: the multivariable function
+    :type function: sympy.core.add.Add
     '''
 
     def __init__(self, function):
@@ -29,17 +28,26 @@ class Extrema():
         return str(self.function)
 
     def set_function(self, function):
+        '''Sets the function class parameter
+
+        :param function: the multivariable function
+        :type function: sympy.core.add.Add
+        '''
         self.function = function
 
     def get_function(self):
+        '''Gets the function class parameter
+
+        :return: the function parameter
+        :rtype: sympy.core.add.Add
+        '''
         return self.function
 
     def get_critical_points(self):
-        '''Returns all critical points of a function
+        '''Finds all critical points of a function
 
-        Return
-        ======
-            list of tuples of ints: the critical points
+        :return: the critical points
+        :rtype: tuples of ints or list of tuples of ints
         '''
         gradient = sympy.derive_by_array(self.function, (x, y))
         stationary_points = sympy.solve(gradient, (x, y))
@@ -48,15 +56,10 @@ class Extrema():
         return stationary_points
 
     def get_relative(self):
-        '''Gets the relative extremas of the function
+        '''Finds the relative extremas of the function
 
-        Return
-        ======
-            str: determines if point of mini, max, of saddle point
-
-        Warning
-        =======
-            Only considers triangle border
+        :return: determines if point of mini, max, of saddle point
+        :rtype: str
         '''
         results = ''
         gradient = sympy.derive_by_array(self.function, (x, y))
@@ -81,29 +84,26 @@ class Extrema():
     def __get_area(self, p1, p2, p3):
         '''Calculates area of triangle given three points
 
-        Parameters
-        ==========
-            p1 (tuple): first point
-            p2 (tuple): second point
-            p3 (tuple): third point
-        
-        Returns
-        =======
-            int: the area of a triangle
+        :param p1: first point
+        :type p1: tuple of ints
+        :param p2: second point
+        :type p2: tuple of ints
+        :param p3: third point
+        :type p3: tuple of ints
+        :return: the area of a triangle
+        :rtype: int
         '''
         return abs(p1[0]*(p2[1]-p3[1])+p2[0]*(p3[1]-p1[1])+p3[0]*(p1[1]-p2[1]))
 
     def __is_inside(self, edge_cases, pt):
         '''Checks to see if a point is inside a triangle
 
-        Parameters
-        ==========
-            edge_cases (list of tuples of ints): the other points to test out
-            pt (tuple): the point to check
-
-        Return
-        ======
-            bool: whether or not point is in triangle
+        :param edge_cases: the other points to test out
+        :type edge_cases: list of tuples of ints
+        :param pt: the point to check
+        :type pt: tuple of ints
+        :return: whether or not point is in triangle
+        :rtype: bool
         '''
         a_total = self.__get_area(edge_cases[0], edge_cases[1], edge_cases[2])
         a1 = self.__get_area(pt, edge_cases[1], edge_cases[2])
@@ -112,15 +112,14 @@ class Extrema():
         return a_total == (a1+a2+a3)
 
     def get_absolute(self, edge_cases):
-        '''Gets the absolute extrema of a function
+        '''Calculates the absolute extrema of a function.
 
-        Parameter
-        =========
-            edge_cases (list of tuples of ints): the other points to test out
+        Warning!! Can only check for three edge cases for the closed region (i.e. a triangle border)
 
-        Return
-        ======
-            dict: the absolute minimum and maximum
+        :param edge_cases: the other points to test out
+        :type edge_cases: list of tuples of ints
+        :return: the absolute extrema
+        :rtype: dict of dict of ints
         '''
 
         # Gets critical points
@@ -131,16 +130,20 @@ class Extrema():
             float('inf'), float('inf'), -float('inf'), float('inf')
         points = [points]
         for p in edge_cases:
-            if p[1] > max_y: max_y = p[1]
-            if p[1] < min_y: min_y = p[1]
-            if p[0] > max_x: max_x = p[0]
-            if p[0] < min_x: min_x = p[0]
+            if p[1] > max_y:
+                max_y = p[1]
+            if p[1] < min_y:
+                min_y = p[1]
+            if p[0] > max_x:
+                max_x = p[0]
+            if p[0] < min_x:
+                min_x = p[0]
 
         if any(points):  # Checks if there are any points to check
             for p in points:
                 if p[0] < min_x or p[0] > max_x or p[1] < min_y or p[1] > max_y:
                     points.remove(p)
-        else: # If not, remove the nested empty list
+        else:  # If not, remove the nested empty list
             points.remove([])
 
         # Loop through possible points for absolute extrema

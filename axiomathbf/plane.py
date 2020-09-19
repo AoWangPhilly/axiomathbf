@@ -13,15 +13,22 @@ from IPython.display import display, Math
 
 
 class Plane():
-    '''The plane class that can initalize with 3 points, a point and a normal vector, or equation
+    '''The plane class that can initalize with 3 points, a point and a normal vector, or equation.
+    The class can also compare planes and lines to test if they are parallel, perpendicular, or skew,
+    find points of intersection, and angle and distance between two 3D objects.
 
-    Attributes
-    ==========
-        p1 (sympy.Point): the first point
-        p2 (sympy.Point): the second point
-        p3 (sympy.Point): the first point
-        normal_vector (list): the normal vector
-        eq (sympy.Add): the Plane equation
+    :param p1: the first point
+    :type p1: sympy.geometry.point.Point3D
+    :param p2: the second point
+    :type p2: sympy.geometry.point.Point3D
+    :param p3: the third point
+    :type p3: sympy.geometry.point.Point3D
+    :param normal_vector: the normal vector
+    :type normal_vector: list of ints
+    :param eq: the plane equation
+    :type eq: sympy.core.add.Add
+    :param plane: the sympy plane object
+    :type plane: sympy.geometry.plane.Plane
     '''
 
     def __init__(self, p1=None, p2=None, p3=None, normal_vector=None, eq=None):
@@ -58,38 +65,43 @@ class Plane():
         return self.plane.equation().equals(other.plane.equation())
 
     def get_plane(self):
+        '''Gets the plane class attribute
+
+        :return: the plane class attribute
+        :rtype: sympy.geometry.plane.Plane
+        '''
         return self.plane
 
     def set_plane(self, plane):
+        '''Sets the plane class attribute
+
+        :param plane: the sympy plane object
+        :type plane: sympy.geometry.plane.Plane
+        '''
         self.plane = plane
 
     def angle(self, other):
-        '''Finds the angle between a Plane and a Plane or a Plane and a ParametricLine
+        '''Calculates the angle between 3D objects (Plane, ParametricLine)
 
-        Argument
-        ========
-            other (Plane, ParametricLine): another 3D object
-
-        Return
-        ======
-            sympy.Numbers: the angle between planes or a parametric line
+        :param other: another 3D object
+        :type other: Plane or ParametricLine
+        :return: the angle between two 3D objects
+        :rtype: sympy.core.numbers.Floats
         '''
         if isinstance(other, Plane):
             return self.plane.angle_between(other.plane)
         elif isinstance(other, ParametricLine):
-            norm_vect, line_dir = Matrix(self.plane.normal_vector), other.vector
+            norm_vect, line_dir = Matrix(
+                self.plane.normal_vector), other.vector
             return abs(asin(line_dir.dot(norm_vect)/(line_dir.norm()*norm_vect.norm())))
 
     def compare(self, other):
-        '''Returns whether a Plane or ParametricLine are parallel, perpendicular, or neither
+        '''Finds whether a Plane or ParametricLine are parallel, perpendicular, or neither
 
-        Arguments
-        =========
-            other (Plane or ParametricLine): another 3D object
-
-        Return
-        ======
-            str: whether the objects are perpendicular, parallel, or neither
+        :param other: another 3D object
+        :type other: Plane or ParametricLine
+        :return: whether the objects are perpendicular, parallel, or neither
+        :rtype: str
         '''
         if isinstance(other, Plane):
             if other.plane.is_perpendicular(self.plane):
@@ -109,36 +121,27 @@ class Plane():
     def distance(self, other):
         '''Returns the distance between Planes, Lines, and Points
 
-        Arguments
-        =========
-            other (Plane, ParametricLine, Point): another 3D object
-
-        Return
-        ======
-            sympy.Numbers: returns distance between 3D objects
+        :param other: another 3D object
+        :type other: Plane, ParametricLine, or sympy.geometry.point.Point3D
+        :return: the distance between 3D objects
+        :rtype: sympy.core.numbers.Floats
         '''
-
         if isinstance(other, Plane):
             return self.plane.distance(other.plane)
         elif isinstance(other, sympy.Point):
             return self.plane.distance(other)
         elif isinstance(other, ParametricLine):
-            pq, norm_vect = Matrix(other.point-self.plane.p1), Matrix(self.plane.normal_vector)
+            pq, norm_vect = Matrix(
+                other.point-self.plane.p1), Matrix(self.plane.normal_vector)
             return abs(pq.dot(norm_vect))/norm_vect.norm()
 
     def intersect(self, other):
-        '''Returns where line or plane intersects
+        '''Calculates where the line or plane intersects
 
-
-        Arguments
-        =========
-            other (Plane or ParametricLine): another 3D object
-
-        Return
-        ======
-            sympy.Point or ParametricLine: returns the point intersection of plane and
-            line or paramatric line of intersection betweeen two planes
-
+        :param other: another 3D object
+        :type other: Plane or ParametricLine
+        :return: returns the point intersection of plane and line or paramatric line of intersection betweeen two planes
+        :rtype: sympy.geometry.point.Point3D or ParametricLine
         '''
         if isinstance(other, Plane):
             line = other.plane.intersection(self.plane)[0]

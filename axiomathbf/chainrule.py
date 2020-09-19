@@ -11,15 +11,13 @@ import re
 
 
 class ChainRule():
-    '''Chain rule class that shows the equation and format for deriving chain rule
+    '''The class is able to compute chain rule based on find the partial derivatives
+    given the multivariable functions and also explicitly defined functions.
+    
+    Here's an example: c1 = ChainRule(f=(x, y, z, w), x=(r, s, t), y=(r, t), z=(r, s), w=(s, t)).
 
-    Attributes
-    ==========
-        kwargs: the function example of tuples
-
-    Example
-    =======
-        c1 = ChainRule(f=(x, y, z, w), x=(r, s, t), y=(r, t), z=(r, s), w=(s, t))
+    :param kwargs: the explicit defned functions
+    :type kwargs: tuples of sympy.core.symbol.Symbol
     '''
 
     def __init__(self, **kwargs):
@@ -34,22 +32,22 @@ class ChainRule():
     def __make_diff(self, top, bot):
         '''Helper method that returns the partial derivative symbol
 
-        Return
-        ======
-            str: returns the string format for partial derivative
+        :param top: the numerator of the partial derivative
+        :type top: str
+        :param bot: the denominator of the partial derivative
+        :return: the string format for partial derivative
+        :rtype: str
         '''
         return '∂{}/∂{}'.format(top, bot)
 
     def get_equation(self, diff):
-        '''Gets the equation with partial derivatives
+        '''Calculates the formula for chain rule given the explicit functions 
+        and differientiation
 
-        Parameter
-        =========
-            diff (str): the derivative, i.e. dz/dt
-
-        Return
-        ======
-            str: the chain rule formula
+        :param diff: the derivative, i.e. dz/dt
+        :type diff: str
+        :return: the chain rule formula
+        :rtype: str
         '''
         diff = diff.split('/')
         root, leaf = diff[0][1], diff[1][1]
@@ -62,15 +60,13 @@ class ChainRule():
         return ' + '.join([' * '.join(i) for i in eq])
 
     def get_latex_equation(self, diff):
-        '''Gets the equation with partial derivatives
+        '''Calculates the formula for chain rule given the explicit functions 
+        and differientiation and formats for LaTeX
 
-        Parameter
-        =========
-            diff (str): the derivative, i.e. dz/dt
-
-        Return
-        ======
-            str: the chain rule formula in latex code
+        :param diff: the derivative, i.e. dz/dt
+        :type diff: str
+        :return: the chain rule formula in LaTeX
+        :rtype: str
         '''
         match = '∂.\/∂.'
         eq = self.get_equation(diff)
@@ -85,21 +81,15 @@ class ChainRule():
         return sympy.latex('${}$'.format(eq))
 
     def solve(self, diff, **kwargs):
-        '''Finds the differientation given the functions and apply chain rule
+        '''Calculates the chain rule given the differientation and sympy functions
+        Here's an example: c1 = ChainRule(); print(c1.solve('dz/dt', z=2*x-y, x=sympy.sin(t), y=3*t))
 
-        Parameters
-        ==========
-            diff (str): the derivative, i.e. dz/dt
-            kwargs: the list of functions
-
-        Return
-        ======
-            sympy.core.add.Add: the chainrule equation
-
-        Example
-        =======
-            c3 = ChainRule()
-            print(c3.solve('dz/dt', z=2*x-y, x=sympy.sin(t), y=3*t))
+        :param diff: the derivative, i.e. dz/dt
+        :type diff: str
+        :param kwargs: multivariate functions (sympy.core.add.Add)
+        :type kwargs: sympy.core.add.Add
+        :return: the chainrule equation
+        :rtype: sympy.core.add.Add
         '''
         diff = diff.split('/')
         root, leaf = diff[0][1], diff[1][1]
